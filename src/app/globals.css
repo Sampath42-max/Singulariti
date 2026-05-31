@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: #00C4B4;
+  --color-dark: #0B0B0F;
+  --color-accent: #F5A52A;
+  
+  --color-background: var(--bg-color);
+  --color-surface: var(--surface-color);
+  --color-ink: var(--ink-color);
+  --color-slate: var(--slate-color);
+  --color-border: var(--border-color);
+
+  --font-display: var(--font-syne);
+  --font-sans: var(--font-outfit);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 100px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root, .light {
+  --bg-color: #F8F8FC;
+  --surface-color: #FFFFFF;
+  --ink-color: #0F0F18;
+  --slate-color: #6B6B80;
+  --border-color: #E2E2EC;
+}
+
+.dark {
+  --bg-color: #0B0B0F;
+  --surface-color: #121218;
+  --ink-color: #F8F8FC;
+  --slate-color: #A0A0B0;
+  --border-color: #2A2A35;
+}
+
+@layer base {
+  body {
+    background: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
