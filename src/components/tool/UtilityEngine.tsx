@@ -21,6 +21,7 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
   const [pickedColor, setPickedColor] = useState<{hex: string, rgb: string} | null>(null);
   const [hoverColor, setHoverColor] = useState<{hex: string, rgb: string} | null>(null);
   const [palette, setPalette] = useState<{hex: string, rgb: string}[]>(([]));
+  const [paletteCount, setPaletteCount] = useState<number>(6);
   
   const [copied, setCopied] = useState<string | null>(null);
   
@@ -74,6 +75,50 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
     }
   };
 
+  const extractPaletteData = (img: HTMLImageElement, count: number) => {
+    try {
+      const tempCanvas = document.createElement('canvas');
+      const tempCtx = tempCanvas.getContext('2d');
+      if (!tempCtx) return;
+      tempCanvas.width = 100;
+      tempCanvas.height = 100;
+      tempCtx.drawImage(img, 0, 0, 100, 100);
+      const data = tempCtx.getImageData(0, 0, 100, 100).data;
+      
+      const colorMap = new Map<string, {count: number, r: number, g: number, b: number}>();
+      for (let i = 0; i < data.length; i += 4) {
+        if (data[i+3] < 128) continue; // ignore transparent
+        const r = data[i], g = data[i+1], b = data[i+2];
+        const qR = Math.round(r / 32) * 32;
+        const qG = Math.round(g / 32) * 32;
+        const qB = Math.round(b / 32) * 32;
+        const key = `${qR},${qG},${qB}`;
+        
+        if (!colorMap.has(key)) colorMap.set(key, { count: 1, r, g, b });
+        else colorMap.get(key)!.count++;
+      }
+      
+      const sorted = Array.from(colorMap.values()).sort((a, b) => b.count - a.count).slice(0, count);
+      const formatPalette = sorted.map(c => {
+        const rgb = `rgb(${c.r}, ${c.g}, ${c.b})`;
+        const hex = '#' + [c.r, c.g, c.b].map(x => x.toString(16).padStart(2, '0')).join('');
+        return { hex, rgb };
+      });
+      setPalette(formatPalette);
+    } catch (err) {
+      console.error("Extraction failed", err);
+    }
+  };
+
+  useEffect(() => {
+    if (tool.id === 'image-color-palette-extractor' && imgRef.current && imgRef.current.complete) {
+      const t = setTimeout(() => {
+        extractPaletteData(imgRef.current!, paletteCount);
+      }, 150);
+      return () => clearTimeout(t);
+    }
+  }, [paletteCount, tool.id, imageUrl]);
+
   const onImageLoad = async (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
     const w = img.naturalWidth;
@@ -85,43 +130,10 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
     setDimensions({ w, h, ratio: `${w/divisor}:${h/divisor}` });
 
     if (tool.id === 'image-color-palette-extractor') {
-      try {
-        const tempCanvas = document.createElement('canvas');
-        const tempCtx = tempCanvas.getContext('2d');
-        if (tempCtx) {
-          tempCanvas.width = 100;
-          tempCanvas.height = 100;
-          tempCtx.drawImage(img, 0, 0, 100, 100);
-          const data = tempCtx.getImageData(0, 0, 100, 100).data;
-          
-          const colorMap = new Map<string, {count: number, r: number, g: number, b: number}>();
-          for (let i = 0; i < data.length; i += 4) {
-            if (data[i+3] < 128) continue; // ignore transparent
-            const r = data[i], g = data[i+1], b = data[i+2];
-            // Quantize colors to bin them together
-            const qR = Math.round(r / 32) * 32;
-            const qG = Math.round(g / 32) * 32;
-            const qB = Math.round(b / 32) * 32;
-            const key = `${qR},${qG},${qB}`;
-            
-            if (!colorMap.has(key)) colorMap.set(key, { count: 1, r, g, b });
-            else colorMap.get(key)!.count++;
-          }
-          
-          const sorted = Array.from(colorMap.values()).sort((a, b) => b.count - a.count).slice(0, 6);
-          const formatPalette = sorted.map(c => {
-            const rgb = `rgb(${c.r}, ${c.g}, ${c.b})`;
-            const hex = '#' + [c.r, c.g, c.b].map(x => x.toString(16).padStart(2, '0')).join('');
-            return { hex, rgb };
-          });
-          setPalette(formatPalette);
-        }
-      } catch (err) {
-        console.error("Extraction failed", err);
-      }
+      extractPaletteData(img, paletteCount);
     }
 
-    if (tool.id === 'color-picker-from-image') {
+    if (tool.id === 'color-picker-from-image' || tool.id === 'image-color-palette-extractor') {
       // Draw to canvas for picking
       const canvas = canvasRef.current;
       if (canvas && img) {
@@ -157,13 +169,13 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
   };
 
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (tool.id !== 'color-picker-from-image') return;
+    if (tool.id !== 'color-picker-from-image' && tool.id !== 'image-color-palette-extractor') return;
     const color = getCanvasColor(e);
     if (color) setPickedColor(color);
   };
 
   const handleCanvasMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (tool.id !== 'color-picker-from-image') return;
+    if (tool.id !== 'color-picker-from-image' && tool.id !== 'image-color-palette-extractor') return;
     const color = getCanvasColor(e);
     if (color) setHoverColor(color);
   };
@@ -242,7 +254,7 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
                 </div>
               )}
 
-              {tool.id === 'color-picker-from-image' && (
+              {(tool.id === 'color-picker-from-image' || tool.id === 'image-color-palette-extractor') && (
                 <div className="space-y-4">
                   <h3 className="font-display font-bold flex items-center text-ink"><Droplet className="w-5 h-5 mr-2" /> Color Picker</h3>
                   <p className="text-[13px] text-slate mb-4">Click anywhere on the image preview to extract the exact pixel color.</p>
@@ -290,6 +302,22 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
               {tool.id === 'image-color-palette-extractor' && (
                 <div className="space-y-4">
                   <h3 className="font-display font-bold flex items-center text-ink"><PaletteIcon className="w-5 h-5 mr-2" /> Extracted Palette</h3>
+                  
+                  <div className="mb-4 space-y-2">
+                    <div className="flex justify-between items-center text-[13px] font-medium text-slate">
+                      <label>Number of Colors:</label>
+                      <span className="bg-surface px-2 py-1 rounded text-ink border border-border">{paletteCount}</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="15" 
+                      value={paletteCount} 
+                      onChange={(e) => setPaletteCount(Number(e.target.value))}
+                      className="w-full accent-primary" 
+                    />
+                  </div>
+
                   {palette.length > 0 ? (
                     <>
                     <div className="grid grid-cols-1 gap-2">
@@ -326,7 +354,7 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
             <div className="lg:col-span-2">
               <div className="relative rounded-lg border border-border bg-background overflow-hidden min-h-[400px] flex items-center justify-center">
                 
-                {imageUrl && tool.id === 'color-picker-from-image' ? (
+                {(imageUrl && tool.id === 'color-picker-from-image') || (imageUrl && tool.id === 'image-color-palette-extractor') ? (
                   <>
                     <canvas 
                       ref={canvasRef} 
