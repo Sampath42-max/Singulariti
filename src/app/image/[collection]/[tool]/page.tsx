@@ -7,6 +7,7 @@ import { ToolEngine } from '@/components/tool/ToolEngine';
 import { EditingEngine } from '@/components/tool/EditingEngine';
 import { UtilityEngine } from '@/components/tool/UtilityEngine';
 import { DeveloperEngine } from '@/components/tool/DeveloperEngine';
+import { SingleFeatureEditorClient } from '@/components/tools/image-editor/SingleFeatureEditorClient';
 import { getToolByPath, getCategoryById } from '@/registry';
 
 const EngineMap: Record<string, React.ElementType> = {
@@ -14,7 +15,8 @@ const EngineMap: Record<string, React.ElementType> = {
   conversion: ToolEngine,
   editing: EditingEngine,
   utility: UtilityEngine,
-  developer: DeveloperEngine
+  developer: DeveloperEngine,
+  'single-editing': SingleFeatureEditorClient
 };
 
 export default async function ToolPage(props: { params: Promise<{ collection: string; tool: string }> }) {

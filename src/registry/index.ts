@@ -164,13 +164,184 @@ export const registry: EcosystemRegistry = {
           path: '/image/editing',
           tools: [
             {
-              id: 'image-editor-tools',
-              name: 'Edit Image',
-              description: 'Crop, resize, rotate, flip, adjust colors, upscale, denoise, and add watermarks or text overlays locally in your browser.',
-              seoTitle: 'Edit Image Online — Free Image Editor | Singularity',
-              seoDescription: 'Edit, crop, resize, rotate, flip, enhance, adjust, watermark, and transform images directly in your browser without uploading to any server.',
-              engine: 'editing',
-              path: '/tools/image/editor'
+              id: 'crop-image',
+              name: 'Crop Image',
+              description: 'Crop images easily to remove unwanted edges or fit specific aspect ratios locally.',
+              seoTitle: 'Crop Image Online — Free Image Cropper | Singulariti',
+              seoDescription: 'Crop images online for free. Adjust aspect ratios safely in your browser without uploading.',
+              engine: 'single-editing',
+              path: '/image/editing/crop-image',
+              options: { action: 'crop' }
+            },
+            {
+              id: 'image-resizer',
+              name: 'Image Resizer',
+              description: 'Resize image dimensions (width & height) quickly while maintaining aspect ratio.',
+              seoTitle: 'Image Resizer Online — Resize Images Free | Singulariti',
+              seoDescription: 'Resize images online instantly. Free and secure browser-based image resizer.',
+              engine: 'single-editing',
+              path: '/image/editing/image-resizer',
+              options: { action: 'resize' }
+            },
+            {
+              id: 'rotate-image',
+              name: 'Rotate Image',
+              description: 'Rotate images by custom angles or standard 90-degree increments.',
+              seoTitle: 'Rotate Image Online — Free Image Rotator | Singulariti',
+              seoDescription: 'Rotate images freely in your browser. Fast, secure, no uploads required.',
+              engine: 'single-editing',
+              path: '/image/editing/rotate-image',
+              options: { action: 'rotate' }
+            },
+            {
+              id: 'flip-image',
+              name: 'Flip Image',
+              description: 'Mirror images horizontally or vertically instantly.',
+              seoTitle: 'Flip Image Online — Free Image Flipper | Singulariti',
+              seoDescription: 'Flip or mirror your images vertically and horizontally securely in your browser.',
+              engine: 'single-editing',
+              path: '/image/editing/flip-image',
+              options: { action: 'flip' }
+            },
+            {
+              id: 'image-upscaler',
+              name: 'Image Upscaler',
+              description: 'Enlarge and upscale images smoothly with advanced browser algorithms.',
+              seoTitle: 'Image Upscaler Online — Enlarge Images Free | Singulariti',
+              seoDescription: 'Upscale and enlarge images without losing quality. Completely browser-based.',
+              engine: 'single-editing',
+              path: '/image/editing/image-upscaler',
+              options: { action: 'upscaler' }
+            },
+            {
+              id: 'image-enhancer',
+              name: 'Image Enhancer',
+              description: 'Auto-enhance image clarity, exposure, and color.',
+              seoTitle: 'Image Enhancer Online — Auto Enhance Images | Singulariti',
+              seoDescription: 'Instantly auto-enhance photo colors and clarity securely in your web browser.',
+              engine: 'single-editing',
+              path: '/image/editing/image-enhancer',
+              options: { action: 'enhancer' }
+            },
+            {
+              id: 'image-sharpen',
+              name: 'Sharpen Image',
+              description: 'Sharpen blurry images to improve crispness and detail.',
+              seoTitle: 'Sharpen Image Online — Fix Blurry Photos | Singulariti',
+              seoDescription: 'Apply sharpening filters to blurry photos online for free without uploading.',
+              engine: 'single-editing',
+              path: '/image/editing/image-sharpen',
+              options: { action: 'sharpen' }
+            },
+            {
+              id: 'image-denoiser',
+              name: 'Denoise Image',
+              description: 'Remove noise and grain from photos for a smoother look.',
+              seoTitle: 'Denoise Image Online — Remove Photo Grain | Singulariti',
+              seoDescription: 'Remove noise and grain from your images safely in your web browser.',
+              engine: 'single-editing',
+              path: '/image/editing/image-denoiser',
+              options: { action: 'denoiser' }
+            },
+            {
+              id: 'brightness-and-contrast-adjuster',
+              name: 'Brightness & Contrast',
+              description: 'Adjust image brightness, contrast, highlights, and shadows.',
+              seoTitle: 'Brightness & Contrast Adjuster Online | Singulariti',
+              seoDescription: 'Easily adjust brightness, contrast, highlights, and shadows securely online.',
+              engine: 'single-editing',
+              path: '/image/editing/brightness-and-contrast-adjuster',
+              options: { action: 'brightnessContrast' }
+            },
+            {
+              id: 'color-adjuster',
+              name: 'Color Adjuster',
+              description: 'Fine-tune image saturation, hue, vibrance, and temperature.',
+              seoTitle: 'Color Adjuster Online — Free Color Correction | Singulariti',
+              seoDescription: 'Apply professional color correction to images completely locally in your browser.',
+              engine: 'single-editing',
+              path: '/image/editing/color-adjuster',
+              options: { action: 'colorAdjust' }
+            },
+            {
+              id: 'grayscale',
+              name: 'Grayscale Converter',
+              description: 'Convert images to pure grayscale instantly.',
+              seoTitle: 'Convert Image to Grayscale Online Free | Singulariti',
+              seoDescription: 'Turn color images into grayscale/black-and-white instantly and securely.',
+              engine: 'single-editing',
+              path: '/image/editing/grayscale',
+              options: { action: 'grayscale' }
+            },
+            {
+              id: 'color-to-black-and-white',
+              name: 'Color to Black & White',
+              description: 'Apply high-contrast black and white filters to photos.',
+              seoTitle: 'Color to Black and White Image Converter | Singulariti',
+              seoDescription: 'Convert color photos to artistic black and white securely without uploading.',
+              engine: 'single-editing',
+              path: '/image/editing/color-to-black-and-white',
+              options: { action: 'colorToBw' }
+            },
+            {
+              id: 'black-and-white-to-color',
+              name: 'Black & White to Color',
+              description: 'Add vintage and warmth color tints to black & white images.',
+              seoTitle: 'Colorize Black & White Images Online | Singulariti',
+              seoDescription: 'Apply color tints to black and white photos safely and securely in your browser.',
+              engine: 'single-editing',
+              path: '/image/editing/black-and-white-to-color',
+              options: { action: 'bwToColor' }
+            },
+            {
+              id: 'blur-image',
+              name: 'Blur Image',
+              description: 'Apply adjustable gaussian blur to your images.',
+              seoTitle: 'Blur Image Online Free — Add Gaussian Blur | Singulariti',
+              seoDescription: 'Apply professional blur effects to your images locally and securely.',
+              engine: 'single-editing',
+              path: '/image/editing/blur-image',
+              options: { action: 'blur' }
+            },
+            {
+              id: 'pixelate-image',
+              name: 'Pixelate Image',
+              description: 'Censor or pixelate images with an adjustable pixel size.',
+              seoTitle: 'Pixelate Image Online Free — Censor Photos | Singulariti',
+              seoDescription: 'Pixelate and censor images securely in your browser without any server uploads.',
+              engine: 'single-editing',
+              path: '/image/editing/pixelate-image',
+              options: { action: 'pixelate' }
+            },
+            {
+              id: 'add-watermark-to-image',
+              name: 'Add Watermark',
+              description: 'Overlay custom text watermarks repeatedly to protect images.',
+              seoTitle: 'Add Watermark to Image Online Free | Singulariti',
+              seoDescription: 'Protect your photos by adding a text watermark locally in your browser.',
+              engine: 'single-editing',
+              path: '/image/editing/add-watermark-to-image',
+              options: { action: 'watermark' }
+            },
+            {
+              id: 'add-text-on-image',
+              name: 'Add Text',
+              description: 'Write customizable text directly on top of your images.',
+              seoTitle: 'Add Text to Image Online Free | Singulariti',
+              seoDescription: 'Overlay text onto images easily and securely entirely in your browser.',
+              engine: 'single-editing',
+              path: '/image/editing/add-text-on-image',
+              options: { action: 'text' }
+            },
+            {
+              id: 'add-logo-overlay',
+              name: 'Add Logo Overlay',
+              description: 'Place a secondary logo or image perfectly on top of another image.',
+              seoTitle: 'Add Logo Overlay to Image Online Free | Singulariti',
+              seoDescription: 'Overlay logos or watermarks onto your images quickly and securely online.',
+              engine: 'single-editing',
+              path: '/image/editing/add-logo-overlay',
+              options: { action: 'logo' }
             }
           ]
         },
