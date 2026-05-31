@@ -15,6 +15,7 @@ import { Check, RotateCcw, Image as ImageIcon } from 'lucide-react';
 import ReactCrop, { type Crop as CropType, centerCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { ToolRegistryItem } from '@/registry/types';
+import { TransformableOverlay } from '@/components/ui/TransformableOverlay';
 
 const DEFAULT_SETTINGS: EditorSettings = {
   crop: { x: 0, y: 0, width: 0, height: 0, unit: 'px' },
@@ -209,7 +210,8 @@ export function SingleFeatureEditorClient({ tool }: Props) {
           settings,
           logoImg,
           false,
-          activeTool
+          activeTool,
+          true
         );
       } catch (err) {
         console.error('Render error:', err);
@@ -436,7 +438,118 @@ export function SingleFeatureEditorClient({ tool }: Props) {
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseUp}
-              />
+              >
+                {/* Text Overlay */}
+                {settings.text.content.trim() !== '' && canvasRef.current && (
+                  <TransformableOverlay
+                    isActive={activeTool === 'text'}
+                    onSelect={() => {}}
+                    x={settings.text.position === 'custom' ? (settings.text.posX / 100) * canvasRef.current.offsetWidth : canvasRef.current.offsetWidth / 2}
+                    y={settings.text.position === 'custom' ? (settings.text.posY / 100) * canvasRef.current.offsetHeight : canvasRef.current.offsetHeight / 2}
+                    width={settings.text.fontSize * 4} // Approximation for bounding box
+                    height={settings.text.fontSize * 1.5}
+                    rotation={settings.text.rotation}
+                    lockAspect={false}
+                    onChange={(updates) => {
+                      if (canvasRef.current) {
+                        const px = Math.min(100, Math.max(0, (updates.x / canvasRef.current.offsetWidth) * 100));
+                        const py = Math.min(100, Math.max(0, (updates.y / canvasRef.current.offsetHeight) * 100));
+                        const newFontSize = Math.max(8, updates.height / 1.5);
+                        setSettings(s => ({ ...s, text: { ...s.text, position: 'custom', posX: px, posY: py, rotation: updates.rotation, fontSize: newFontSize } }));
+                      }
+                    }}
+                  >
+                    <div style={{
+                      color: settings.text.color,
+                      opacity: settings.text.opacity / 100,
+                      fontFamily: settings.text.fontFamily,
+                      fontSize: `${settings.text.fontSize}px`,
+                      fontWeight: settings.text.bold ? 'bold' : 'normal',
+                      fontStyle: settings.text.italic ? 'italic' : 'normal',
+                      backgroundColor: settings.text.bgColor !== 'transparent' ? settings.text.bgColor : undefined,
+                      padding: '4px 8px',
+                      whiteSpace: 'nowrap',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '100%',
+                      height: '100%'
+                    }}>
+                      {settings.text.content}
+                    </div>
+                  </TransformableOverlay>
+                )}
+
+                {/* Logo Overlay */}
+                {logoImg && settings.logo.url && canvasRef.current && (
+                  <TransformableOverlay
+                    isActive={activeTool === 'logo'}
+                    onSelect={() => {}}
+                    x={settings.logo.position === 'custom' ? (settings.logo.posX / 100) * canvasRef.current.offsetWidth : canvasRef.current.offsetWidth / 2}
+                    y={settings.logo.position === 'custom' ? (settings.logo.posY / 100) * canvasRef.current.offsetHeight : canvasRef.current.offsetHeight / 2}
+                    width={(settings.logo.size / 100) * canvasRef.current.offsetWidth}
+                    height={((settings.logo.size / 100) * canvasRef.current.offsetWidth) * (logoImg.naturalHeight / logoImg.naturalWidth)}
+                    rotation={settings.logo.rotation}
+                    lockAspect={settings.logo.lockAspect}
+                    onChange={(updates) => {
+                      if (canvasRef.current) {
+                        const px = Math.min(100, Math.max(0, (updates.x / canvasRef.current.offsetWidth) * 100));
+                        const py = Math.min(100, Math.max(0, (updates.y / canvasRef.current.offsetHeight) * 100));
+                        const size = Math.min(100, Math.max(5, (updates.width / canvasRef.current.offsetWidth) * 100));
+                        setSettings(s => ({ ...s, logo: { ...s.logo, position: 'custom', posX: px, posY: py, rotation: updates.rotation, size } }));
+                      }
+                    }}
+                  >
+                    <img 
+                      src={settings.logo.url} 
+                      alt="Logo" 
+                      style={{ 
+                        opacity: settings.logo.opacity / 100, 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'contain'
+                      }} 
+                    />
+                  </TransformableOverlay>
+                )}
+
+                {/* Watermark Overlay */}
+                {settings.watermark.text.trim() !== '' && !settings.watermark.repeat && canvasRef.current && (
+                  <TransformableOverlay
+                    isActive={activeTool === 'watermark'}
+                    onSelect={() => {}}
+                    x={settings.watermark.position === 'custom' ? (settings.watermark.posX / 100) * canvasRef.current.offsetWidth : canvasRef.current.offsetWidth / 2}
+                    y={settings.watermark.position === 'custom' ? (settings.watermark.posY / 100) * canvasRef.current.offsetHeight : canvasRef.current.offsetHeight / 2}
+                    width={settings.watermark.fontSize * 5}
+                    height={settings.watermark.fontSize * 1.5}
+                    rotation={settings.watermark.rotation}
+                    lockAspect={false}
+                    onChange={(updates) => {
+                      if (canvasRef.current) {
+                        const px = Math.min(100, Math.max(0, (updates.x / canvasRef.current.offsetWidth) * 100));
+                        const py = Math.min(100, Math.max(0, (updates.y / canvasRef.current.offsetHeight) * 100));
+                        const newFontSize = Math.max(8, updates.height / 1.5);
+                        setSettings(s => ({ ...s, watermark: { ...s.watermark, position: 'custom', posX: px, posY: py, rotation: updates.rotation, fontSize: newFontSize } }));
+                      }
+                    }}
+                  >
+                    <div style={{
+                      color: settings.watermark.color,
+                      opacity: settings.watermark.opacity / 100,
+                      fontFamily: settings.watermark.fontFamily,
+                      fontSize: `${settings.watermark.fontSize}px`,
+                      whiteSpace: 'nowrap',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '100%',
+                      height: '100%'
+                    }}>
+                      {settings.watermark.text}
+                    </div>
+                  </TransformableOverlay>
+                )}
+              </EditorCanvas>
             )}
             
             {/* Privacy Message */}

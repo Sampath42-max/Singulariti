@@ -4,10 +4,10 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
 import { registry } from '@/registry';
-import { ImageIcon } from 'lucide-react';
+import { Wand2 } from 'lucide-react';
 
-export default function ImageCategoryPage() {
-  const category = registry.categories.find(c => c.id === 'image');
+export default function EditingCategoryPage() {
+  const category = registry.categories.find(c => c.id === 'editing');
 
   if (!category) return null;
 
@@ -19,17 +19,15 @@ export default function ImageCategoryPage() {
         {/* Category Hero */}
         <section className="container mx-auto px-4 max-w-5xl mb-16 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6">
-            <ImageIcon className="w-8 h-8" />
+            <Wand2 className="w-8 h-8" />
           </div>
           <h1 className="font-display font-bold text-4xl md:text-5xl text-ink mb-6">
-            Image Tools
+            Editing Tools
           </h1>
           <p className="font-sans text-lg text-slate max-w-2xl mx-auto">
             {category.description}
           </p>
         </section>
-
-
 
         {/* Collections */}
         <section className="container mx-auto px-4 max-w-7xl">
@@ -56,7 +54,7 @@ export default function ImageCategoryPage() {
                     title={tool.name}
                     description={tool.description}
                     href={tool.path}
-                    icon={<ImageIcon className="w-6 h-6" />}
+                    icon={<Wand2 className="w-6 h-6" />}
                   />
                 ))}
               </div>

@@ -6,16 +6,22 @@ import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';
 import { DownloadButton } from '@/components/tools/DownloadButton';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
+import { PageThumbnail } from '@/components/tools/PageThumbnail';
+import * as pdfjsLib from 'pdfjs-dist';
+import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
 import { compressPDF } from '@/lib/pdf/pdfHelpers';
 import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
-import { FileText, Percent, AlertCircle } from 'lucide-react';
+import { FileText, Percent, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
 export function CompressPdfClient() {
   const [file, setFile] = useState<File | null>(null);
+  const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
+  const [resultPdfDoc, setResultPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{ url: string; originalSize: number; newSize: number } | null>(null);
+  const [showPreview, setShowPreview] = useState(true);
 
   const handleFileSelected = async (selectedFiles: File[]) => {
     if (selectedFiles.length === 0) return;
@@ -31,6 +37,8 @@ export function CompressPdfClient() {
         return;
       }
       setFile(selectedFile);
+      const doc = await loadPdfDocument(selectedFile);
+      setPdfDoc(doc);
     } catch (err: any) {
       console.error(err);
       setError('Failed to parse PDF document. It might be corrupted.');
@@ -47,6 +55,8 @@ export function CompressPdfClient() {
       const compressedBytes = await compressPDF(file);
       const blob = new Blob([compressedBytes.buffer as ArrayBuffer], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
+      const resDoc = await loadPdfDocument(new File([blob], 'compressed.pdf', { type: 'application/pdf' }));
+      setResultPdfDoc(resDoc);
       setResult({
         url,
         originalSize: file.size,
@@ -62,6 +72,8 @@ export function CompressPdfClient() {
 
   const handleReset = () => {
     setFile(null);
+    setPdfDoc(null);
+    setResultPdfDoc(null);
     setResult(null);
     setError(null);
   };
@@ -101,9 +113,51 @@ export function CompressPdfClient() {
           <div className="p-4 bg-yellow-500/5 border border-yellow-500/10 rounded-lg text-yellow-600 dark:text-yellow-500 text-[13px] flex gap-3 mb-8">
             <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
             <p className="font-sans leading-relaxed font-medium">
-              Note: Compression level depends on the PDF structure. Some PDFs may not reduce much in browser-only mode.
+              Note: Deep compression depends heavily on the PDF structure. Images inside the PDF are structurally preserved to avoid quality loss.
             </p>
           </div>
+
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="font-display font-bold text-[14px] text-ink">Visual Preview</h3>
+            <button
+              onClick={() => setShowPreview(!showPreview)}
+              className="text-[12px] font-sans font-medium text-slate flex items-center gap-1.5 hover:text-ink transition-colors"
+            >
+              {showPreview ? <><EyeOff className="w-4 h-4" /> Hide Preview</> : <><Eye className="w-4 h-4" /> Show Preview</>}
+            </button>
+          </div>
+
+          {showPreview && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 bg-background border border-border rounded-xl p-6">
+              {/* Original Preview */}
+              <div className="flex flex-col items-center">
+                <span className="text-[11px] font-sans font-bold text-slate uppercase tracking-wider mb-3">Original</span>
+                <div className="border border-border/50 shadow-sm bg-white p-1 rounded min-h-[300px] flex items-center justify-center">
+                  {pdfDoc ? (
+                    <PageThumbnail pdfDoc={pdfDoc} pageNumber={1} scale={0.5} />
+                  ) : (
+                    <span className="text-[12px] text-slate">Loading preview...</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Compressed Preview */}
+              <div className="flex flex-col items-center">
+                <span className="text-[11px] font-sans font-bold text-slate uppercase tracking-wider mb-3">Compressed</span>
+                <div className="border border-border/50 shadow-sm bg-white p-1 rounded min-h-[300px] flex items-center justify-center">
+                  {resultPdfDoc ? (
+                    <PageThumbnail pdfDoc={resultPdfDoc} pageNumber={1} scale={0.5} />
+                  ) : isProcessing ? (
+                    <div className="flex flex-col items-center justify-center gap-2">
+                      <LoadingSpinner text="" />
+                    </div>
+                  ) : (
+                    <span className="text-[12px] text-slate">Ready to compress</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
 
           {isProcessing && <LoadingSpinner text="Optimizing PDF structure..." />}
 

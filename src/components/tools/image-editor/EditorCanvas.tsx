@@ -8,6 +8,7 @@ interface EditorCanvasProps {
   onMouseMove?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   onMouseUp?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   onMouseLeave?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
+  children?: React.ReactNode;
 }
 
 export function EditorCanvas({ 
@@ -16,7 +17,8 @@ export function EditorCanvas({
   onMouseDown,
   onMouseMove,
   onMouseUp,
-  onMouseLeave
+  onMouseLeave,
+  children
 }: EditorCanvasProps) {
   return (
     <div className="relative rounded-xl border border-border bg-background/50 overflow-hidden min-h-[400px] flex items-center justify-center p-4 w-full">
@@ -42,14 +44,21 @@ export function EditorCanvas({
         </div>
       )}
       
-      <canvas 
-        ref={canvasRef} 
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseLeave}
-        className="max-w-full max-h-[58vh] object-contain shadow-md rounded-lg border border-border bg-white z-0 cursor-crosshair" 
-      />
+      {/* 
+        Wrap canvas and children in a relative container that shrinks to fit the canvas.
+        This allows absolute children to correctly map to the canvas's local coordinate space.
+      */}
+      <div className="relative inline-flex max-w-full max-h-[58vh] shadow-md rounded-lg border border-border bg-white z-0">
+        <canvas 
+          ref={canvasRef} 
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseLeave}
+          className="max-w-full max-h-full object-contain cursor-crosshair rounded-lg" 
+        />
+        {children}
+      </div>
     </div>
   );
 }

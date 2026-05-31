@@ -48,7 +48,8 @@ export async function renderImageWithSettings(
   settings: EditorSettings,
   logoImg?: HTMLImageElement | null,
   isFullResolution: boolean = false,
-  activeTool?: string
+  activeTool?: string,
+  skipOverlays: boolean = false
 ): Promise<void> {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
@@ -264,7 +265,7 @@ export async function renderImageWithSettings(
 
   // 5. Add Text overlays
   const txt = settings.text;
-  if (txt.content.trim() !== '') {
+  if (!skipOverlays && txt.content.trim() !== '') {
     ctx.save();
     
     // Set Font Styling
@@ -310,7 +311,7 @@ export async function renderImageWithSettings(
 
   // 6. Draw Logo Overlays
   const logo = settings.logo;
-  if (logoImg && logo.url) {
+  if (!skipOverlays && logoImg && logo.url) {
     ctx.save();
 
     // Size calculation (logo.size represents % of canvas width)
@@ -339,7 +340,8 @@ export async function renderImageWithSettings(
 
   // 7. Add Watermarks
   const wm = settings.watermark;
-  if (wm.text.trim() !== '') {
+  const shouldSkipWatermark = skipOverlays && !wm.repeat;
+  if (!shouldSkipWatermark && wm.text.trim() !== '') {
     ctx.save();
     const renderedWmFontSize = wm.fontSize * scaleFactor;
     ctx.font = `${renderedWmFontSize}px ${wm.fontFamily}`;

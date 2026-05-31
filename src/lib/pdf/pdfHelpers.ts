@@ -236,15 +236,18 @@ export async function compressPDF(file: File): Promise<Uint8Array> {
  * position: coordinates and dimensions relative to page (0 to 1 scaling, or absolute points)
  */
 export async function signPDF(
-  file: File,
+  arrayBuffer: ArrayBuffer,
+  pageIndex: number,
   signatureDataUrl: string,
-  pageNumber: number,
-  position: { x: number; y: number; width: number; height: number }
+  posX: number,
+  posY: number,
+  sigWidth: number,
+  sigHeight: number,
+  sigRotation: number
 ): Promise<Uint8Array> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
   const pdfDoc = await PDFDocument.load(arrayBuffer);
-  const page = pdfDoc.getPage(pageNumber - 1);
-  const { height: pageHeight } = page.getSize();
+  const page = pdfDoc.getPage(pageIndex);
+  const { width: pdfW, height: pdfH } = page.getSize();
 
   // Draw signature (signatureDataUrl is a PNG base64 data URI)
   const imageBytes = await fetch(signatureDataUrl).then((res) => res.arrayBuffer());
@@ -252,12 +255,18 @@ export async function signPDF(
     ? await pdfDoc.embedPng(imageBytes)
     : await pdfDoc.embedJpg(imageBytes);
 
+  const scaleX = (posX / 100) * pdfW;
+  const scaleY = (posY / 100) * pdfH;
+  const drawWidth = (sigWidth / 100) * pdfW;
+  const drawHeight = (sigHeight / 100) * pdfH;
+
   // Convert HTML canvas top-left coordinates to PDF bottom-left coordinates
   page.drawImage(sigImage, {
-    x: position.x,
-    y: pageHeight - position.y - position.height,
-    width: position.width,
-    height: position.height
+    x: scaleX,
+    y: pdfH - scaleY,
+    width: drawWidth,
+    height: drawHeight,
+    rotate: degrees(-sigRotation)
   });
 
   return pdfDoc.save();
@@ -274,7 +283,10 @@ export interface WatermarkOptions {
   color?: string; // Hex color string, e.g. '#FF0000'
   opacity?: number; // 0 to 1
   rotation?: number; // degrees
-  position: 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  position: 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'custom';
+  customX?: number; // percentage (0 to 100)
+  customY?: number; // percentage (0 to 100)
+  imageSize?: number; // percentage of page size, default 40
   applyToAll: boolean;
   selectedPages?: number[]; // 1-based page numbers
 }
@@ -351,6 +363,12 @@ export async function addWatermarkToPDF(
       } else if (options.position === 'bottom-right') {
         x = pageWidth - textWidth - 40;
         y = 60;
+      } else if (options.position === 'custom') {
+        // Custom coordinates based on percentage
+        const pX = options.customX ?? 50;
+        const pY = options.customY ?? 50;
+        x = (pX / 100) * (pageWidth - textWidth);
+        y = pageHeight - ((pY / 100) * pageHeight) - (size / 2); 
       }
 
       page.drawText(text, {
@@ -364,8 +382,9 @@ export async function addWatermarkToPDF(
       });
     } else if (options.type === 'image' && embeddedImage) {
       // Set image dimensions: scale down if it exceeds a portion of the page
-      const maxW = pageWidth * 0.4;
-      const maxH = pageHeight * 0.4;
+      const sizePercent = options.imageSize ?? 40;
+      const maxW = pageWidth * (sizePercent / 100);
+      const maxH = pageHeight * (sizePercent / 100);
       
       const imgRatio = embeddedImage.width / embeddedImage.height;
       let w = maxW;
@@ -391,6 +410,11 @@ export async function addWatermarkToPDF(
       } else if (options.position === 'bottom-right') {
         x = pageWidth - w - 40;
         y = 40;
+      } else if (options.position === 'custom') {
+        const pX = options.customX ?? 50;
+        const pY = options.customY ?? 50;
+        x = (pX / 100) * (pageWidth - w);
+        y = pageHeight - ((pY / 100) * pageHeight) - h;
       }
 
       page.drawImage(embeddedImage, {

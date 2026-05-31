@@ -9,8 +9,22 @@ import { downloadBlob, downloadURL } from '@/lib/downloadHelpers';
 import { validateURL, validateEmail, validatePhone, validateUPI } from '@/lib/qr/qrValidation';
 import { Settings, QrCode, FileText, Download, Trash, Sparkles } from 'lucide-react';
 
-export function QrCodeGeneratorClient() {
-  const [qrType, setQrType] = useState<QRType>('url');
+export interface QrCodeGeneratorClientProps {
+  initialType?: QRType;
+  isStandalone?: boolean;
+  toolName?: string;
+  toolDescription?: string;
+  toolSeoTitle?: string;
+  toolSeoDescription?: string;
+}
+
+export function QrCodeGeneratorClient({
+  initialType = 'url',
+  isStandalone = false,
+  toolName = "QR Code Generator",
+  toolDescription = "Create highly customized QR codes for URLs, Wi-Fi networks, UPI payments, phone numbers, and contacts. Customize designs, add logos, and export to PNG, SVG, or PDF."
+}: QrCodeGeneratorClientProps = {}) {
+  const [qrType, setQrType] = useState<QRType>(initialType);
   
   // Customization Settings
   const [size, setSize] = useState(256);
@@ -247,8 +261,8 @@ export function QrCodeGeneratorClient() {
 
   return (
     <ToolLayout
-      title="QR Code Generator"
-      description="Create highly customized QR codes for URLs, Wi-Fi networks, UPI payments, phone numbers, and contacts. Customize designs, add logos, and export to PNG, SVG, or PDF."
+      title={toolName}
+      description={toolDescription}
       categoryName="QR Tools"
       categoryHref="/tools/qr"
       error={error}
@@ -263,27 +277,29 @@ export function QrCodeGeneratorClient() {
             
             {/* Input Type Selector and form fields */}
             <div className="p-5 bg-background border border-border rounded-xl space-y-4">
-              <div className="space-y-1.5">
-                <label className="block text-[11px] font-sans text-slate font-bold uppercase tracking-wider">
-                  Select QR Type
-                </label>
-                <select
-                  value={qrType}
-                  onChange={(e) => { setQrType(e.target.value as QRType); setError(null); }}
-                  className="w-full h-10 px-3 bg-surface border border-border rounded-lg text-sm text-ink outline-none focus:border-primary transition-colors"
-                >
-                  <option value="url">Website URL</option>
-                  <option value="text">Plain Text</option>
-                  <option value="wifi">Wi-Fi Credentials</option>
-                  <option value="upi">UPI Payment</option>
-                  <option value="email">Email Message</option>
-                  <option value="whatsapp">WhatsApp Link</option>
-                  <option value="vcard">Contact Card (vCard)</option>
-                  <option value="phone">Phone Number</option>
-                  <option value="sms">SMS Message</option>
-                  <option value="location">Google Maps Location</option>
-                </select>
-              </div>
+              {!isStandalone && (
+                <div className="space-y-1.5">
+                  <label className="block text-[11px] font-sans text-slate font-bold uppercase tracking-wider">
+                    Select QR Type
+                  </label>
+                  <select
+                    value={qrType}
+                    onChange={(e) => { setQrType(e.target.value as QRType); setError(null); }}
+                    className="w-full h-10 px-3 bg-surface border border-border rounded-lg text-sm text-ink outline-none focus:border-primary transition-colors"
+                  >
+                    <option value="url">Website URL</option>
+                    <option value="text">Plain Text</option>
+                    <option value="wifi">Wi-Fi Credentials</option>
+                    <option value="upi">UPI Payment</option>
+                    <option value="email">Email Message</option>
+                    <option value="whatsapp">WhatsApp Link</option>
+                    <option value="vcard">Contact Card (vCard)</option>
+                    <option value="phone">Phone Number</option>
+                    <option value="sms">SMS Message</option>
+                    <option value="location">Google Maps Location</option>
+                  </select>
+                </div>
+              )}
 
               {/* Dynamic form inputs based on QR type */}
               <div className="pt-2 border-t border-border/40">

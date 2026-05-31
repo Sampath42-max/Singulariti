@@ -6,13 +6,18 @@ import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';
 import { DownloadButton } from '@/components/tools/DownloadButton';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
+import { PageThumbnail } from '@/components/tools/PageThumbnail';
+import * as pdfjsLib from 'pdfjs-dist';
+import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
 import { addWatermarkToPDF, WatermarkOptions, countPDFPages } from '@/lib/pdf/pdfHelpers';
 import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Type, Image as ImageIcon, Sparkles, Settings } from 'lucide-react';
+import { TransformableOverlay } from '@/components/ui/TransformableOverlay';
 
 export function WatermarkPdfClient() {
   const [file, setFile] = useState<File | null>(null);
+  const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [pageCount, setPageCount] = useState<number | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,8 +32,13 @@ export function WatermarkPdfClient() {
   const [color, setColor] = useState('#FF0000');
   const [opacity, setOpacity] = useState(0.2);
   const [rotation, setRotation] = useState(45);
-  const [position, setPosition] = useState<'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'>('center');
+  const [position, setPosition] = useState<'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'custom'>('center');
+  const [customX, setCustomX] = useState(50);
+  const [customY, setCustomY] = useState(50);
+  const [imageSize, setImageSize] = useState(40);
   
+  const previewContainerRef = React.useRef<HTMLDivElement>(null);
+
   const [applyToAll, setApplyToAll] = useState(true);
   const [selectedPageInput, setSelectedPageInput] = useState('1');
 
@@ -49,6 +59,9 @@ export function WatermarkPdfClient() {
       setFile(selectedFile);
       const { counts } = await countPDFPages([selectedFile]);
       setPageCount(counts[0].pages);
+      
+      const doc = await loadPdfDocument(selectedFile);
+      setPdfDoc(doc);
     } catch (err: any) {
       console.error(err);
       setError('Failed to parse PDF document. It might be corrupted.');
@@ -107,6 +120,9 @@ export function WatermarkPdfClient() {
         opacity,
         rotation,
         position,
+        customX,
+        customY,
+        imageSize,
         applyToAll,
         selectedPages: applyToAll ? undefined : pagesToWatermark
       };
@@ -126,6 +142,7 @@ export function WatermarkPdfClient() {
   const handleReset = () => {
     if (imagePreview) URL.revokeObjectURL(imagePreview);
     setFile(null);
+    setPdfDoc(null);
     setPageCount(null);
     setImageFile(null);
     setImagePreview(null);
@@ -137,8 +154,48 @@ export function WatermarkPdfClient() {
     setOpacity(0.2);
     setRotation(45);
     setPosition('center');
+    setCustomX(50);
+    setCustomY(50);
+    setImageSize(40);
     setApplyToAll(true);
     setSelectedPageInput('1');
+  };
+
+  const getWatermarkPositionStyle = () => {
+    switch (position) {
+      case 'top-left': return { left: '10%', top: '10%' };
+      case 'top-right': return { left: '90%', top: '10%' };
+      case 'bottom-left': return { left: '10%', top: '90%' };
+      case 'bottom-right': return { left: '90%', top: '90%' };
+      case 'custom': return { left: `${customX}%`, top: `${customY}%` };
+      case 'center':
+      default:
+        return { left: '50%', top: '50%' };
+    }
+  };
+
+  const getOverlayX = () => {
+    if (!previewContainerRef.current) return 0;
+    const w = previewContainerRef.current.offsetWidth;
+    switch (position) {
+      case 'top-left': case 'bottom-left': return 0.1 * w;
+      case 'top-right': case 'bottom-right': return 0.9 * w;
+      case 'center': return 0.5 * w;
+      case 'custom': return (customX / 100) * w;
+      default: return 0.5 * w;
+    }
+  };
+
+  const getOverlayY = () => {
+    if (!previewContainerRef.current) return 0;
+    const h = previewContainerRef.current.offsetHeight;
+    switch (position) {
+      case 'top-left': case 'top-right': return 0.1 * h;
+      case 'bottom-left': case 'bottom-right': return 0.9 * h;
+      case 'center': return 0.5 * h;
+      case 'custom': return (customY / 100) * h;
+      default: return 0.5 * h;
+    }
   };
 
   return (
@@ -180,8 +237,8 @@ export function WatermarkPdfClient() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Watermark Config (Left 6 cols) */}
-            <div className="lg:col-span-6 space-y-6">
+            {/* Config & Scope (Left 5 cols) */}
+            <div className="lg:col-span-5 space-y-6">
               <div className="p-5 bg-background border border-border rounded-xl space-y-6">
                 <div className="flex items-center justify-between border-b border-border pb-3 mb-2">
                   <h3 className="font-display font-bold text-[14px] text-ink flex items-center">
@@ -268,6 +325,21 @@ export function WatermarkPdfClient() {
                         <span className="text-[11px] text-slate">{formatFileSize(imageFile.size)}</span>
                       </div>
                     )}
+                    
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-[11px] text-slate font-bold uppercase tracking-wider">
+                        <span>Size (%)</span>
+                        <span>{imageSize}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="5"
+                        max="100"
+                        value={imageSize}
+                        onChange={(e) => { setImageSize(Number(e.target.value)); setResultBlobUrl(null); }}
+                        className="w-full accent-primary"
+                      />
+                    </div>
                   </div>
                 )}
 
@@ -305,25 +377,59 @@ export function WatermarkPdfClient() {
                 </div>
 
                 {/* Position */}
-                <div className="space-y-1.5">
-                  <label className="block text-[11px] text-slate font-bold uppercase tracking-wider">Position Preset</label>
-                  <select
-                    value={position}
-                    onChange={(e: any) => { setPosition(e.target.value); setResultBlobUrl(null); }}
-                    className="w-full h-10 px-3 bg-surface border border-border rounded-lg text-sm text-ink outline-none focus:border-primary"
-                  >
-                    <option value="center">Center</option>
-                    <option value="top-left">Top Left</option>
-                    <option value="top-right">Top Right</option>
-                    <option value="bottom-left">Bottom Left</option>
-                    <option value="bottom-right">Bottom Right</option>
-                  </select>
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="block text-[11px] text-slate font-bold uppercase tracking-wider">Position Preset</label>
+                    <select
+                      value={position}
+                      onChange={(e: any) => { setPosition(e.target.value); setResultBlobUrl(null); }}
+                      className="w-full h-10 px-3 bg-surface border border-border rounded-lg text-sm text-ink outline-none focus:border-primary"
+                    >
+                      <option value="center">Center</option>
+                      <option value="top-left">Top Left</option>
+                      <option value="top-right">Top Right</option>
+                      <option value="bottom-left">Bottom Left</option>
+                      <option value="bottom-right">Bottom Right</option>
+                      <option value="custom">Custom Position</option>
+                    </select>
+                  </div>
+
+                  {position === 'custom' && (
+                    <div className="grid grid-cols-2 gap-4 animate-in fade-in duration-200">
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between text-[11px] text-slate font-bold uppercase tracking-wider">
+                          <span>Position (X)</span>
+                          <span>{customX}%</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={customX}
+                          onChange={(e) => { setCustomX(Number(e.target.value)); setResultBlobUrl(null); }}
+                          className="w-full accent-primary"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between text-[11px] text-slate font-bold uppercase tracking-wider">
+                          <span>Position (Y)</span>
+                          <span>{customY}%</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={customY}
+                          onChange={(e) => { setCustomY(Number(e.target.value)); setResultBlobUrl(null); }}
+                          className="w-full accent-primary"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
 
-            {/* Scope selection (Right 6 cols) */}
-            <div className="lg:col-span-6 space-y-6">
+              {/* Scope selection */}
               <div className="p-5 bg-background border border-border rounded-xl space-y-4">
                 <h3 className="font-display font-bold text-[14px] text-ink flex items-center pb-2 border-b border-border">
                   <Sparkles className="w-4 h-4 mr-2 text-primary" /> Select Pages
@@ -368,6 +474,96 @@ export function WatermarkPdfClient() {
                       Enter comma-separated page numbers. Max pages: {pageCount}.
                     </p>
                   </div>
+                )}
+              </div>
+            </div>
+
+            {/* Visual Placement Preview (Right 7 cols) */}
+            <div className="lg:col-span-7 flex flex-col items-center">
+              <h3 className="font-display font-bold text-[14px] text-ink mb-4 w-full text-left">Visual Preview</h3>
+              
+              <div className="w-full relative border border-border rounded-xl bg-background overflow-hidden p-6 flex justify-center items-center min-h-[400px]">
+                {pdfDoc ? (
+                  <div ref={previewContainerRef} className="relative border border-slate/30 shadow-md max-w-full overflow-hidden touch-none select-none">
+                    <PageThumbnail
+                      pdfDoc={pdfDoc}
+                      pageNumber={1}
+                      scale={0.8}
+                    />
+
+                    {/* Watermark Overlay */}
+                    {watermarkType === 'text' && text.trim() && previewContainerRef.current ? (
+                      <TransformableOverlay
+                        isActive={true}
+                        onSelect={() => {}}
+                        x={getOverlayX()}
+                        y={getOverlayY()}
+                        width={(fontSize / 100) * previewContainerRef.current.offsetWidth} // approximate width mapping
+                        height={fontSize * 1.5}
+                        rotation={rotation}
+                        lockAspect={false}
+                        onChange={(updates) => {
+                          if (previewContainerRef.current) {
+                            const px = Math.min(100, Math.max(0, (updates.x / previewContainerRef.current.offsetWidth) * 100));
+                            const py = Math.min(100, Math.max(0, (updates.y / previewContainerRef.current.offsetHeight) * 100));
+                            const newFontSize = Math.max(8, updates.height / 1.5);
+                            setPosition('custom');
+                            setCustomX(px);
+                            setCustomY(py);
+                            setFontSize(newFontSize);
+                            setRotation(updates.rotation);
+                            setResultBlobUrl(null);
+                          }
+                        }}
+                      >
+                        <div
+                          className="font-bold text-center whitespace-nowrap w-full h-full flex items-center justify-center pointer-events-none"
+                          style={{
+                            color: color,
+                            opacity: opacity,
+                            fontSize: `${fontSize * 0.8}px`
+                          }}
+                        >
+                          {text}
+                        </div>
+                      </TransformableOverlay>
+                    ) : watermarkType === 'image' && imagePreview && previewContainerRef.current ? (
+                      <TransformableOverlay
+                        isActive={true}
+                        onSelect={() => {}}
+                        x={getOverlayX()}
+                        y={getOverlayY()}
+                        width={(imageSize / 100) * previewContainerRef.current.offsetWidth}
+                        height={(imageSize / 100) * previewContainerRef.current.offsetWidth} // aspect ratio will lock
+                        rotation={rotation}
+                        lockAspect={true}
+                        onChange={(updates) => {
+                          if (previewContainerRef.current) {
+                            const px = Math.min(100, Math.max(0, (updates.x / previewContainerRef.current.offsetWidth) * 100));
+                            const py = Math.min(100, Math.max(0, (updates.y / previewContainerRef.current.offsetHeight) * 100));
+                            const newSize = Math.min(100, Math.max(5, (updates.width / previewContainerRef.current.offsetWidth) * 100));
+                            setPosition('custom');
+                            setCustomX(px);
+                            setCustomY(py);
+                            setImageSize(newSize);
+                            setRotation(updates.rotation);
+                            setResultBlobUrl(null);
+                          }
+                        }}
+                      >
+                        <img
+                          src={imagePreview}
+                          alt="Watermark Preview"
+                          className="pointer-events-none object-contain w-full h-full"
+                          style={{
+                            opacity: opacity
+                          }}
+                        />
+                      </TransformableOverlay>
+                    ) : null}
+                  </div>
+                ) : (
+                  <span className="text-slate text-sm font-sans">Preview not available</span>
                 )}
               </div>
             </div>

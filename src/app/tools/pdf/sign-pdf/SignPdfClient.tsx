@@ -13,6 +13,7 @@ import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
 import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Edit2, Upload, PenTool, Check, Trash } from 'lucide-react';
+import { TransformableOverlay } from '@/components/ui/TransformableOverlay';
 
 export function SignPdfClient() {
   const [file, setFile] = useState<File | null>(null);
@@ -25,14 +26,18 @@ export function SignPdfClient() {
   const [resultBlobUrl, setResultBlobUrl] = useState<string | null>(null);
 
   // Position sliders
-  const [posX, setPosX] = useState(50);
-  const [posY, setPosY] = useState(50);
-  const [sigWidth, setSigWidth] = useState(150);
-  const [sigHeight, setSigHeight] = useState(60);
+  const [posX, setPosX] = useState<number>(50);
+  const [posY, setPosY] = useState<number>(50);
+  const [sigWidth, setSigWidth] = useState(30); // percentage of page width
+  const [sigHeight, setSigHeight] = useState(15); // percentage of page height
+  const [sigRotation, setSigRotation] = useState<number>(0);
 
   // Drawing canvas ref
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
+
+  // Drag and Resize State
+  const previewContainerRef = useRef<HTMLDivElement>(null);
 
   // Load PDF
   const handleFileSelected = async (selectedFiles: File[]) => {
@@ -163,29 +168,9 @@ export function SignPdfClient() {
     setResultBlobUrl(null);
 
     try {
-      // Fetch details of selected page
-      const page = await pdfDoc.getPage(selectedPage);
-      const viewport = page.getViewport({ scale: 1.0 });
-      
-      // Calculate scaled coordinate positions (our visual preview coordinates map directly to standard PDF point sizes)
-      // Slider X & Y represents positioning inside coordinates. Let's make sure:
-      // X slider maps to [0, page width in points]
-      // Y slider maps to [0, page height in points]
-      const pdfW = viewport.width;
-      const pdfH = viewport.height;
-
-      const scaleX = (posX / 100) * (pdfW - sigWidth);
-      const scaleY = (posY / 100) * (pdfH - sigHeight);
-
-      const position = {
-        x: scaleX,
-        y: scaleY,
-        width: sigWidth,
-        height: sigHeight
-      };
-
-      const signedBytes = await signPDF(file, signatureUrl, selectedPage, position);
-      const blob = new Blob([signedBytes.buffer as ArrayBuffer], { type: 'application/pdf' });
+      const arrayBuffer = await file.arrayBuffer();
+      const signedPdfBytes = await signPDF(arrayBuffer, Number(selectedPage) - 1, signatureUrl, posX, posY, sigWidth, sigHeight, sigRotation);
+      const blob = new Blob([signedPdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       setResultBlobUrl(url);
     } catch (err: any) {
@@ -204,8 +189,8 @@ export function SignPdfClient() {
     setError(null);
     setPosX(50);
     setPosY(50);
-    setSigWidth(150);
-    setSigHeight(60);
+    setSigWidth(30);
+    setSigHeight(15);
   };
 
   return (
@@ -392,9 +377,9 @@ export function SignPdfClient() {
                       <label className="block text-[11px] text-slate font-bold uppercase tracking-wider">Width</label>
                       <input
                         type="number"
-                        min="50"
-                        max="350"
-                        value={sigWidth}
+                        min="5"
+                        max="100"
+                        value={Math.round(sigWidth)}
                         onChange={(e) => { setSigWidth(Number(e.target.value)); setResultBlobUrl(null); }}
                         className="w-full h-10 px-3 bg-surface border border-border rounded-lg text-sm text-ink outline-none focus:border-primary"
                       />
@@ -403,9 +388,9 @@ export function SignPdfClient() {
                       <label className="block text-[11px] text-slate font-bold uppercase tracking-wider">Height</label>
                       <input
                         type="number"
-                        min="20"
-                        max="150"
-                        value={sigHeight}
+                        min="5"
+                        max="100"
+                        value={Math.round(sigHeight)}
                         onChange={(e) => { setSigHeight(Number(e.target.value)); setResultBlobUrl(null); }}
                         className="w-full h-10 px-3 bg-surface border border-border rounded-lg text-sm text-ink outline-none focus:border-primary"
                       />
@@ -421,7 +406,7 @@ export function SignPdfClient() {
               
               <div className="w-full relative border border-border rounded-xl bg-background overflow-hidden p-6 flex justify-center items-center min-h-[400px]">
                 {pdfDoc ? (
-                  <div className="relative border border-slate/30 shadow-md max-w-full">
+                  <div ref={previewContainerRef} className="relative border border-slate/30 shadow-md max-w-full touch-none select-none">
                     <PageThumbnail
                       pdfDoc={pdfDoc}
                       pageNumber={selectedPage}
@@ -429,21 +414,38 @@ export function SignPdfClient() {
                     />
 
                     {/* Draggable overlay representation */}
-                    {signatureUrl && (
-                      <div
-                        className="absolute bg-primary/10 border border-primary/40 rounded flex items-center justify-center select-none"
-                        style={{
-                          left: `${posX}%`,
-                          top: `${posY}%`,
-                          width: `${(sigWidth / 5)}%`, // approximation scaling for preview layout
-                          height: `${(sigHeight / 5)}%`,
-                          transform: 'translate(-50%, -50%)', // center on slider coordinates
-                          pointerEvents: 'none'
+                    {signatureUrl && previewContainerRef.current && (
+                      <TransformableOverlay
+                        isActive={true}
+                        onSelect={() => {}}
+                        x={(posX / 100) * previewContainerRef.current.offsetWidth}
+                        y={(posY / 100) * previewContainerRef.current.offsetHeight}
+                        width={(sigWidth / 100) * previewContainerRef.current.offsetWidth}
+                        height={(sigHeight / 100) * previewContainerRef.current.offsetHeight}
+                        rotation={sigRotation}
+                        lockAspect={true}
+                        onChange={(updates) => {
+                          if (previewContainerRef.current) {
+                            const px = Math.min(100, Math.max(0, (updates.x / previewContainerRef.current.offsetWidth) * 100));
+                            const py = Math.min(100, Math.max(0, (updates.y / previewContainerRef.current.offsetHeight) * 100));
+                            const pw = Math.min(100, Math.max(5, (updates.width / previewContainerRef.current.offsetWidth) * 100));
+                            const ph = Math.min(100, Math.max(5, (updates.height / previewContainerRef.current.offsetHeight) * 100));
+                            setPosX(px);
+                            setPosY(py);
+                            setSigWidth(pw);
+                            setSigHeight(ph);
+                            setSigRotation(updates.rotation);
+                            setResultBlobUrl(null);
+                          }
                         }}
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={signatureUrl} alt="Signature Preview" className="w-full h-full object-contain" />
-                      </div>
+                        <img 
+                          src={signatureUrl} 
+                          alt="Signature Preview" 
+                          className="w-full h-full object-contain pointer-events-none drop-shadow-md" 
+                        />
+                      </TransformableOverlay>
                     )}
                   </div>
                 ) : (

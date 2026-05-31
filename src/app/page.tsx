@@ -4,9 +4,22 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { ImageIcon, Sparkles, FileText, QrCode } from 'lucide-react';
+import { ImageIcon, Sparkles, FileText, QrCode, Wand2 } from 'lucide-react';
+import { Badge } from '@/components/ui/Badge';
+import { registry } from '@/registry';
 
 export default function Home() {
+  const getToolCount = (categoryId: string) => {
+    const category = registry.categories.find(c => c.id === categoryId);
+    if (!category) return 0;
+    return category.collections.reduce((acc, collection) => acc + collection.tools.length, 0);
+  };
+
+  const imageToolsCount = getToolCount('image');
+  const editingToolsCount = getToolCount('editing');
+  const pdfToolsCount = getToolCount('pdf');
+  const qrToolsCount = getToolCount('qr');
+
   return (
     <>
       <Header />
@@ -41,27 +54,34 @@ export default function Home() {
             <h2 className="font-display font-bold text-3xl text-ink">Explore Ecosystem</h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card 
               title="Image Tools"
               description="Compress, convert, and resize images instantly in your browser."
               icon={<ImageIcon />}
               href="/image"
-              badge={{ text: '13 Tools', variant: 'default' }}
+              badge={{ text: `${imageToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="Image Editing Tools"
+              description="Edit, crop, apply filters, and enhance images instantly."
+              icon={<Wand2 />}
+              href="/editing"
+              badge={{ text: `${editingToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="PDF Tools"
               description="Merge, split, rotate, sign, compress and watermark PDF files."
               icon={<FileText />}
               href="/tools/pdf"
-              badge={{ text: '14 Tools', variant: 'default' }}
+              badge={{ text: `${pdfToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="QR Tools"
               description="Generate custom styled QR codes or scan them securely."
               icon={<QrCode />}
               href="/tools/qr"
-              badge={{ text: '2 Tools', variant: 'default' }}
+              badge={{ text: `${qrToolsCount} Tools`, variant: 'default' }}
             />
           </div>
         </section>
@@ -98,10 +118,3 @@ export default function Home() {
   );
 }
 
-function Badge({ children, className, variant = 'default' }: { children: React.ReactNode, className?: string, variant?: string }) {
-  return (
-    <span className={`inline-flex items-center justify-center font-sans text-[11px] font-medium leading-none px-3 py-1.5 rounded-full ${variant === 'default' ? 'bg-primary/10 text-primary' : ''} ${className}`}>
-      {children}
-    </span>
-  );
-}
