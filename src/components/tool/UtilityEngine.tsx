@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ToolRegistryItem } from '../../registry/types';
 import { Dropzone } from '../ui/Dropzone';
 import { Button } from '../ui/Button';
-import { Info, Maximize, FileCode2, Droplet, Palette as PaletteIcon, Copy, CheckCircle2, MousePointer2 } from 'lucide-react';
+import { Info, Maximize, FileCode2, Droplet, Palette as PaletteIcon, Copy, CheckCircle2, MousePointer2, Download } from 'lucide-react';
 
 interface UtilityEngineProps {
   tool: ToolRegistryItem;
@@ -37,6 +37,16 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
     navigator.clipboard.writeText(text);
     setCopied(text);
     setTimeout(() => setCopied(null), 2000);
+  };
+
+  const exportPalette = () => {
+    if (palette.length === 0) return;
+    const csv = 'HEX,RGB\n' + palette.map(p => `${p.hex},"${p.rgb}"`).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `singulariti_palette_${file?.name || 'export'}.csv`;
+    a.click();
   };
 
   const processFile = async (selectedFile: File) => {
@@ -164,10 +174,12 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
     else return (bytes / 1048576).toFixed(2) + ' MB';
   };
 
-  const InfoCard = ({ label, value }: { label: string, value: React.ReactNode }) => (
-    <div className="bg-background border border-border p-4 rounded-lg flex flex-col items-center text-center justify-center min-w-0">
+  const InfoCard = ({ label, value, interactive = false }: { label: string, value: React.ReactNode, interactive?: boolean }) => (
+    <div className={`bg-background border border-border p-4 rounded-lg flex flex-col items-center text-center justify-center min-w-0 ${interactive ? 'group cursor-pointer' : ''}`}>
       <span className="text-[12px] font-medium text-slate uppercase tracking-wider mb-1 flex-shrink-0">{label}</span>
-      <span className="text-lg font-mono text-ink font-bold w-full truncate">{value}</span>
+      <div className={`text-lg font-mono text-ink font-bold w-full transition-all duration-200 ${interactive ? 'truncate group-hover:whitespace-normal group-hover:break-all group-active:whitespace-normal group-active:break-all' : 'truncate'}`}>
+        {value}
+      </div>
     </div>
   );
 
@@ -204,7 +216,7 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
               {tool.id === 'image-metadata-viewer' && (
                 <div className="space-y-4">
                   <h3 className="font-display font-bold flex items-center text-ink"><Info className="w-5 h-5 mr-2" /> File Metadata</h3>
-                  <InfoCard label="File Name" value={<span title={file.name}>{file.name}</span>} />
+                  <InfoCard label="File Name (Hover to expand)" value={file.name} interactive={true} />
                   <InfoCard label="File Size" value={formatSize(file.size)} />
                   <InfoCard label="MIME Type" value={file.type || 'Unknown'} />
                   <InfoCard label="Last Modified" value={<span className="text-sm">{new Date(file.lastModified).toLocaleString()}</span>} />
@@ -279,6 +291,7 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
                 <div className="space-y-4">
                   <h3 className="font-display font-bold flex items-center text-ink"><PaletteIcon className="w-5 h-5 mr-2" /> Extracted Palette</h3>
                   {palette.length > 0 ? (
+                    <>
                     <div className="grid grid-cols-1 gap-2">
                       {palette.map((color, i) => (
                         <div key={i} className="flex items-center gap-3 p-2 border border-border rounded-lg bg-background">
@@ -297,7 +310,11 @@ export function UtilityEngine({ tool }: UtilityEngineProps) {
                         </div>
                       ))}
                     </div>
-                  ) : (
+                    <Button variant="outline" size="sm" className="w-full mt-4" onClick={exportPalette}>
+                      <Download className="w-4 h-4 mr-2" /> Export CSV
+                    </Button>
+                  </>
+                ) : (
                     <div className="text-sm text-slate">Extracting palette...</div>
                   )}
                 </div>

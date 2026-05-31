@@ -119,8 +119,7 @@ export function EditingEngine({ tool }: EditingEngineProps) {
   }, [width, height, rotation, flipH, flipV, blur, pixelSize, imageLoaded, tool.id]);
 
   const applyEffect = async (img: HTMLImageElement, isFinalRender = false) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const canvas = canvasRef.current || document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
