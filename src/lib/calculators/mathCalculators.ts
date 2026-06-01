@@ -46,27 +46,23 @@ export function calculateCgpa(
 ) {
   let totalGradePoints = 0;
   let totalCredits = 0;
-  let simpleSum = 0;
   let semestersCount = 0;
-  let hasCredits = false;
 
   semesters.forEach(sem => {
     if (sem.gpa !== undefined && !isNaN(sem.gpa)) {
-      simpleSum += sem.gpa;
       semestersCount++;
-      if (sem.credits !== undefined && !isNaN(sem.credits) && sem.credits > 0) {
-        hasCredits = true;
-        totalGradePoints += sem.gpa * sem.credits;
-        totalCredits += sem.credits;
-      }
+      // Default to 1 if credits are missing or invalid so equal weight applies
+      const credits = (sem.credits !== undefined && !isNaN(sem.credits) && sem.credits > 0) ? sem.credits : 1;
+      totalGradePoints += sem.gpa * credits;
+      totalCredits += credits;
     }
   });
 
-  if (semestersCount === 0) {
+  if (semestersCount === 0 || totalCredits === 0) {
     return { cgpa: 0, percentage: 0 };
   }
 
-  const cgpa = hasCredits && totalCredits > 0 ? (totalGradePoints / totalCredits) : (simpleSum / semestersCount);
+  const cgpa = totalGradePoints / totalCredits;
 
   let percentage = 0;
   if (scale === '10') {

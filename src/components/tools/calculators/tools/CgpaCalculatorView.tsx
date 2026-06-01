@@ -166,7 +166,7 @@ export function CgpaCalculatorView({ toolId, title, description }: CgpaCalculato
       items={resultItems}
     >
       <div className="mt-4 p-3 bg-primary/5 border border-primary/10 rounded-lg text-[11px] font-sans text-slate text-center">
-        Note: CGPA to percentage conversion may vary by university.
+        Note: CGPA to percentage conversion may vary by university. If you leave credits blank, all semesters will be given equal weight.
       </div>
     </CalculatorResult>
   ) : (

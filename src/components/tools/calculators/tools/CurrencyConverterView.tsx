@@ -45,6 +45,8 @@ export function CurrencyConverterView({ toolId, title, description }: CurrencyCo
   const [toCurrency, setToCurrency] = useState<string>('INR');
   const [customRate, setCustomRate] = useState<number>(83.50);
   const [isManualRate, setIsManualRate] = useState<boolean>(false);
+  const [rates, setRates] = useState<Record<string, number>>(STATIC_RATES);
+  const [isLoadingRates, setIsLoadingRates] = useState<boolean>(true);
   const [result, setResult] = useState<{
     convertedAmount: number;
     rateUsed: number;
@@ -55,15 +57,28 @@ export function CurrencyConverterView({ toolId, title, description }: CurrencyCo
     customRate?: string | null;
   }>({});
 
+  // Fetch live exchange rates on mount
+  useEffect(() => {
+    fetch('https://open.er-api.com/v6/latest/USD')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.rates) {
+          setRates(data.rates);
+        }
+      })
+      .catch(err => console.error('Failed to fetch live currency rates:', err))
+      .finally(() => setIsLoadingRates(false));
+  }, []);
+
   // Recalculate rate when currencies change (if not in manual edit mode)
   useEffect(() => {
     if (!isManualRate) {
-      const fromRate = STATIC_RATES[fromCurrency] || 1.0;
-      const toRate = STATIC_RATES[toCurrency] || 1.0;
+      const fromRate = rates[fromCurrency] || 1.0;
+      const toRate = rates[toCurrency] || 1.0;
       const rate = (1 / fromRate) * toRate;
       setCustomRate(parseFloat(rate.toFixed(4)));
     }
-  }, [fromCurrency, toCurrency, isManualRate]);
+  }, [fromCurrency, toCurrency, isManualRate, rates]);
 
   const handleCalculate = (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,10 +111,10 @@ export function CurrencyConverterView({ toolId, title, description }: CurrencyCo
     setErrors({});
   };
 
-  const currencyOptions = Object.keys(STATIC_RATES).map(code => ({
+  const currencyOptions = Object.keys(rates).map(code => ({
     value: code,
     label: CURRENCY_LABELS[code] || code
-  }));
+  })).sort((a, b) => a.value.localeCompare(b.value));
 
   const formula = "Converted Amount = Amount × Exchange Rate\nExchange Rate (computed) = (1 / USD-rate-of-From) × USD-rate-of-To";
   const example = `Convert: 100 USD to INR, Rate: 83.50\nConverted Value: 100 × 83.50 = ₹8,350.00`;
@@ -176,7 +191,7 @@ export function CurrencyConverterView({ toolId, title, description }: CurrencyCo
       items={resultItems}
     >
       <div className="mt-4 p-3 bg-primary/5 border border-primary/10 rounded-lg text-[11px] font-sans text-slate text-center leading-relaxed">
-        <strong>Note:</strong> Currency rates are sample/static unless connected to a live exchange-rate API. Feel free to adjust the rate above manually.
+        <strong>Note:</strong> Currency rates are fetched live from open.er-api.com. Feel free to adjust the rate above manually if needed.
       </div>
     </CalculatorResult>
   ) : (
