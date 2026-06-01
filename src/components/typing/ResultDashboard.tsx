@@ -41,44 +41,58 @@ export function ResultDashboard({
     <div className="w-full max-w-5xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       
       {/* Top Stats & Chart */}
-      <div id="typing-result-card" className="grid grid-cols-1 md:grid-cols-4 gap-6 bg-background p-6 rounded-2xl border border-border relative overflow-hidden">
+      <div id="typing-result-card" className="flex flex-col bg-background p-6 md:p-8 rounded-2xl border border-border relative overflow-hidden">
         
-        {/* Singulariti Watermark for sharing */}
-        <div className="absolute -bottom-4 -right-4 opacity-5 text-9xl font-display font-black pointer-events-none tracking-tighter">
+        {/* Singulariti Watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] text-[120px] md:text-[200px] font-display font-black pointer-events-none tracking-tighter z-0 select-none">
           singulariti
+        </div>
+
+        {/* Hidden Header specifically for Image Export */}
+        <div id="export-header" className="hidden items-center justify-between w-full mb-8 border-b border-border/50 pb-4 z-10">
+          <div className="font-display font-black text-2xl tracking-tighter text-primary">singulariti.in</div>
+          <div className="font-sans text-sm text-slate font-medium">Typing Speed Result</div>
         </div>
 
         {/* Quick Restart Button */}
         <button
+          data-html2canvas-ignore="true"
           onClick={onRestart}
-          className="absolute top-4 right-4 p-2 text-slate hover:text-foreground hover:bg-surface rounded-full transition-colors group z-10"
+          className="absolute top-4 right-4 p-2 text-slate hover:text-foreground hover:bg-surface rounded-full transition-colors group z-20"
           title="Restart Test"
         >
           <RotateCcw size={20} className="group-hover:-rotate-90 transition-transform duration-300" />
         </button>
 
-        <div className="md:col-span-1 space-y-6 flex flex-col justify-center">
-          <div>
-            <div className="text-sm font-sans text-slate uppercase tracking-wider font-bold">WPM</div>
-            <div className="text-6xl font-system font-black text-primary">{wpm}</div>
-          </div>
-          <div>
-            <div className="text-sm font-sans text-slate uppercase tracking-wider font-bold">Accuracy</div>
-            <div className="text-4xl font-system font-bold text-foreground">{accuracy}%</div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 z-10">
+          <div className="flex items-end space-x-6 md:space-x-10">
             <div>
-              <div className="text-xs font-sans text-slate uppercase tracking-wider font-bold">Raw</div>
-              <div className="text-xl font-system font-bold text-foreground">{rawWpm}</div>
+              <div className="text-sm font-sans text-slate uppercase tracking-widest font-bold mb-2">WPM</div>
+              <div className="text-7xl md:text-8xl font-system font-black text-primary leading-none tracking-tighter">{wpm}</div>
             </div>
             <div>
-              <div className="text-xs font-sans text-slate uppercase tracking-wider font-bold">Consistency</div>
-              <div className="text-xl font-system font-bold text-foreground">{consistency}%</div>
+              <div className="text-sm font-sans text-slate uppercase tracking-widest font-bold mb-2">Accuracy</div>
+              <div className="text-4xl md:text-5xl font-system font-bold text-foreground leading-none tracking-tight">{accuracy}%</div>
+            </div>
+          </div>
+
+          <div className="flex items-end space-x-6 bg-surface/40 px-6 py-4 rounded-xl border border-border/50 backdrop-blur-sm">
+            <div>
+              <div className="text-xs font-sans text-slate uppercase tracking-wider font-bold mb-1">Raw</div>
+              <div className="text-xl md:text-2xl font-system font-bold text-foreground leading-none">{rawWpm}</div>
+            </div>
+            <div>
+              <div className="text-xs font-sans text-slate uppercase tracking-wider font-bold mb-1">Consistency</div>
+              <div className="text-xl md:text-2xl font-system font-bold text-foreground leading-none">{consistency}%</div>
+            </div>
+            <div>
+              <div className="text-xs font-sans text-slate uppercase tracking-wider font-bold mb-1">Time</div>
+              <div className="text-xl md:text-2xl font-system font-bold text-foreground leading-none">{testDurationSecs}s</div>
             </div>
           </div>
         </div>
 
-        <div className="md:col-span-3 h-[250px] w-full">
+        <div className="h-[250px] w-full z-10">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={history} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
@@ -91,12 +105,12 @@ export function ResultDashboard({
               <XAxis dataKey="time" stroke="var(--color-slate)" fontSize={12} tickLine={false} axisLine={false} />
               <YAxis stroke="var(--color-slate)" fontSize={12} tickLine={false} axisLine={false} />
               <Tooltip 
-                contentStyle={{ borderRadius: '8px', border: '1px solid var(--border-color)', backgroundColor: 'var(--surface-color)', color: 'var(--ink-color)' }}
-                labelStyle={{ color: 'var(--slate-color)' }}
+                contentStyle={{ borderRadius: '8px', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-surface)', color: 'var(--color-ink)' }}
+                labelStyle={{ color: 'var(--color-slate)' }}
                 itemStyle={{ color: 'var(--color-primary)' }}
               />
-              <Area type="monotone" dataKey="wpm" stroke="var(--color-primary)" strokeWidth={3} fillOpacity={1} fill="url(#colorWpm)" />
-              <Area type="monotone" dataKey="rawWpm" stroke="var(--color-slate)" strokeWidth={1} fill="none" strokeDasharray="4 4" />
+              <Area type="monotone" dataKey="wpm" stroke="var(--color-primary)" strokeWidth={3} fillOpacity={1} fill="url(#colorWpm)" isAnimationActive={false} />
+              <Area type="monotone" dataKey="rawWpm" stroke="var(--color-slate)" strokeWidth={1} fill="none" strokeDasharray="4 4" isAnimationActive={false} />
             </AreaChart>
           </ResponsiveContainer>
         </div>

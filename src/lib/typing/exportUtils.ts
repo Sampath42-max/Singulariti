@@ -7,12 +7,18 @@ export async function captureImageCard(elementId: string, filename: string = 'ty
   
   try {
     const canvas = await html2canvas(element, {
-      backgroundColor: null,
+      backgroundColor: '#0f172a', // slate-900 for dark mode background
       scale: 2, // high res
       useCORS: true,
       scrollY: -window.scrollY,
       windowWidth: document.documentElement.offsetWidth,
       windowHeight: document.documentElement.offsetHeight,
+      onclone: (documentClone) => {
+        const header = documentClone.getElementById('export-header');
+        if (header) {
+          header.style.display = 'flex';
+        }
+      }
     });
     
     const image = canvas.toDataURL('image/png');
