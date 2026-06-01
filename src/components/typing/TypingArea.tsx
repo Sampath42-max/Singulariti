@@ -71,7 +71,7 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
                const historyItem = state.history[wIdx];
                const inputChar = historyItem?.input[cIdx];
                if (inputChar === char) {
-                 charClass = "text-foreground";
+                 charClass = "text-primary";
                } else {
                  charClass = "text-red-500";
                }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { MetricsSnapshot } from '@/hooks/useTypingMetrics';
 import { captureImageCard, generateCertificate } from '@/lib/typing/exportUtils';
-import { Download, Share2, Award } from 'lucide-react';
+import { Download, Share2, Award, RotateCcw } from 'lucide-react';
 import { updateTypingProfile } from '@/lib/typing/typingProfile';
 
 interface ResultDashboardProps {
@@ -45,6 +45,15 @@ export function ResultDashboard({
         <div className="absolute -bottom-4 -right-4 opacity-5 text-9xl font-display font-black pointer-events-none tracking-tighter">
           singulariti
         </div>
+
+        {/* Quick Restart Button */}
+        <button
+          onClick={onRestart}
+          className="absolute top-4 right-4 p-2 text-slate hover:text-foreground hover:bg-surface rounded-full transition-colors group z-10"
+          title="Restart Test"
+        >
+          <RotateCcw size={20} className="group-hover:-rotate-90 transition-transform duration-300" />
+        </button>
 
         <div className="md:col-span-1 space-y-6 flex flex-col justify-center">
           <div>

@@ -34,7 +34,7 @@ export function TypingModesMenu({
   };
 
   return (
-    <div className={`flex flex-wrap items-center justify-center gap-6 p-4 mb-8 transition-opacity ${disabled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+    <div className={`flex flex-wrap items-center justify-center gap-6 p-4 mb-8 transition-opacity duration-300 ${disabled ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
       
       {/* Mode Select */}
       <div className="flex items-center space-x-2 bg-surface/50 rounded-full px-4 py-2">

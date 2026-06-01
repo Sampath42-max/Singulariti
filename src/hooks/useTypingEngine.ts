@@ -175,6 +175,19 @@ export function useTypingEngine() {
       }
       newState.currentInput = value;
 
+      // Auto-finish if it's the last word and exactly correct
+      if (prev.mode === 'words' && prev.wordIndex === prev.wordLimit - 1) {
+        const targetWord = prev.words[prev.wordIndex];
+        if (value === targetWord) {
+           newState.history = [...prev.history, { word: targetWord, input: value, isCorrect: true }];
+           newState.wordIndex = prev.wordIndex + 1;
+           newState.correctChars = prev.correctChars + value.length; // No space typed
+           newState.status = 'finished';
+           newState.endTime = Date.now();
+           if (timerRef.current) clearInterval(timerRef.current);
+        }
+      }
+
       return newState;
     });
   }, []);
