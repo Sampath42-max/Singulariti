@@ -3,6 +3,24 @@ self.addEventListener('message', async (e) => {
   const { id, file, toFormat } = e.data; // toFormat e.g., 'image/png'
   
   try {
+    if (toFormat === 'image/svg+xml') {
+      if (file.type === 'image/svg+xml') {
+        self.postMessage({ id, success: true, blob: file, originalSize: file.size, newSize: file.size });
+        return;
+      }
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      const bitmap = await createImageBitmap(file);
+      const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="${bitmap.width}" height="${bitmap.height}"><image href="${dataUrl}" width="100%" height="100%"/></svg>`;
+      const blob = new Blob([svgString], { type: 'image/svg+xml' });
+      self.postMessage({ id, success: true, blob, originalSize: file.size, newSize: blob.size });
+      return;
+    }
+
     const bitmap = await createImageBitmap(file);
     
     const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);

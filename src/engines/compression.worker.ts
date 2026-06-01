@@ -3,8 +3,26 @@ self.addEventListener('message', async (e) => {
   const { id, file, quality, maxWidth } = e.data;
   
   try {
+    if (file.type === 'image/svg+xml') {
+      const text = await file.text();
+      // Simple SVG compression: remove comments, extra whitespaces, newlines, and empty tags
+      let compressedText = text
+        .replace(/<!--[\s\S]*?-->/g, '') // remove comments
+        .replace(/>\s+</g, '><') // remove whitespace between tags
+        .replace(/\s{2,}/g, ' ') // collapse multiple spaces
+        .replace(/[\r\n]+/g, ' ') // remove newlines
+        .trim();
+        
+      const blob = new Blob([compressedText], { type: 'image/svg+xml' });
+      if (blob.size >= file.size) {
+        self.postMessage({ id, success: true, useOriginal: true, originalSize: file.size, compressedSize: file.size });
+      } else {
+        self.postMessage({ id, success: true, useOriginal: false, blob, originalSize: file.size, compressedSize: blob.size });
+      }
+      return;
+    }
+
     const bitmap = await createImageBitmap(file);
-    
     let width = bitmap.width;
     let height = bitmap.height;
     

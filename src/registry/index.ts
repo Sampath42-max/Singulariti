@@ -62,6 +62,15 @@ export const registry: EcosystemRegistry = {
               seoDescription: 'Compress WebP files online for free. Reduce file size up to 90% while maintaining quality.',
               engine: 'compression',
               path: '/image/compression/webp-compressor',
+            },
+            {
+              id: 'svg-compressor',
+              name: 'SVG Compressor',
+              description: 'Minify SVG files to reduce file size. Free, secure, no upload to server.',
+              seoTitle: 'SVG Compressor — Compress SVG Online Free | Singulariti',
+              seoDescription: 'Compress SVG files online for free. Minify your vector graphics instantly in your browser.',
+              engine: 'compression',
+              path: '/image/compression/svg-compressor',
             }
           ]
         },
@@ -152,6 +161,66 @@ export const registry: EcosystemRegistry = {
               engine: 'conversion',
               path: '/image/conversion/jpeg-to-jpg',
               options: { from: 'image/jpeg', to: 'image/jpeg' }
+            },
+            {
+              id: 'svg-to-png',
+              name: 'SVG to PNG',
+              description: 'Convert SVG vector images to PNG format. Free, secure, no upload to server.',
+              seoTitle: 'SVG to PNG — Convert SVG to PNG Online Free | Singulariti',
+              seoDescription: 'Convert SVG images to PNG online for free. Fast, secure, and entirely in your browser.',
+              engine: 'conversion',
+              path: '/image/conversion/svg-to-png',
+              options: { from: 'image/svg+xml', to: 'image/png' }
+            },
+            {
+              id: 'svg-to-jpg',
+              name: 'SVG to JPG',
+              description: 'Convert SVG vector images to JPG format. Free, secure, no upload to server.',
+              seoTitle: 'SVG to JPG — Convert SVG to JPG Online Free | Singulariti',
+              seoDescription: 'Convert SVG images to JPG online for free. Fast, secure, and entirely in your browser.',
+              engine: 'conversion',
+              path: '/image/conversion/svg-to-jpg',
+              options: { from: 'image/svg+xml', to: 'image/jpeg' }
+            },
+            {
+              id: 'svg-to-webp',
+              name: 'SVG to WebP',
+              description: 'Convert SVG vector images to WebP format. Free, secure, no upload to server.',
+              seoTitle: 'SVG to WebP — Convert SVG to WebP Online Free | Singulariti',
+              seoDescription: 'Convert SVG images to WebP online for free. Fast, secure, and entirely in your browser.',
+              engine: 'conversion',
+              path: '/image/conversion/svg-to-webp',
+              options: { from: 'image/svg+xml', to: 'image/webp' }
+            },
+            {
+              id: 'png-to-svg',
+              name: 'PNG to SVG',
+              description: 'Convert PNG images to SVG format. Free, secure, no upload to server.',
+              seoTitle: 'PNG to SVG — Convert PNG to SVG Online Free | Singulariti',
+              seoDescription: 'Convert PNG images to SVG online for free. Fast, secure, and entirely in your browser.',
+              engine: 'conversion',
+              path: '/image/conversion/png-to-svg',
+              options: { from: 'image/png', to: 'image/svg+xml' }
+            },
+            {
+              id: 'jpg-to-svg',
+              name: 'JPG to SVG',
+              description: 'Convert JPG images to SVG format. Free, secure, no upload to server.',
+              seoTitle: 'JPG to SVG — Convert JPG to SVG Online Free | Singulariti',
+              seoDescription: 'Convert JPG images to SVG online for free. Fast, secure, and entirely in your browser.',
+              engine: 'conversion',
+              path: '/image/conversion/jpg-to-svg',
+              options: { from: 'image/jpeg', to: 'image/svg+xml' }
+            },
+            {
+              id: 'webp-to-svg',
+              name: 'WebP to SVG',
+              description: 'Convert WebP images to SVG format. Free, secure, no upload to server.',
+              seoTitle: 'WebP to SVG — Convert WebP to SVG Online Free | Singulariti',
+              seoDescription: 'Convert WebP images to SVG online for free. Fast, secure, and entirely in your browser.',
+              engine: 'conversion',
+              path: '/image/conversion/webp-to-svg',
+              options: { from: 'image/webp', to: 'image/svg+xml' }
             }
           ]
         },
