@@ -261,10 +261,10 @@ export async function signPDF(
   const drawWidth = (sigWidth / 100) * pdfW;
   const drawHeight = (sigHeight / 100) * pdfH;
 
-  // Convert HTML canvas top-left coordinates to PDF bottom-left coordinates
+  // Convert HTML canvas center coordinates to PDF bottom-left coordinates
   page.drawImage(sigImage, {
-    x: scaleX,
-    y: pdfH - scaleY,
+    x: scaleX - drawWidth / 2,
+    y: pdfH - scaleY - drawHeight / 2,
     width: drawWidth,
     height: drawHeight,
     rotate: degrees(-sigRotation)
@@ -368,7 +368,7 @@ export async function addWatermarkToPDF(
         // Custom coordinates based on percentage
         const pX = options.customX ?? 50;
         const pY = options.customY ?? 50;
-        x = (pX / 100) * (pageWidth - textWidth);
+        x = (pX / 100) * pageWidth - textWidth / 2;
         y = pageHeight - ((pY / 100) * pageHeight) - (size / 2); 
       }
 
@@ -414,8 +414,8 @@ export async function addWatermarkToPDF(
       } else if (options.position === 'custom') {
         const pX = options.customX ?? 50;
         const pY = options.customY ?? 50;
-        x = (pX / 100) * (pageWidth - w);
-        y = pageHeight - ((pY / 100) * pageHeight) - h;
+        x = (pX / 100) * pageWidth - w / 2;
+        y = pageHeight - ((pY / 100) * pageHeight) - h / 2;
       }
 
       page.drawImage(embeddedImage, {

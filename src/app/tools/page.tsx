@@ -4,7 +4,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
 import { registry } from '@/registry';
-import { ImageIcon, FileText, QrCode } from 'lucide-react';
+import { ImageIcon, FileText, QrCode, Calculator } from 'lucide-react';
 
 export const metadata = {
   title: 'Tools Directory — Singulariti',
@@ -21,6 +21,8 @@ export default function ToolsDirectoryPage() {
         return <FileText className="w-6 h-6" />;
       case 'qr':
         return <QrCode className="w-6 h-6" />;
+      case 'calculators':
+        return <Calculator className="w-6 h-6" />;
       default:
         return <FileText className="w-6 h-6" />;
     }

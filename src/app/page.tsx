@@ -4,7 +4,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { ImageIcon, Sparkles, FileText, QrCode, Wand2 } from 'lucide-react';
+import { ImageIcon, Sparkles, FileText, QrCode, Wand2, Calculator } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { registry } from '@/registry';
 
@@ -19,6 +19,7 @@ export default function Home() {
   const editingToolsCount = getToolCount('editing');
   const pdfToolsCount = getToolCount('pdf');
   const qrToolsCount = getToolCount('qr');
+  const calculatorsToolsCount = getToolCount('calculators');
 
   return (
     <>
@@ -54,7 +55,7 @@ export default function Home() {
             <h2 className="font-display font-bold text-3xl text-ink">Explore Ecosystem</h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             <Card 
               title="Image Tools"
               description="Compress, convert, and resize images instantly in your browser."
@@ -82,6 +83,13 @@ export default function Home() {
               icon={<QrCode />}
               href="/tools/qr"
               badge={{ text: `${qrToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="Calculator Tools"
+              description="Calculate financial, mathematical, tax, health, and date-related metrics."
+              icon={<Calculator />}
+              href="/tools/calculators"
+              badge={{ text: `${calculatorsToolsCount} Tools`, variant: 'default' }}
             />
           </div>
         </section>
