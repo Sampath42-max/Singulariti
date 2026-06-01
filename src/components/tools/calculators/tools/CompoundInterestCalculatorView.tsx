@@ -116,12 +116,18 @@ export function CompoundInterestCalculatorView({ toolId, title, description }: C
     </>
   );
 
+  const chartData = result ? [
+    { name: 'Principal Amount', value: principal, fill: 'var(--color-primary)' },
+    { name: 'Interest Earned', value: result.interestEarned, fill: 'var(--color-accent)' }
+  ] : undefined;
+
   const results = result ? (
     <CalculatorResult
       title="Compound Interest Results"
       highlightLabel="Future Value"
       highlightValue={formatCurrency(result.finalAmount)}
       items={resultItems}
+      chartData={chartData}
     />
   ) : (
     <div className="bg-background border border-border rounded-xl p-6 text-center text-slate font-sans text-sm">

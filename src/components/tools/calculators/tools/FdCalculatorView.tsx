@@ -128,12 +128,18 @@ export function FdCalculatorView({ toolId, title, description }: FdCalculatorVie
     </>
   );
 
+  const chartData = result ? [
+    { name: 'Invested Amount', value: result.principalAmount, fill: 'var(--color-primary)' },
+    { name: 'Interest Earned', value: result.totalInterest, fill: 'var(--color-accent)' }
+  ] : undefined;
+
   const results = result ? (
     <CalculatorResult
       title="FD Investment Summary"
       highlightLabel="Maturity Value"
       highlightValue={formatCurrency(result.maturityAmount)}
       items={resultItems}
+      chartData={chartData}
     />
   ) : (
     <div className="bg-background border border-border rounded-xl p-6 text-center text-slate font-sans text-sm">

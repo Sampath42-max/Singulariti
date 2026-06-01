@@ -101,12 +101,18 @@ export function CagrCalculatorView({ toolId, title, description }: CagrCalculato
     </>
   );
 
+  const chartData = (result && finalValue > initialValue) ? [
+    { name: 'Initial Value', value: initialValue, fill: 'var(--color-primary)' },
+    { name: 'Absolute Growth', value: finalValue - initialValue, fill: 'var(--color-accent)' }
+  ] : undefined;
+
   const results = result ? (
     <CalculatorResult
       title="CAGR Growth Summary"
       highlightLabel="Compound Annual Growth Rate"
       highlightValue={`${result.cagr.toFixed(2)}%`}
       items={resultItems}
+      chartData={chartData}
     />
   ) : (
     <div className="bg-background border border-border rounded-xl p-6 text-center text-slate font-sans text-sm">

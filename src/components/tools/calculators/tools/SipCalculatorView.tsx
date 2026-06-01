@@ -102,12 +102,18 @@ export function SipCalculatorView({ toolId, title, description }: SipCalculatorV
     </>
   );
 
+  const chartData = result ? [
+    { name: 'Invested Amount', value: result.investedAmount, fill: 'var(--color-primary)' },
+    { name: 'Estimated Returns', value: result.estimatedReturns, fill: 'var(--color-accent)' }
+  ] : undefined;
+
   const results = result ? (
     <CalculatorResult
       title="SIP Investment Summary"
       highlightLabel="Future Value"
       highlightValue={formatCurrency(result.totalMaturityValue)}
       items={resultItems}
+      chartData={chartData}
     />
   ) : (
     <div className="bg-background border border-border rounded-xl p-6 text-center text-slate font-sans text-sm">

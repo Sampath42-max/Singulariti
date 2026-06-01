@@ -116,12 +116,18 @@ export function RoiCalculatorView({ toolId, title, description }: RoiCalculatorV
     </>
   );
 
+  const chartData = (result && result.netProfit > 0) ? [
+    { name: 'Total Investment', value: initialInvestment + additionalCosts, fill: 'var(--color-primary)' },
+    { name: 'Net Profit', value: result.netProfit, fill: 'var(--color-accent)' }
+  ] : undefined;
+
   const results = result ? (
     <CalculatorResult
       title="ROI Performance Summary"
       highlightLabel="Absolute Return (ROI)"
       highlightValue={`${result.roi.toFixed(2)}%`}
       items={resultItems}
+      chartData={chartData}
     />
   ) : (
     <div className="bg-background border border-border rounded-xl p-6 text-center text-slate font-sans text-sm">

@@ -116,12 +116,18 @@ export function EmiCalculatorView({ toolId, title, description }: EmiCalculatorV
     </>
   );
 
+  const chartData = result ? [
+    { name: 'Principal Amount', value: result.principalAmount, fill: 'var(--color-primary)' },
+    { name: 'Total Interest', value: result.totalInterest, fill: 'var(--color-accent)' }
+  ] : undefined;
+
   const results = result ? (
     <CalculatorResult
       title="EMI Repayment Summary"
       highlightLabel="Monthly EMI"
       highlightValue={formatCurrency(result.monthlyEmi)}
       items={resultItems}
+      chartData={chartData}
     />
   ) : (
     <div className="bg-background border border-border rounded-xl p-6 text-center text-slate font-sans text-sm">
