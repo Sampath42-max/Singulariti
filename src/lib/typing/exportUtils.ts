@@ -9,6 +9,10 @@ export async function captureImageCard(elementId: string, filename: string = 'ty
     const canvas = await html2canvas(element, {
       backgroundColor: null,
       scale: 2, // high res
+      useCORS: true,
+      scrollY: -window.scrollY,
+      windowWidth: document.documentElement.offsetWidth,
+      windowHeight: document.documentElement.offsetHeight,
     });
     
     const image = canvas.toDataURL('image/png');

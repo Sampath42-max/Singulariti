@@ -35,7 +35,6 @@ export function usePomodoroEngine() {
   });
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Load from local storage
   useEffect(() => {
@@ -62,20 +61,7 @@ export function usePomodoroEngine() {
     localStorage.setItem('singulariti_pomodoro_tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  const playNotification = useCallback(() => {
-    try {
-      // Use a subtle bell or generic alert sound if available, else fallback
-      // For now we assume the browser will play a generic beep or we can just skip
-      if (audioRef.current) {
-        audioRef.current.play().catch(() => {});
-      }
-    } catch (e) {
-      // ignore
-    }
-  }, []);
-
   const handleSessionComplete = useCallback(() => {
-    playNotification();
     if (mode === 'pomodoro' || mode === 'custom') {
       const today = new Date().toDateString();
       setStats(prev => {
@@ -103,7 +89,7 @@ export function usePomodoroEngine() {
       // After break, switch to pomodoro
       changeMode('pomodoro');
     }
-  }, [mode, playNotification]);
+  }, [mode]);
 
   // Timer logic
   useEffect(() => {
@@ -173,6 +159,5 @@ export function usePomodoroEngine() {
     addTask,
     toggleTask,
     deleteTask,
-    audioRef,
   };
 }

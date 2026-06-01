@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { usePomodoroEngine } from '@/hooks/usePomodoroEngine';
-import { TimerDisplay, TimerControls, TaskManagement, AmbientSounds, StatsDisplay } from './PomodoroComponents';
+import { TimerDisplay, TimerControls, TaskManagement, StatsDisplay } from './PomodoroComponents';
 import { Maximize, Minimize, Eye, EyeOff } from 'lucide-react';
 
 export default function PomodoroContainer() {
@@ -56,10 +56,7 @@ export default function PomodoroContainer() {
       className={`relative flex flex-col items-center justify-center min-h-[80vh] w-full transition-colors duration-500 rounded-3xl ${
         isFullscreen ? 'bg-background min-h-screen rounded-none' : 'bg-transparent'
       }`}
-    >
-      <audio ref={engine.audioRef} loop />
-
-      {/* Top right controls */}
+    >      {/* Top right controls */}
       <div className={`absolute top-6 right-6 flex items-center space-x-4 z-50 transition-opacity duration-300 ${isFocusMode ? 'opacity-20 hover:opacity-100' : 'opacity-100'}`}>
         <button
           onClick={() => setIsFocusMode(!isFocusMode)}
@@ -93,10 +90,10 @@ export default function PomodoroContainer() {
           setCustomTime={engine.setCustomTime}
         />
 
-        {/* Extra UI hidden in Focus Mode */}
-        <div className={`w-full max-w-4xl mx-auto transition-all duration-500 overflow-hidden ${isFocusMode ? 'opacity-0 max-h-0 pointer-events-none' : 'opacity-100 max-h-[1000px] mt-12'}`}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div>
+        {/* Extra UI hidden in Focus Mode or Fullscreen */}
+        <div className={`w-full max-w-4xl mx-auto transition-all duration-500 overflow-hidden ${(isFocusMode || isFullscreen) ? 'opacity-0 max-h-0 pointer-events-none' : 'opacity-100 max-h-[1000px] mt-12'}`}>
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start justify-center">
+            <div className="w-full lg:flex-1">
               <TaskManagement 
                 tasks={engine.tasks}
                 addTask={engine.addTask}
@@ -104,9 +101,8 @@ export default function PomodoroContainer() {
                 deleteTask={engine.deleteTask}
               />
             </div>
-            <div className="space-y-8">
+            <div className="w-full lg:flex-1">
               <StatsDisplay stats={engine.stats} />
-              <AmbientSounds audioRef={engine.audioRef} />
             </div>
           </div>
         </div>
