@@ -132,7 +132,20 @@ export async function generateMetadata(props: { params: Promise<{ collection: st
     title: tool.seoTitle,
     description: tool.seoDescription,
     alternates: {
-      canonical: `https://singulariti.app/image/${collection?.id}/${tool.id}`,
-    }
+      canonical: `https://singulariti.app/image/${params.collection}/${tool.id}`,
+    },
+    openGraph: {
+      title: tool.seoTitle,
+      description: tool.seoDescription,
+      url: `https://singulariti.app/image/${params.collection}/${tool.id}`,
+      siteName: 'Singulariti',
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: tool.seoTitle,
+      description: tool.seoDescription,
+    },
   };
 }

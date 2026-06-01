@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | Singulariti",
   },
   description: "Fast, secure, browser-based utility tools designed for creators, developers, students and professionals. Zero uploads, absolute privacy.",
-  keywords: ["pdf tools", "image editing", "qr code generator", "online tools", "browser-based tools", "privacy-first tools"],
+  keywords: ["pdf tools", "image editing", "qr code generator", "online tools", "browser-based tools", "privacy-first tools", "financial calculators", "typing speed test", "utility tools"],
   openGraph: {
     title: "Singulariti | One Place. Every Tool.",
     description: "Fast, secure, browser-based utility tools designed for creators, developers, students and professionals.",

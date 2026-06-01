@@ -64,6 +64,19 @@ export async function generateMetadata(props: { params: Promise<{ tool: string }
     description: tool.seoDescription,
     alternates: {
       canonical: `https://singulariti.app/tools/calculators/${tool.id}`,
-    }
+    },
+    openGraph: {
+      title: tool.seoTitle,
+      description: tool.seoDescription,
+      url: `https://singulariti.app/tools/calculators/${tool.id}`,
+      siteName: 'Singulariti',
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: tool.seoTitle,
+      description: tool.seoDescription,
+    },
   };
 }

@@ -43,31 +43,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Dynamic Category, Collection, and Tool routes
   categories.forEach((category) => {
-    // Category root (e.g., /editing)
-    routes.push({
-      url: `${baseUrl}/${category.id}`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    });
-
-    category.collections.forEach((collection) => {
-      // Collection root (e.g., /editing/tools)
+    // Category root (e.g., /image)
+    if (category.path) {
       routes.push({
-        url: `${baseUrl}/${category.id}/${collection.id}`,
+        url: `${baseUrl}${category.path}`,
         lastModified,
         changeFrequency: 'weekly',
-        priority: 0.8,
+        priority: 0.9,
       });
+    }
 
-      // Individual tools (e.g., /editing/tools/crop-image)
-      collection.tools.forEach((tool) => {
+    category.collections.forEach((collection) => {
+      // Collection root (e.g., /image/compression)
+      if (collection.path) {
         routes.push({
-          url: `${baseUrl}/${category.id}/${collection.id}/${tool.id}`,
+          url: `${baseUrl}${collection.path}`,
           lastModified,
           changeFrequency: 'weekly',
-          priority: 0.7,
+          priority: 0.8,
         });
+      }
+
+      // Individual tools (e.g., /tools/calculators/sip-calculator)
+      collection.tools.forEach((tool) => {
+        if (tool.path) {
+          routes.push({
+            url: `${baseUrl}${tool.path}`,
+            lastModified,
+            changeFrequency: 'weekly',
+            priority: 0.7,
+          });
+        }
       });
     });
   });
