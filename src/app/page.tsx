@@ -4,7 +4,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { ImageIcon, Sparkles, FileText, QrCode, Wand2, Calculator, Keyboard } from 'lucide-react';
+import { ImageIcon, Sparkles, FileText, QrCode, Wand2, Calculator, Keyboard, Timer } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { registry } from '@/registry';
 
@@ -96,6 +96,13 @@ export default function Home() {
               description="Measure your WPM, analyze your mistakes, and improve your typing accuracy."
               icon={<Keyboard />}
               href="/typing-speed-test"
+              badge={{ text: `New`, variant: 'default' }}
+            />
+            <Card 
+              title="Pomodoro Timer"
+              description="Deep focus environment with task management and ambient sounds."
+              icon={<Timer />}
+              href="/pomodoro-timer"
               badge={{ text: `New`, variant: 'default' }}
             />
           </div>

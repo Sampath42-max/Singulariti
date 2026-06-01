@@ -20,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://singulariti.app"),
+  metadataBase: new URL("https://singulariti.in"),
   title: {
     default: "Singulariti | One Place. Every Tool.",
     template: "%s | Singulariti",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Singulariti | One Place. Every Tool.",
     description: "Fast, secure, browser-based utility tools designed for creators, developers, students and professionals.",
-    url: "https://singulariti.app",
+    url: "https://singulariti.in",
     siteName: "Singulariti",
     locale: "en_US",
     type: "website",
