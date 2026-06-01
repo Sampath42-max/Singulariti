@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TypingState } from '@/hooks/useTypingEngine';
+import { motion } from 'framer-motion';
 
 interface TypingAreaProps {
   state: TypingState;
@@ -70,7 +71,7 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
                const historyItem = state.history[wIdx];
                const inputChar = historyItem?.input[cIdx];
                if (inputChar === char) {
-                 charClass = "text-slate-500";
+                 charClass = "text-foreground";
                } else {
                  charClass = "text-red-500";
                }
@@ -81,7 +82,16 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
             return (
               <span key={cIdx} className={`relative ${charClass}`}>
                 {isCaret && (
-                  <span className="absolute left-0 top-[10%] bottom-[10%] w-[2px] bg-accent animate-pulse" />
+                  <motion.div 
+                    layoutId="caret"
+                    className="absolute left-0 top-[10%] bottom-[10%] w-[2px] bg-primary z-10"
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ 
+                      layout: { type: "tween", ease: "linear", duration: 0.1 },
+                      opacity: { repeat: Infinity, duration: 1, ease: "linear" }
+                    }}
+                  />
                 )}
                 {char}
               </span>
@@ -98,7 +108,16 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
           {/* Caret at end of word if extra chars */}
           {isCurrentWord && state.currentInput.length >= word.length && isFocused && (
              <span className="relative">
-               <span className="absolute left-0 top-[10%] bottom-[10%] w-[2px] bg-accent animate-pulse" />
+               <motion.div 
+                 layoutId="caret"
+                 className="absolute left-0 top-[10%] bottom-[10%] w-[2px] bg-primary z-10"
+                 initial={{ opacity: 1 }}
+                 animate={{ opacity: [1, 0, 1] }}
+                 transition={{ 
+                   layout: { type: "tween", ease: "linear", duration: 0.1 },
+                   opacity: { repeat: Infinity, duration: 1, ease: "linear" }
+                 }}
+               />
              </span>
           )}
         </div>
@@ -121,7 +140,7 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
       onClick={handleClick}
     >
       {/* Time / Word Progress */}
-      <div className="flex justify-between items-center mb-4 font-system text-accent text-2xl">
+      <div className="flex justify-between items-center mb-4 font-system text-primary text-2xl">
         <div>
           {state.mode === 'time' ? state.timeLeft : `${state.wordIndex}/${state.wordLimit}`}
         </div>
@@ -158,11 +177,24 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
         </div>
       </div>
       
-      <div className="mt-8 text-center text-slate text-sm font-sans flex justify-center items-center space-x-2">
-        <kbd className="px-2 py-1 bg-surface border border-border rounded text-xs">Tab</kbd>
-        <span>+</span>
-        <kbd className="px-2 py-1 bg-surface border border-border rounded text-xs">Enter</kbd>
-        <span>to restart</span>
+      <div className="mt-8 flex flex-col items-center space-y-4">
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            onRestart();
+            inputRef.current?.focus();
+          }}
+          className="flex items-center justify-center p-3 rounded-full hover:bg-surface text-slate hover:text-foreground transition-colors group cursor-pointer relative z-20"
+          title="Restart Test"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-rotate-90 transition-transform duration-300"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        </button>
+        <div className="text-center text-slate/70 text-sm font-sans flex justify-center items-center space-x-2">
+          <kbd className="px-2 py-1 bg-surface border border-border rounded text-xs">Tab</kbd>
+          <span>+</span>
+          <kbd className="px-2 py-1 bg-surface border border-border rounded text-xs">Enter</kbd>
+          <span>to restart</span>
+        </div>
       </div>
     </div>
   );

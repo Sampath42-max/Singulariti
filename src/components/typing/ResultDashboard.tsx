@@ -49,7 +49,7 @@ export function ResultDashboard({
         <div className="md:col-span-1 space-y-6 flex flex-col justify-center">
           <div>
             <div className="text-sm font-sans text-slate uppercase tracking-wider font-bold">WPM</div>
-            <div className="text-6xl font-system font-black text-accent">{wpm}</div>
+            <div className="text-6xl font-system font-black text-primary">{wpm}</div>
           </div>
           <div>
             <div className="text-sm font-sans text-slate uppercase tracking-wider font-bold">Accuracy</div>
@@ -72,8 +72,8 @@ export function ResultDashboard({
             <AreaChart data={history} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorWpm" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--color-accent)" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="var(--color-accent)" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0}/>
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
@@ -82,9 +82,9 @@ export function ResultDashboard({
               <Tooltip 
                 contentStyle={{ borderRadius: '8px', border: '1px solid var(--border-color)', backgroundColor: 'var(--surface-color)', color: 'var(--ink-color)' }}
                 labelStyle={{ color: 'var(--slate-color)' }}
-                itemStyle={{ color: 'var(--accent-color)' }}
+                itemStyle={{ color: 'var(--color-primary)' }}
               />
-              <Area type="monotone" dataKey="wpm" stroke="var(--color-accent)" strokeWidth={3} fillOpacity={1} fill="url(#colorWpm)" />
+              <Area type="monotone" dataKey="wpm" stroke="var(--color-primary)" strokeWidth={3} fillOpacity={1} fill="url(#colorWpm)" />
               <Area type="monotone" dataKey="rawWpm" stroke="var(--color-slate)" strokeWidth={1} fill="none" strokeDasharray="4 4" />
             </AreaChart>
           </ResponsiveContainer>

@@ -40,14 +40,14 @@ export function TypingModesMenu({
       <div className="flex items-center space-x-2 bg-surface/50 rounded-full px-4 py-2">
         <button
           onClick={() => onModeChange('time')}
-          className={`flex items-center space-x-2 px-2 py-1 rounded text-sm font-sans transition-colors ${mode === 'time' ? 'text-accent' : 'text-slate hover:text-foreground'}`}
+          className={`flex items-center space-x-2 px-2 py-1 rounded text-sm font-sans transition-colors ${mode === 'time' ? 'text-primary' : 'text-slate hover:text-foreground'}`}
         >
           <Clock size={16} />
           <span>time</span>
         </button>
         <button
           onClick={() => onModeChange('words')}
-          className={`flex items-center space-x-2 px-2 py-1 rounded text-sm font-sans transition-colors ${mode === 'words' ? 'text-accent' : 'text-slate hover:text-foreground'}`}
+          className={`flex items-center space-x-2 px-2 py-1 rounded text-sm font-sans transition-colors ${mode === 'words' ? 'text-primary' : 'text-slate hover:text-foreground'}`}
         >
           <Type size={16} />
           <span>words</span>
@@ -60,7 +60,7 @@ export function TypingModesMenu({
           <button
             key={t}
             onClick={() => onTimeChange(t)}
-            className={`px-2 py-1 rounded text-sm font-system transition-colors ${timeLimit === t ? 'text-accent' : 'text-slate hover:text-foreground'}`}
+            className={`px-2 py-1 rounded text-sm font-system transition-colors ${timeLimit === t ? 'text-primary' : 'text-slate hover:text-foreground'}`}
           >
             {t}
           </button>
@@ -69,7 +69,7 @@ export function TypingModesMenu({
           <button
             key={w}
             onClick={() => onWordChange(w)}
-            className={`px-2 py-1 rounded text-sm font-system transition-colors ${wordLimit === w ? 'text-accent' : 'text-slate hover:text-foreground'}`}
+            className={`px-2 py-1 rounded text-sm font-system transition-colors ${wordLimit === w ? 'text-primary' : 'text-slate hover:text-foreground'}`}
           >
             {w}
           </button>
@@ -83,7 +83,7 @@ export function TypingModesMenu({
             key={d}
             onClick={() => onDifficultyChange(d)}
             title={d}
-            className={`flex items-center space-x-1 px-2 py-1 rounded text-sm font-sans transition-colors ${difficulty === d ? 'text-accent' : 'text-slate hover:text-foreground'}`}
+            className={`flex items-center space-x-1 px-2 py-1 rounded text-sm font-sans transition-colors ${difficulty === d ? 'text-primary' : 'text-slate hover:text-foreground'}`}
           >
             {diffIcons[d]}
             <span className="hidden sm:inline">{d}</span>
