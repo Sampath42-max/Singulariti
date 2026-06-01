@@ -39,23 +39,14 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
       const isCurrentWord = wIdx === state.wordIndex;
       const isPastWord = wIdx < state.wordIndex;
       
-      let wordClass = "inline-block mx-1.5 my-1.5 text-2xl font-mono transition-colors duration-100 ";
+      let wordClass = "inline-block mx-1.5 my-1.5 text-3xl font-mono ";
       
-      if (isPastWord) {
-        const historyItem = state.history[wIdx];
-        if (historyItem?.isCorrect) {
-          wordClass += "text-slate"; // correct past word
-        } else {
-          wordClass += "text-red-500 underline decoration-red-500/30 underline-offset-4"; // incorrect past word
-        }
-      } else if (isCurrentWord) {
-        wordClass += "text-slate-300"; // current word base color
-      } else {
-        wordClass += "text-slate-600"; // future word
-      }
-
       return (
-        <div key={wIdx} className={wordClass}>
+        <div 
+          key={wIdx} 
+          className={wordClass}
+          {...(isCurrentWord ? { 'data-active': 'true' } : {})}
+        >
           {word.split('').map((char, cIdx) => {
             let charClass = "";
             let isCaret = false;
@@ -73,26 +64,24 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
                 charClass = "text-foreground";
               } else {
                 // incorrectly typed
-                charClass = "text-red-400 bg-red-400/10 rounded-sm";
+                charClass = "text-red-500 bg-red-500/10 rounded-sm";
               }
             } else if (isPastWord) {
-               // Render past word exactly as is, styling handled at word level usually
-               // But we can color individual chars for more precision
                const historyItem = state.history[wIdx];
                const inputChar = historyItem?.input[cIdx];
                if (inputChar === char) {
-                 charClass = "text-slate-400";
+                 charClass = "text-slate-500";
                } else {
                  charClass = "text-red-500";
                }
             } else {
-               charClass = "text-slate-600";
+               charClass = "text-slate-500";
             }
 
             return (
               <span key={cIdx} className={`relative ${charClass}`}>
                 {isCaret && (
-                  <span className="absolute left-0 top-0 bottom-0 w-[2px] bg-accent animate-pulse" />
+                  <span className="absolute left-0 top-[10%] bottom-[10%] w-[2px] bg-accent animate-pulse" />
                 )}
                 {char}
               </span>
@@ -101,7 +90,7 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
           
           {/* Render extra characters typed beyond word length */}
           {isCurrentWord && state.currentInput.length > word.length && (
-            <span className="text-red-400 bg-red-400/10 rounded-sm">
+            <span className="text-red-500 bg-red-500/10 rounded-sm">
               {state.currentInput.slice(word.length)}
             </span>
           )}
@@ -109,7 +98,7 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
           {/* Caret at end of word if extra chars */}
           {isCurrentWord && state.currentInput.length >= word.length && isFocused && (
              <span className="relative">
-               <span className="absolute left-0 top-0 bottom-0 w-[2px] bg-accent animate-pulse" />
+               <span className="absolute left-0 top-[10%] bottom-[10%] w-[2px] bg-accent animate-pulse" />
              </span>
           )}
         </div>
@@ -117,13 +106,9 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
     });
   };
 
-  // We only show a limited window of words (e.g. current line and next line)
-  // To keep it simple, we use a fixed height container with hidden overflow, and scroll it
   useEffect(() => {
     if (containerRef.current) {
-       // A bit of a hack to keep the current line in view without complex math:
-       // Find the active word element and scroll it into view
-       const activeWord = containerRef.current.querySelector('.text-slate-300'); // current word base class
+       const activeWord = containerRef.current.querySelector('[data-active="true"]');
        if (activeWord) {
          activeWord.scrollIntoView({ behavior: 'smooth', block: 'center' });
        }

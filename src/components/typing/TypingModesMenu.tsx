@@ -34,42 +34,42 @@ export function TypingModesMenu({
   };
 
   return (
-    <div className={`flex flex-wrap items-center justify-center gap-4 p-4 bg-background border border-border rounded-xl mb-8 transition-opacity ${disabled ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+    <div className={`flex flex-wrap items-center justify-center gap-6 p-4 mb-8 transition-opacity ${disabled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
       
       {/* Mode Select */}
-      <div className="flex items-center space-x-1 bg-surface rounded-lg p-1">
+      <div className="flex items-center space-x-2 bg-surface/50 rounded-full px-4 py-2">
         <button
           onClick={() => onModeChange('time')}
-          className={`flex items-center space-x-2 px-3 py-1.5 rounded-md text-sm font-sans transition-colors ${mode === 'time' ? 'bg-primary text-primary-foreground' : 'text-slate hover:text-foreground'}`}
+          className={`flex items-center space-x-2 px-2 py-1 rounded text-sm font-sans transition-colors ${mode === 'time' ? 'text-accent' : 'text-slate hover:text-foreground'}`}
         >
           <Clock size={16} />
-          <span>Time</span>
+          <span>time</span>
         </button>
         <button
           onClick={() => onModeChange('words')}
-          className={`flex items-center space-x-2 px-3 py-1.5 rounded-md text-sm font-sans transition-colors ${mode === 'words' ? 'bg-primary text-primary-foreground' : 'text-slate hover:text-foreground'}`}
+          className={`flex items-center space-x-2 px-2 py-1 rounded text-sm font-sans transition-colors ${mode === 'words' ? 'text-accent' : 'text-slate hover:text-foreground'}`}
         >
           <Type size={16} />
-          <span>Words</span>
+          <span>words</span>
         </button>
       </div>
 
       {/* Value Select */}
-      <div className="flex items-center space-x-1 bg-surface rounded-lg p-1">
+      <div className="flex items-center space-x-2 bg-surface/50 rounded-full px-4 py-2">
         {mode === 'time' && timeOptions.map(t => (
           <button
             key={t}
             onClick={() => onTimeChange(t)}
-            className={`px-3 py-1.5 rounded-md text-sm font-system transition-colors ${timeLimit === t ? 'text-accent' : 'text-slate hover:text-foreground'}`}
+            className={`px-2 py-1 rounded text-sm font-system transition-colors ${timeLimit === t ? 'text-accent' : 'text-slate hover:text-foreground'}`}
           >
-            {t}s
+            {t}
           </button>
         ))}
         {mode === 'words' && wordOptions.map(w => (
           <button
             key={w}
             onClick={() => onWordChange(w)}
-            className={`px-3 py-1.5 rounded-md text-sm font-system transition-colors ${wordLimit === w ? 'text-accent' : 'text-slate hover:text-foreground'}`}
+            className={`px-2 py-1 rounded text-sm font-system transition-colors ${wordLimit === w ? 'text-accent' : 'text-slate hover:text-foreground'}`}
           >
             {w}
           </button>
@@ -77,16 +77,16 @@ export function TypingModesMenu({
       </div>
 
       {/* Difficulty Select */}
-      <div className="flex items-center space-x-1 bg-surface rounded-lg p-1">
+      <div className="flex items-center space-x-2 bg-surface/50 rounded-full px-4 py-2">
         {(Object.keys(diffIcons) as TypingDifficulty[]).map(d => (
           <button
             key={d}
             onClick={() => onDifficultyChange(d)}
-            title={d.charAt(0).toUpperCase() + d.slice(1)}
-            className={`flex items-center space-x-1 px-3 py-1.5 rounded-md text-sm font-sans transition-colors ${difficulty === d ? 'text-accent' : 'text-slate hover:text-foreground'}`}
+            title={d}
+            className={`flex items-center space-x-1 px-2 py-1 rounded text-sm font-sans transition-colors ${difficulty === d ? 'text-accent' : 'text-slate hover:text-foreground'}`}
           >
             {diffIcons[d]}
-            <span className="hidden sm:inline">{d.charAt(0).toUpperCase() + d.slice(1)}</span>
+            <span className="hidden sm:inline">{d}</span>
           </button>
         ))}
       </div>

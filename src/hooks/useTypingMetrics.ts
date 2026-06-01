@@ -64,7 +64,9 @@ export function useTypingMetrics(state: TypingState) {
   }, [state.status, state.startTime, state.correctChars, state.incorrectChars, state.extraChars]);
 
   // Final metrics
-  const elapsedMs = state.endTime && state.startTime ? state.endTime - state.startTime : (state.startTime ? Date.now() - state.startTime : 0);
+  const elapsedMs = state.status === 'finished' && state.endTime && state.startTime
+    ? state.endTime - state.startTime
+    : (state.startTime ? Date.now() - state.startTime : 0);
   const elapsedMinutes = elapsedMs / 60000;
 
   const currentWpm = calculateWpm(state.correctChars, elapsedMinutes);

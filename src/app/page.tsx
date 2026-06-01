@@ -4,7 +4,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { ImageIcon, Sparkles, FileText, QrCode, Wand2, Calculator } from 'lucide-react';
+import { ImageIcon, Sparkles, FileText, QrCode, Wand2, Calculator, Keyboard } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { registry } from '@/registry';
 
@@ -90,6 +90,13 @@ export default function Home() {
               icon={<Calculator />}
               href="/tools/calculators"
               badge={{ text: `${calculatorsToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="Typing Speed Test"
+              description="Measure your WPM, analyze your mistakes, and improve your typing accuracy."
+              icon={<Keyboard />}
+              href="/typing-speed-test"
+              badge={{ text: `New`, variant: 'default' }}
             />
           </div>
         </section>
