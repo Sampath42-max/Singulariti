@@ -10,22 +10,28 @@ import { mergePDFs, countPDFPages } from '@/lib/pdf/pdfHelpers';
 import { downloadBlob } from '@/lib/downloadHelpers';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { ArrowUp, ArrowDown, Trash2, Plus, FileText } from 'lucide-react';
-import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
 
 export function MergePdfClient() {
   const [files, setFiles] = useState<File[]>([]);
   const [pageCounts, setPageCounts] = useState<Record<string, number>>({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
   const [mergedBlobUrl, setMergedBlobUrl] = useState<string | null>(null);
 
   const handleFilesSelected = async (selectedFiles: File[]) => {
     setError(null);
     setMergedBlobUrl(null);
     
-    // Check for password protection
+    // Check for validation and password protection
     const validFiles: File[] = [];
     for (const file of selectedFiles) {
+      const validation = validatePdfFile(file);
+      if (!validation.isValid) {
+        setError(validation.error || `Invalid PDF file: ${file.name}`);
+        return;
+      }
       try {
         const buffer = await file.arrayBuffer();
         const isProtected = await checkPdfPasswordProtected(buffer);
@@ -42,6 +48,14 @@ export function MergePdfClient() {
 
     const updatedFiles = [...files, ...validFiles];
     setFiles(updatedFiles);
+
+    // Set or clear warning based on the updated queue
+    const largeFile = updatedFiles.find(f => f.size > 100 * 1024 * 1024);
+    if (largeFile) {
+      setWarning(`Large file warning: File "${largeFile.name}" is ${(largeFile.size / (1024 * 1024)).toFixed(1)}MB. Processing files between 100MB and 1GB entirely in the browser is supported, but may cause the page to lag or run out of memory depending on your computer's RAM. Keep other tabs closed for best performance.`);
+    } else {
+      setWarning(null);
+    }
 
     // Load page counts
     try {
@@ -74,6 +88,14 @@ export function MergePdfClient() {
     const updated = files.filter((_, i) => i !== index);
     setFiles(updated);
     setMergedBlobUrl(null);
+
+    // Set or clear warning based on remaining files in the queue
+    const largeFile = updated.find(f => f.size > 100 * 1024 * 1024);
+    if (largeFile) {
+      setWarning(`Large file warning: File "${largeFile.name}" is ${(largeFile.size / (1024 * 1024)).toFixed(1)}MB. Processing files between 100MB and 1GB entirely in the browser is supported, but may cause the page to lag or run out of memory depending on your computer's RAM. Keep other tabs closed for best performance.`);
+    } else {
+      setWarning(null);
+    }
   };
 
   const handleMerge = async () => {
@@ -103,6 +125,7 @@ export function MergePdfClient() {
     setPageCounts({});
     setMergedBlobUrl(null);
     setError(null);
+    setWarning(null);
   };
 
   return (
@@ -112,6 +135,7 @@ export function MergePdfClient() {
       categoryName="PDF Tools"
       categoryHref="/tools/pdf"
       error={error}
+      warning={warning}
       onClearError={() => setError(null)}
     >
       {files.length === 0 ? (

@@ -6,7 +6,7 @@ import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { countPDFPages } from '@/lib/pdf/pdfHelpers';
-import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Plus, Hash } from 'lucide-react';
 
@@ -16,13 +16,21 @@ export function PageCounterClient() {
   const [totalCount, setTotalCount] = useState<number | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
 
   const handleFilesSelected = async (selectedFiles: File[]) => {
     setError(null);
+    setWarning(null);
     setIsProcessing(true);
 
     const validFiles: File[] = [];
     for (const file of selectedFiles) {
+      const validation = validatePdfFile(file);
+      if (!validation.isValid) {
+        setError(validation.error || `Invalid PDF file: ${file.name}`);
+        setIsProcessing(false);
+        return;
+      }
       try {
         const buffer = await file.arrayBuffer();
         const isProtected = await checkPdfPasswordProtected(buffer);
@@ -42,6 +50,14 @@ export function PageCounterClient() {
     const updatedFiles = [...files, ...validFiles];
     setFiles(updatedFiles);
 
+    // Set or clear warning based on the updated queue
+    const largeFile = updatedFiles.find(f => f.size > 100 * 1024 * 1024);
+    if (largeFile) {
+      setWarning(`Large file warning: File "${largeFile.name}" is ${(largeFile.size / (1024 * 1024)).toFixed(1)}MB. Processing files between 100MB and 1GB entirely in the browser is supported, but may cause the page to lag or run out of memory depending on your computer's RAM. Keep other tabs closed for best performance.`);
+    } else {
+      setWarning(null);
+    }
+
     try {
       const result = await countPDFPages(updatedFiles);
       setFileCounts(result.counts);
@@ -59,6 +75,7 @@ export function PageCounterClient() {
     setFileCounts([]);
     setTotalCount(null);
     setError(null);
+    setWarning(null);
   };
 
   return (
@@ -68,6 +85,7 @@ export function PageCounterClient() {
       categoryName="PDF Tools"
       categoryHref="/tools/pdf"
       error={error}
+      warning={warning}
       onClearError={() => setError(null)}
     >
       {files.length === 0 ? (

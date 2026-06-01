@@ -10,7 +10,7 @@ import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import { signPDF } from '@/lib/pdf/pdfHelpers';
 import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
-import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Edit2, Upload, PenTool, Check, Trash } from 'lucide-react';
 import { TransformableOverlay } from '@/components/ui/TransformableOverlay';
@@ -23,6 +23,7 @@ export function SignPdfClient() {
   const [signatureUrl, setSignatureUrl] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
   const [resultBlobUrl, setResultBlobUrl] = useState<string | null>(null);
 
   // Position sliders
@@ -39,12 +40,64 @@ export function SignPdfClient() {
   // Drag and Resize State
   const previewContainerRef = useRef<HTMLDivElement>(null);
 
+  const [sigAspectRatio, setSigAspectRatio] = useState<number | null>(null);
+
+  // Monitor signature URL changes to compute natural aspect ratio
+  useEffect(() => {
+    if (!signatureUrl) {
+      setSigAspectRatio(null);
+      return;
+    }
+    const img = new Image();
+    img.src = signatureUrl;
+    img.onload = () => {
+      const aspect = img.naturalWidth / img.naturalHeight;
+      setSigAspectRatio(aspect);
+    };
+  }, [signatureUrl]);
+
+  // Adjust signature height to match aspect ratio
+  useEffect(() => {
+    if (sigAspectRatio && previewContainerRef.current) {
+      const pageRatio = previewContainerRef.current.offsetWidth / previewContainerRef.current.offsetHeight;
+      setSigHeight((sigWidth * pageRatio) / sigAspectRatio);
+    }
+  }, [sigAspectRatio]);
+
+  const handleWidthChange = (val: number) => {
+    setSigWidth(val);
+    if (sigAspectRatio && previewContainerRef.current) {
+      const pageRatio = previewContainerRef.current.offsetWidth / previewContainerRef.current.offsetHeight;
+      setSigHeight((val * pageRatio) / sigAspectRatio);
+    }
+    setResultBlobUrl(null);
+  };
+
+  const handleHeightChange = (val: number) => {
+    setSigHeight(val);
+    if (sigAspectRatio && previewContainerRef.current) {
+      const pageRatio = previewContainerRef.current.offsetWidth / previewContainerRef.current.offsetHeight;
+      setSigWidth((val * sigAspectRatio) / pageRatio);
+    }
+    setResultBlobUrl(null);
+  };
+
   // Load PDF
   const handleFileSelected = async (selectedFiles: File[]) => {
     if (selectedFiles.length === 0) return;
     setError(null);
+    setWarning(null);
     setResultBlobUrl(null);
     const selectedFile = selectedFiles[0];
+
+    const validation = validatePdfFile(selectedFile);
+    if (!validation.isValid) {
+      setError(validation.error || 'Invalid PDF file.');
+      return;
+    }
+    if (validation.warning) {
+      setWarning(validation.warning);
+    }
 
     try {
       const buffer = await selectedFile.arrayBuffer();
@@ -187,10 +240,12 @@ export function SignPdfClient() {
     setSignatureUrl(null);
     setResultBlobUrl(null);
     setError(null);
+    setWarning(null);
     setPosX(50);
     setPosY(50);
     setSigWidth(30);
     setSigHeight(15);
+    setSigAspectRatio(null);
   };
 
   return (
@@ -200,6 +255,7 @@ export function SignPdfClient() {
       categoryName="PDF Tools"
       categoryHref="/tools/pdf"
       error={error}
+      warning={warning}
       onClearError={() => setError(null)}
     >
       {!file ? (
@@ -380,7 +436,7 @@ export function SignPdfClient() {
                         min="5"
                         max="100"
                         value={Math.round(sigWidth)}
-                        onChange={(e) => { setSigWidth(Number(e.target.value)); setResultBlobUrl(null); }}
+                        onChange={(e) => { handleWidthChange(Number(e.target.value)); }}
                         className="w-full h-10 px-3 bg-surface border border-border rounded-lg text-sm text-ink outline-none focus:border-primary"
                       />
                     </div>
@@ -391,7 +447,7 @@ export function SignPdfClient() {
                         min="5"
                         max="100"
                         value={Math.round(sigHeight)}
-                        onChange={(e) => { setSigHeight(Number(e.target.value)); setResultBlobUrl(null); }}
+                        onChange={(e) => { handleHeightChange(Number(e.target.value)); }}
                         className="w-full h-10 px-3 bg-surface border border-border rounded-lg text-sm text-ink outline-none focus:border-primary"
                       />
                     </div>
@@ -406,7 +462,7 @@ export function SignPdfClient() {
               
               <div className="w-full relative border border-border rounded-xl bg-background overflow-hidden p-6 flex justify-center items-center min-h-[400px]">
                 {pdfDoc ? (
-                  <div ref={previewContainerRef} className="relative border border-slate/30 shadow-md max-w-full touch-none select-none">
+                  <div ref={previewContainerRef} className="relative border border-slate/30 shadow-md max-w-full touch-none select-none w-fit h-fit mx-auto">
                     <PageThumbnail
                       pdfDoc={pdfDoc}
                       pageNumber={selectedPage}

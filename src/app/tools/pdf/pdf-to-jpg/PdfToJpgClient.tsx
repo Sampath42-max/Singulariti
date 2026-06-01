@@ -9,7 +9,7 @@ import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import { loadPdfDocument, renderPageToDataUrl } from '@/lib/pdf/pdfRenderHelpers';
 import { downloadAllAsZip, downloadBlob } from '@/lib/downloadHelpers';
-import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Download, FileImage, Image as ImageIcon } from 'lucide-react';
 
@@ -19,13 +19,24 @@ export function PdfToJpgClient() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState({ current: 0, total: 0 });
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
   const [renderedImages, setRenderedImages] = useState<string[]>([]); // Data URLs
 
   const handleFileSelected = async (selectedFiles: File[]) => {
     if (selectedFiles.length === 0) return;
     setError(null);
+    setWarning(null);
     setRenderedImages([]);
     const selectedFile = selectedFiles[0];
+
+    const validation = validatePdfFile(selectedFile);
+    if (!validation.isValid) {
+      setError(validation.error || 'Invalid PDF file.');
+      return;
+    }
+    if (validation.warning) {
+      setWarning(validation.warning);
+    }
 
     try {
       const buffer = await selectedFile.arrayBuffer();
@@ -104,6 +115,7 @@ export function PdfToJpgClient() {
     setPdfDoc(null);
     setRenderedImages([]);
     setError(null);
+    setWarning(null);
   };
 
   return (
@@ -113,6 +125,7 @@ export function PdfToJpgClient() {
       categoryName="PDF Tools"
       categoryHref="/tools/pdf"
       error={error}
+      warning={warning}
       onClearError={() => setError(null)}
     >
       {!file ? (

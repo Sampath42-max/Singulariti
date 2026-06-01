@@ -15,11 +15,12 @@ export interface TransformableOverlayProps {
   onChange: (updates: { x: number; y: number; width: number; height: number; rotation: number }) => void;
   children: React.ReactNode;
   containerRef?: React.RefObject<HTMLDivElement | null>;
+  zoom?: number;
 }
 
 export function TransformableOverlay({
   x, y, width, height, rotation, lockAspect = true, minWidth = 20, minHeight = 20,
-  isActive, onSelect, onChange, children, containerRef
+  isActive, onSelect, onChange, children, containerRef, zoom = 100
 }: TransformableOverlayProps) {
   
   const elementRef = useRef<HTMLDivElement>(null);
@@ -85,14 +86,14 @@ export function TransformableOverlay({
   useEffect(() => {
     const handlePointerMove = (e: PointerEvent) => {
       if (isDragging) {
-        const dx = e.clientX - interactionStart.current.startX;
-        const dy = e.clientY - interactionStart.current.startY;
+        const dx = (e.clientX - interactionStart.current.startX) / (zoom / 100);
+        const dy = (e.clientY - interactionStart.current.startY) / (zoom / 100);
         onChange({ x: interactionStart.current.elemX + dx, y: interactionStart.current.elemY + dy, width, height, rotation });
       } 
       else if (isResizing) {
         const handle = isResizing;
-        const dx = e.clientX - interactionStart.current.startX;
-        const dy = e.clientY - interactionStart.current.startY;
+        const dx = (e.clientX - interactionStart.current.startX) / (zoom / 100);
+        const dy = (e.clientY - interactionStart.current.startY) / (zoom / 100);
         
         // Inverse rotation to get local delta
         const rad = (-rotation * Math.PI) / 180;
@@ -187,7 +188,7 @@ export function TransformableOverlay({
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', handlePointerUp);
     };
-  }, [isDragging, isResizing, isRotating, x, y, width, height, rotation, onChange, lockAspect, minWidth, minHeight]);
+  }, [isDragging, isResizing, isRotating, x, y, width, height, rotation, onChange, lockAspect, minWidth, minHeight, zoom]);
 
   // Handle styles
   const handleClasses = "absolute w-3 h-3 bg-white border border-primary rounded-sm shadow-sm pointer-events-auto z-10";

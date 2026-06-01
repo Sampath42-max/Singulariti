@@ -7,7 +7,7 @@ import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { loadPdfDocument, extractTextFromPdf } from '@/lib/pdf/pdfRenderHelpers';
-import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { downloadBlob } from '@/lib/downloadHelpers';
 import { FileText, Copy, Download, Check, Clipboard } from 'lucide-react';
@@ -19,12 +19,23 @@ export function PdfToTextClient() {
   const [progress, setProgress] = useState({ current: 0, total: 0 });
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
 
   const handleFileSelected = async (selectedFiles: File[]) => {
     if (selectedFiles.length === 0) return;
     setError(null);
+    setWarning(null);
     setExtractedText(null);
     const selectedFile = selectedFiles[0];
+
+    const validation = validatePdfFile(selectedFile);
+    if (!validation.isValid) {
+      setError(validation.error || 'Invalid PDF file.');
+      return;
+    }
+    if (validation.warning) {
+      setWarning(validation.warning);
+    }
 
     try {
       const buffer = await selectedFile.arrayBuffer();
@@ -72,6 +83,7 @@ export function PdfToTextClient() {
     setFile(null);
     setExtractedText(null);
     setError(null);
+    setWarning(null);
   };
 
   return (
@@ -81,6 +93,7 @@ export function PdfToTextClient() {
       categoryName="PDF Tools"
       categoryHref="/tools/pdf"
       error={error}
+      warning={warning}
       onClearError={() => setError(null)}
     >
       {!file ? (

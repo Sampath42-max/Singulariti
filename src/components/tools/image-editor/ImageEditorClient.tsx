@@ -9,11 +9,11 @@ import { EditorSettingsPanel } from './EditorSettingsPanel';
 import { EditorToolbar } from './EditorToolbar';
 import { DownloadImageButton, DownloadParams } from './DownloadImageButton';
 import { EditorSettings, EditorToolId, HistoryState, ImageState } from '../../../lib/image-editor/editorTypes';
-import { renderImageWithSettings } from '../../../lib/image-editor/canvasHelpers';
+import { renderImageWithSettings, getPreviewScaleFactor, getPositionCoordinates } from '../../../lib/image-editor/canvasHelpers';
 import { downloadCanvasAsImage } from '../../../lib/image-editor/downloadHelpers';
 import { validateImageFile } from '../../../lib/image-editor/validationHelpers';
 import { Button } from '../../ui/Button';
-import { Check } from 'lucide-react';
+import { Check, ZoomIn, ZoomOut } from 'lucide-react';
 import ReactCrop, { type Crop as CropType, centerCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { TransformableOverlay } from '@/components/ui/TransformableOverlay';
@@ -39,10 +39,40 @@ const DEFAULT_SETTINGS: EditorSettings = {
   colorToBw: { mode: 'custom', contrast: 0 }
 };
 
+function didBackgroundSettingsChange(prev: EditorSettings, current: EditorSettings): boolean {
+  if (JSON.stringify(prev.crop) !== JSON.stringify(current.crop)) return true;
+  if (JSON.stringify(prev.resize) !== JSON.stringify(current.resize)) return true;
+  if (JSON.stringify(prev.rotate) !== JSON.stringify(current.rotate)) return true;
+  if (JSON.stringify(prev.flip) !== JSON.stringify(current.flip)) return true;
+  if (JSON.stringify(prev.blur) !== JSON.stringify(current.blur)) return true;
+  if (JSON.stringify(prev.pixelate) !== JSON.stringify(current.pixelate)) return true;
+  if (JSON.stringify(prev.grayscale) !== JSON.stringify(current.grayscale)) return true;
+  if (JSON.stringify(prev.upscaler) !== JSON.stringify(current.upscaler)) return true;
+  if (JSON.stringify(prev.enhancer) !== JSON.stringify(current.enhancer)) return true;
+  if (JSON.stringify(prev.sharpen) !== JSON.stringify(current.sharpen)) return true;
+  if (JSON.stringify(prev.denoiser) !== JSON.stringify(current.denoiser)) return true;
+  if (JSON.stringify(prev.colorAdjust) !== JSON.stringify(current.colorAdjust)) return true;
+  if (JSON.stringify(prev.brightnessContrast) !== JSON.stringify(current.brightnessContrast)) return true;
+  if (JSON.stringify(prev.bwToColor) !== JSON.stringify(current.bwToColor)) return true;
+  if (JSON.stringify(prev.colorToBw) !== JSON.stringify(current.colorToBw)) return true;
+  
+  if (prev.watermark.repeat || current.watermark.repeat) {
+    if (JSON.stringify(prev.watermark) !== JSON.stringify(current.watermark)) return true;
+  }
+  
+  return false;
+}
+
 export function ImageEditorClient() {
   const [imageState, setImageState] = useState<ImageState>({ file: null, url: null, width: 0, height: 0 });
   const [activeTool, setActiveTool] = useState<EditorToolId>('crop');
   const [settings, setSettings] = useState<EditorSettings>(DEFAULT_SETTINGS);
+  const [zoom, setZoom] = useState(100);
+  
+  const prevSettingsRef = useRef<EditorSettings>(DEFAULT_SETTINGS);
+  const prevActiveToolRef = useRef<EditorToolId>('crop');
+  const prevHistoryIndexRef = useRef<number>(-1);
+  const prevLogoImgRef = useRef<HTMLImageElement | null>(null);
   
   // Crop states
   const [crop, setCrop] = useState<CropType>();
@@ -77,6 +107,31 @@ export function ImageEditorClient() {
     const url = URL.createObjectURL(file);
     createdUrlsRef.current.push(url);
     return url;
+  };
+
+  const getOverlayCoords = (
+    position: 'topLeft' | 'topRight' | 'center' | 'bottomLeft' | 'bottomRight' | 'custom',
+    posX: number,
+    posY: number,
+    elementW: number,
+    elementH: number
+  ) => {
+    if (!canvasRef.current) return { x: 0, y: 0 };
+    const previewScaleFactor = getPreviewScaleFactor(imageState.width, imageState.height, settings);
+    const pos = getPositionCoordinates(
+      position,
+      canvasRef.current.offsetWidth,
+      canvasRef.current.offsetHeight,
+      elementW,
+      elementH,
+      posX,
+      posY,
+      previewScaleFactor
+    );
+    return {
+      x: pos.x + elementW / 2,
+      y: pos.y + elementH / 2
+    };
   };
 
   // Clean URLs on unmount
@@ -198,6 +253,23 @@ export function ImageEditorClient() {
   // Re-render canvas whenever settings or active tool changes
   useEffect(() => {
     if (!activeImageRef.current || !canvasRef.current) return;
+
+    const prevSettings = prevSettingsRef.current;
+    prevSettingsRef.current = settings;
+
+    const bgChanged = didBackgroundSettingsChange(prevSettings, settings);
+    const shouldReRender = bgChanged ||
+      activeTool !== prevActiveToolRef.current ||
+      historyIndex !== prevHistoryIndexRef.current ||
+      logoImg !== prevLogoImgRef.current;
+
+    prevActiveToolRef.current = activeTool;
+    prevHistoryIndexRef.current = historyIndex;
+    prevLogoImgRef.current = logoImg;
+
+    if (!shouldReRender) {
+      return;
+    }
 
     setCanvasLoading(true);
     const debounce = setTimeout(async () => {
@@ -487,7 +559,45 @@ export function ImageEditorClient() {
             </div>
 
             {/* Center Column: Preview Viewport */}
-            <div className="lg:col-span-6 flex flex-col justify-center items-center bg-surface border border-border rounded-xl p-4 min-h-[450px]">
+            <div className="lg:col-span-6 flex flex-col items-center bg-surface border border-border rounded-xl p-4 min-h-[450px]">
+              {activeTool !== 'crop' && (
+                <div className="flex items-center gap-2 mb-4 bg-background/80 backdrop-blur-xs border border-border px-3 py-1.5 rounded-lg shadow-xs z-20">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setZoom(prev => Math.max(25, prev - 25))}
+                    disabled={zoom <= 25}
+                    className="h-8 w-8 p-0"
+                    title="Zoom Out"
+                  >
+                    <ZoomOut className="w-4 h-4" />
+                  </Button>
+                  <span className="text-xs font-semibold font-mono min-w-[48px] text-center text-ink select-none">
+                    {zoom}%
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setZoom(prev => Math.min(400, prev + 25))}
+                    disabled={zoom >= 400}
+                    className="h-8 w-8 p-0"
+                    title="Zoom In"
+                  >
+                    <ZoomIn className="w-4 h-4" />
+                  </Button>
+                  <div className="h-4 w-[1px] bg-border mx-1" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setZoom(100)}
+                    disabled={zoom === 100}
+                    className="px-2 h-8 text-xs text-ink hover:text-primary"
+                  >
+                    Reset
+                  </Button>
+                </div>
+              )}
+
               {activeTool === 'crop' ? (
                 <div className="relative rounded-xl border border-border bg-background/50 overflow-hidden min-h-[400px] flex items-center justify-center p-4 w-full select-none">
                   {/* Checkerboard transparency grid background */}
@@ -518,6 +628,7 @@ export function ImageEditorClient() {
                 <EditorCanvas 
                   canvasRef={canvasRef} 
                   isLoading={canvasLoading || isProcessing} 
+                  zoom={zoom}
                   onMouseDown={handleMouseDown}
                   onMouseMove={handleMouseMove}
                   onMouseUp={handleMouseUp}
@@ -528,8 +639,21 @@ export function ImageEditorClient() {
                     <TransformableOverlay
                       isActive={activeTool === 'text'}
                       onSelect={() => {}}
-                      x={settings.text.position === 'custom' ? (settings.text.posX / 100) * canvasRef.current.offsetWidth : canvasRef.current.offsetWidth / 2}
-                      y={settings.text.position === 'custom' ? (settings.text.posY / 100) * canvasRef.current.offsetHeight : canvasRef.current.offsetHeight / 2}
+                      zoom={zoom}
+                      x={getOverlayCoords(
+                        settings.text.position,
+                        settings.text.posX,
+                        settings.text.posY,
+                        settings.text.fontSize * 4,
+                        settings.text.fontSize * 1.5
+                      ).x}
+                      y={getOverlayCoords(
+                        settings.text.position,
+                        settings.text.posX,
+                        settings.text.posY,
+                        settings.text.fontSize * 4,
+                        settings.text.fontSize * 1.5
+                      ).y}
                       width={settings.text.fontSize * 4}
                       height={settings.text.fontSize * 1.5}
                       rotation={settings.text.rotation}
@@ -569,8 +693,21 @@ export function ImageEditorClient() {
                     <TransformableOverlay
                       isActive={activeTool === 'logo'}
                       onSelect={() => {}}
-                      x={settings.logo.position === 'custom' ? (settings.logo.posX / 100) * canvasRef.current.offsetWidth : canvasRef.current.offsetWidth / 2}
-                      y={settings.logo.position === 'custom' ? (settings.logo.posY / 100) * canvasRef.current.offsetHeight : canvasRef.current.offsetHeight / 2}
+                      zoom={zoom}
+                      x={getOverlayCoords(
+                        settings.logo.position,
+                        settings.logo.posX,
+                        settings.logo.posY,
+                        (settings.logo.size / 100) * canvasRef.current.offsetWidth,
+                        ((settings.logo.size / 100) * canvasRef.current.offsetWidth) * (logoImg.naturalHeight / logoImg.naturalWidth)
+                      ).x}
+                      y={getOverlayCoords(
+                        settings.logo.position,
+                        settings.logo.posX,
+                        settings.logo.posY,
+                        (settings.logo.size / 100) * canvasRef.current.offsetWidth,
+                        ((settings.logo.size / 100) * canvasRef.current.offsetWidth) * (logoImg.naturalHeight / logoImg.naturalWidth)
+                      ).y}
                       width={(settings.logo.size / 100) * canvasRef.current.offsetWidth}
                       height={((settings.logo.size / 100) * canvasRef.current.offsetWidth) * (logoImg.naturalHeight / logoImg.naturalWidth)}
                       rotation={settings.logo.rotation}
@@ -602,8 +739,21 @@ export function ImageEditorClient() {
                     <TransformableOverlay
                       isActive={activeTool === 'watermark'}
                       onSelect={() => {}}
-                      x={settings.watermark.position === 'custom' ? (settings.watermark.posX / 100) * canvasRef.current.offsetWidth : canvasRef.current.offsetWidth / 2}
-                      y={settings.watermark.position === 'custom' ? (settings.watermark.posY / 100) * canvasRef.current.offsetHeight : canvasRef.current.offsetHeight / 2}
+                      zoom={zoom}
+                      x={getOverlayCoords(
+                        settings.watermark.position,
+                        settings.watermark.posX,
+                        settings.watermark.posY,
+                        settings.watermark.fontSize * 5,
+                        settings.watermark.fontSize * 1.5
+                      ).x}
+                      y={getOverlayCoords(
+                        settings.watermark.position,
+                        settings.watermark.posX,
+                        settings.watermark.posY,
+                        settings.watermark.fontSize * 5,
+                        settings.watermark.fontSize * 1.5
+                      ).y}
                       width={settings.watermark.fontSize * 5}
                       height={settings.watermark.fontSize * 1.5}
                       rotation={settings.watermark.rotation}

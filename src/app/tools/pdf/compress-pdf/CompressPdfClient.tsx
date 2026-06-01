@@ -10,7 +10,7 @@ import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import * as pdfjsLib from 'pdfjs-dist';
 import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
 import { compressPDF } from '@/lib/pdf/pdfHelpers';
-import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Percent, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
@@ -20,14 +20,25 @@ export function CompressPdfClient() {
   const [resultPdfDoc, setResultPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
   const [result, setResult] = useState<{ url: string; originalSize: number; newSize: number } | null>(null);
   const [showPreview, setShowPreview] = useState(true);
 
   const handleFileSelected = async (selectedFiles: File[]) => {
     if (selectedFiles.length === 0) return;
     setError(null);
+    setWarning(null);
     setResult(null);
     const selectedFile = selectedFiles[0];
+
+    const validation = validatePdfFile(selectedFile);
+    if (!validation.isValid) {
+      setError(validation.error || 'Invalid PDF file.');
+      return;
+    }
+    if (validation.warning) {
+      setWarning(validation.warning);
+    }
 
     try {
       const buffer = await selectedFile.arrayBuffer();
@@ -76,6 +87,7 @@ export function CompressPdfClient() {
     setResultPdfDoc(null);
     setResult(null);
     setError(null);
+    setWarning(null);
   };
 
   return (
@@ -85,6 +97,7 @@ export function CompressPdfClient() {
       categoryName="PDF Tools"
       categoryHref="/tools/pdf"
       error={error}
+      warning={warning}
       onClearError={() => setError(null)}
     >
       {!file ? (

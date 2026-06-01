@@ -6,7 +6,7 @@ import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';
 import { DownloadButton } from '@/components/tools/DownloadButton';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
-import { checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
 import { protectPDFDocument } from '@/lib/pdf/pdfHelpers';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
@@ -17,13 +17,24 @@ export function ProtectPdfClient() {
   const [showPassword, setShowPassword] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
   const [resultBlobUrl, setResultBlobUrl] = useState<string | null>(null);
 
   const handleFileSelected = async (selectedFiles: File[]) => {
     if (selectedFiles.length === 0) return;
     setError(null);
+    setWarning(null);
     setResultBlobUrl(null);
     const selectedFile = selectedFiles[0];
+
+    const validation = validatePdfFile(selectedFile);
+    if (!validation.isValid) {
+      setError(validation.error || 'Invalid PDF file.');
+      return;
+    }
+    if (validation.warning) {
+      setWarning(validation.warning);
+    }
 
     try {
       const buffer = await selectedFile.arrayBuffer();
@@ -69,6 +80,7 @@ export function ProtectPdfClient() {
     setShowPassword(false);
     setResultBlobUrl(null);
     setError(null);
+    setWarning(null);
   };
 
   return (
@@ -78,6 +90,7 @@ export function ProtectPdfClient() {
       categoryName="PDF Tools"
       categoryHref="/tools/pdf"
       error={error}
+      warning={warning}
       onClearError={() => setError(null)}
     >
       <div className="flex flex-col gap-8">
@@ -86,7 +99,7 @@ export function ProtectPdfClient() {
             accept={{ 'application/pdf': ['.pdf'] }}
             multiple={false}
             onFilesSelected={handleFileSelected}
-            maxSize={50 * 1024 * 1024} // 50MB
+            maxSize={1024 * 1024 * 1024} // 1GB
           />
         )}
 

@@ -9,6 +9,7 @@ interface EditorCanvasProps {
   onMouseUp?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   onMouseLeave?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   children?: React.ReactNode;
+  zoom?: number;
 }
 
 export function EditorCanvas({ 
@@ -18,10 +19,11 @@ export function EditorCanvas({
   onMouseMove,
   onMouseUp,
   onMouseLeave,
-  children
+  children,
+  zoom = 100
 }: EditorCanvasProps) {
   return (
-    <div className="relative rounded-xl border border-border bg-background/50 overflow-hidden min-h-[400px] flex items-center justify-center p-4 w-full">
+    <div className="relative rounded-xl border border-border bg-background/50 overflow-auto min-h-[400px] flex items-center justify-center p-4 w-full">
       {/* Checkerboard transparency grid background */}
       <div 
         className="absolute inset-0 opacity-10 pointer-events-none" 
@@ -48,7 +50,14 @@ export function EditorCanvas({
         Wrap canvas and children in a relative container that shrinks to fit the canvas.
         This allows absolute children to correctly map to the canvas's local coordinate space.
       */}
-      <div className="relative inline-flex max-w-full max-h-[58vh] shadow-md rounded-lg border border-border bg-white z-0">
+      <div 
+        className="relative inline-flex max-w-full max-h-[58vh] shadow-md rounded-lg border border-border bg-white z-0 transition-transform duration-200"
+        style={{
+          transform: `scale(${zoom / 100})`,
+          transformOrigin: 'center',
+          margin: zoom > 100 ? `${(zoom - 100) / 2}%` : undefined
+        }}
+      >
         <canvas 
           ref={canvasRef} 
           onMouseDown={onMouseDown}

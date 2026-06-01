@@ -39,6 +39,48 @@ export function getPositionCoordinates(
   }
 }
 
+export function getPreviewScaleFactor(
+  imageW: number,
+  imageH: number,
+  settings: EditorSettings
+): number {
+  let trueW = imageW;
+  let trueH = imageH;
+
+  const resize = settings.resize;
+  if (resize && resize.width > 0 && resize.height > 0) {
+    trueW = resize.width;
+    trueH = resize.height;
+  } else if (settings.upscaler) {
+    const up = settings.upscaler;
+    if (up.scale !== 'custom') {
+      const factor = up.scale === '2x' ? 2 : up.scale === '3x' ? 3 : up.scale === '4x' ? 4 : 1;
+      trueW = imageW * factor;
+      trueH = imageH * factor;
+    } else {
+      trueW = up.width || imageW;
+      trueH = up.height || imageH;
+    }
+  }
+
+  let targetW = trueW;
+  let targetH = trueH;
+
+  const MAX_PREVIEW_SIZE = 800;
+  if (targetW > MAX_PREVIEW_SIZE || targetH > MAX_PREVIEW_SIZE) {
+    const ratio = targetW / targetH;
+    if (targetW > targetH) {
+      targetW = MAX_PREVIEW_SIZE;
+      targetH = Math.round(MAX_PREVIEW_SIZE / ratio);
+    } else {
+      targetH = MAX_PREVIEW_SIZE;
+      targetW = Math.round(MAX_PREVIEW_SIZE * ratio);
+    }
+  }
+
+  return targetW / trueW;
+}
+
 /**
  * Runs the complete editing canvas pipeline sequentially.
  */
@@ -134,57 +176,68 @@ export async function renderImageWithSettings(
   ctx.restore();
 
   // 3. Apply Pixel-based filters (Clarity, Denoising, Sharpening, and Color conversions)
-  let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const enh = settings.enhancer || {};
+  const sh = settings.sharpen || { strength: 0 };
+  const dn = settings.denoiser || { strength: 0 };
+  const bwCol = settings.bwToColor || { mode: 'tint', tintColor: '#ffffff' };
+  const colBw = settings.colorToBw || { mode: 'custom', contrast: 0 };
+  const gamma = settings.colorAdjust?.gamma;
 
-  // A. Image Enhancer
-  const enh = settings.enhancer;
-  if (enh.auto || enh.color || enh.clarity || enh.exposure || enh.saturation) {
-    imgData = enhanceImageData(imgData, enh);
-  }
+  const hasPixelFilters = 
+    (enh.auto || enh.color || enh.clarity || enh.exposure || enh.saturation) ||
+    (sh.strength > 0) ||
+    (dn.strength > 0) ||
+    (bwCol.mode !== 'tint' || (bwCol.tintColor !== '#ffffff' && bwCol.tintColor !== '')) ||
+    (colBw.mode !== 'custom' || colBw.contrast !== 0) ||
+    (gamma !== undefined && gamma !== 1.0);
 
-  // B. Image Sharpen
-  const sh = settings.sharpen;
-  if (sh.strength > 0) {
-    imgData = sharpenImageData(imgData, sh.strength);
-  }
+  if (hasPixelFilters) {
+    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-  // C. Image Denoiser
-  const dn = settings.denoiser;
-  if (dn.strength > 0) {
-    imgData = denoiseImageData(imgData, dn.strength);
-  }
-
-  // D. Color conversions (Monochrome & Tone Tints)
-  const bwCol = settings.bwToColor;
-  if (bwCol.mode !== 'tint' || bwCol.tintColor !== '#ffffff') {
-    // If warm, cool, sepia, vintage or a custom tint color is active
-    if (bwCol.mode !== 'tint' || bwCol.tintColor !== '') {
-      imgData = bwToColorTone(imgData, bwCol.mode, bwCol.tintColor);
+    // A. Image Enhancer
+    if (enh.auto || enh.color || enh.clarity || enh.exposure || enh.saturation) {
+      imgData = enhanceImageData(imgData, enh);
     }
-  }
 
-  const colBw = settings.colorToBw;
-  if (colBw.mode !== 'custom' || colBw.contrast !== 0) {
-    imgData = colorToBw(imgData, colBw.mode, colBw.contrast);
-  }
-
-  // E. Gamma Correction
-  if (settings.colorAdjust?.gamma !== undefined && settings.colorAdjust.gamma !== 1.0) {
-    const gamma = settings.colorAdjust.gamma;
-    const invGamma = 1 / gamma;
-    const data = imgData.data;
-    const lut = new Uint8Array(256);
-    for (let i = 0; i < 256; i++) {
-      lut[i] = Math.min(255, Math.max(0, Math.pow(i / 255, invGamma) * 255));
+    // B. Image Sharpen
+    if (sh.strength > 0) {
+      imgData = sharpenImageData(imgData, sh.strength);
     }
-    for (let i = 0; i < data.length; i += 4) {
-      data[i] = lut[data[i]];
-      data[i+1] = lut[data[i+1]];
-      data[i+2] = lut[data[i+2]];
-    }
-  }
 
-  ctx.putImageData(imgData, 0, 0);
+    // C. Image Denoiser
+    if (dn.strength > 0) {
+      imgData = denoiseImageData(imgData, dn.strength);
+    }
+
+    // D. Color conversions (Monochrome & Tone Tints)
+    if (bwCol.mode !== 'tint' || bwCol.tintColor !== '#ffffff') {
+      // If warm, cool, sepia, vintage or a custom tint color is active
+      if (bwCol.mode !== 'tint' || bwCol.tintColor !== '') {
+        imgData = bwToColorTone(imgData, bwCol.mode, bwCol.tintColor);
+      }
+    }
+
+    if (colBw.mode !== 'custom' || colBw.contrast !== 0) {
+      imgData = colorToBw(imgData, colBw.mode, colBw.contrast);
+    }
+
+    // E. Gamma Correction
+    if (gamma !== undefined && gamma !== 1.0) {
+      const invGamma = 1 / gamma;
+      const data = imgData.data;
+      const lut = new Uint8Array(256);
+      for (let i = 0; i < 256; i++) {
+        lut[i] = Math.min(255, Math.max(0, Math.pow(i / 255, invGamma) * 255));
+      }
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = lut[data[i]];
+        data[i+1] = lut[data[i+1]];
+        data[i+2] = lut[data[i+2]];
+      }
+    }
+
+    ctx.putImageData(imgData, 0, 0);
+  }
 
   // 4. Apply Adjustments (Brightness, Contrast, Saturation, Gamma, Temperature) using Context filters & overlays
   const adj = settings.colorAdjust;

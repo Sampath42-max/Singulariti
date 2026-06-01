@@ -750,6 +750,245 @@ export const registry: EcosystemRegistry = {
           ]
         }
       ]
+    },
+    {
+      id: 'calculators',
+      name: 'Calculator Tools',
+      description: 'Free online calculators to compute financial, mathematical, tax, health, and date-related queries instantly in your browser.',
+      seoTitle: 'Calculator Tools — Online Calculators Free | Singulariti',
+      seoDescription: 'Free browser-based calculators. Calculate EMI, SIP, compound interest, CAGR, FD, and mortgage payments, tax, BMI, and date differences securely in your browser.',
+      path: '/tools/calculators',
+      collections: [
+        {
+          id: 'financial',
+          name: 'Financial Calculators',
+          description: 'Calculate EMI, SIP, FD returns, compound interest, mortgage, and investment performance.',
+          seoTitle: 'Financial Calculators Online Free | Singulariti',
+          seoDescription: 'Free online financial calculators. Compute loan EMIs, SIP maturity values, fixed deposits, CAGR, and mortgage payments.',
+          path: '/tools/calculators',
+          tools: [
+            {
+              id: 'emi-calculator',
+              name: 'EMI Calculator',
+              description: 'Calculate monthly loan EMI, total interest, and total repayment amount.',
+              seoTitle: 'EMI Calculator Online - Singularity',
+              seoDescription: 'Calculate monthly loan EMI, total interest, and total repayment amount instantly using Singularity’s free EMI calculator.',
+              engine: 'utility',
+              path: '/tools/calculators/emi-calculator'
+            },
+            {
+              id: 'sip-calculator',
+              name: 'SIP Calculator',
+              description: 'Estimate maturity value and estimated returns of your mutual fund SIP investments.',
+              seoTitle: 'SIP Calculator Online - Singularity',
+              seoDescription: 'Estimate maturity value and estimated returns of mutual fund SIP investments instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/sip-calculator'
+            },
+            {
+              id: 'compound-interest-calculator',
+              name: 'Compound Interest Calculator',
+              description: 'Calculate future compound interest earnings with flexible compounding frequencies.',
+              seoTitle: 'Compound Interest Calculator - Singularity',
+              seoDescription: 'Calculate future compound interest earnings with flexible compounding frequencies instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/compound-interest-calculator'
+            },
+            {
+              id: 'cagr-calculator',
+              name: 'CAGR Calculator',
+              description: 'Calculate Compound Annual Growth Rate of investments over years.',
+              seoTitle: 'CAGR Calculator Online - Singularity',
+              seoDescription: 'Calculate Compound Annual Growth Rate of investments over years instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/cagr-calculator'
+            },
+            {
+              id: 'fd-calculator',
+              name: 'FD Calculator',
+              description: 'Calculate Fixed Deposit maturity amount and interest earned.',
+              seoTitle: 'FD Calculator Online - Singularity',
+              seoDescription: 'Calculate Fixed Deposit maturity amount and interest earned instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/fd-calculator'
+            },
+            {
+              id: 'roi-calculator',
+              name: 'ROI Calculator',
+              description: 'Calculate Return on Investment percentage and annualized performance.',
+              seoTitle: 'ROI Calculator Online - Singularity',
+              seoDescription: 'Calculate Return on Investment percentage and annualized performance instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/roi-calculator'
+            },
+            {
+              id: 'currency-converter',
+              name: 'Currency Converter',
+              description: 'Convert between different currencies using standard exchange rates.',
+              seoTitle: 'Currency Converter Online - Singularity',
+              seoDescription: 'Convert between different currencies using standard exchange rates instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/currency-converter'
+            },
+            {
+              id: 'mortgage-calculator',
+              name: 'Mortgage Calculator',
+              description: 'Estimate monthly mortgage payments, including property tax and home insurance.',
+              seoTitle: 'Mortgage Calculator Online - Singularity',
+              seoDescription: 'Estimate monthly mortgage payments, including property tax and home insurance instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/mortgage-calculator'
+            }
+          ]
+        },
+        {
+          id: 'tax-business',
+          name: 'Tax & Business Calculators',
+          description: 'Calculate income tax payable under old or new regimes, GST, profit/loss, and revenue.',
+          seoTitle: 'Tax and Business Calculators Online Free | Singulariti',
+          seoDescription: 'Free online tax and business calculators. Compute Indian Income Tax, GST, sales profit margins, and ad revenue.',
+          path: '/tools/calculators',
+          tools: [
+            {
+              id: 'income-tax-calculator',
+              name: 'Income Tax Calculator',
+              description: 'Estimate income tax payable under Old and New tax regimes with deductions.',
+              seoTitle: 'Income Tax Calculator Online - Singularity',
+              seoDescription: 'Estimate income tax payable under Old and New tax regimes with deductions instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/income-tax-calculator'
+            },
+            {
+              id: 'gst-calculator',
+              name: 'GST Calculator',
+              description: 'Calculate GST amounts by adding or removing GST with custom rates.',
+              seoTitle: 'GST Calculator Online - Singularity',
+              seoDescription: 'Calculate GST amounts by adding or removing GST with custom rates instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/gst-calculator'
+            },
+            {
+              id: 'discount-calculator',
+              name: 'Discount Calculator',
+              description: 'Calculate discount savings, final sales price, and additional discounts.',
+              seoTitle: 'Discount Calculator Online - Singularity',
+              seoDescription: 'Calculate discount savings, final sales price, and additional discounts instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/discount-calculator'
+            },
+            {
+              id: 'profit-calculator',
+              name: 'Profit Calculator',
+              description: 'Calculate cost, selling price, profit amount, and profit margins.',
+              seoTitle: 'Profit Calculator Online - Singularity',
+              seoDescription: 'Calculate cost, selling price, profit amount, and profit margins instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/profit-calculator'
+            },
+            {
+              id: 'youtube-earnings-calculator',
+              name: 'YouTube Earnings Calculator',
+              description: 'Estimate daily, monthly, and yearly YouTube video creation earnings.',
+              seoTitle: 'YouTube Earnings Calculator Online - Singularity',
+              seoDescription: 'Estimate daily, monthly, and yearly YouTube video creation earnings instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/youtube-earnings-calculator'
+            },
+            {
+              id: 'adsense-revenue-calculator',
+              name: 'AdSense Revenue Calculator',
+              description: 'Estimate Google AdSense earnings based on page views, CPC, and CTR.',
+              seoTitle: 'AdSense Revenue Calculator Online - Singularity',
+              seoDescription: 'Estimate Google AdSense earnings based on page views, CPC, and CTR instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/adsense-revenue-calculator'
+            }
+          ]
+        },
+        {
+          id: 'math-science',
+          name: 'Math & Science Calculators',
+          description: 'Basic and advanced scientific math functions, percentages, and CGPA conversions.',
+          seoTitle: 'Math and Science Calculators Online Free | Singulariti',
+          seoDescription: 'Free online math and educational calculators. Compute percentages, semester CGPAs, and scientific equations.',
+          path: '/tools/calculators',
+          tools: [
+            {
+              id: 'percentage-calculator',
+              name: 'Percentage Calculator',
+              description: 'Compute percentages, percentage increases, decreases, and fractions.',
+              seoTitle: 'Percentage Calculator Online - Singularity',
+              seoDescription: 'Compute percentages, percentage increases, decreases, and fractions instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/percentage-calculator'
+            },
+            {
+              id: 'cgpa-calculator',
+              name: 'CGPA Calculator',
+              description: 'Calculate cumulative grade point average (CGPA) and convert to percentages.',
+              seoTitle: 'CGPA Calculator Online - Singularity',
+              seoDescription: 'Calculate cumulative grade point average (CGPA) and convert to percentages instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/cgpa-calculator'
+            },
+            {
+              id: 'scientific-calculator',
+              name: 'Scientific Calculator',
+              description: 'Full scientific calculator supporting trigonometry, logs, factorials, and powers.',
+              seoTitle: 'Scientific Calculator Online - Singularity',
+              seoDescription: 'Full scientific calculator supporting trigonometry, logs, factorials, and powers instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/scientific-calculator'
+            }
+          ]
+        },
+        {
+          id: 'health-date',
+          name: 'Health & Date Calculators',
+          description: 'Track exact chronological age, calendar differences, BMI, and calorie goals.',
+          seoTitle: 'Health and Date Calculators Online Free | Singulariti',
+          seoDescription: 'Free online health and calendar calculators. Compute chronological age, day counts, BMI ranges, and metabolic BMR.',
+          path: '/tools/calculators',
+          tools: [
+            {
+              id: 'age-calculator',
+              name: 'Age Calculator',
+              description: 'Calculate chronological age in years, months, and days, and countdown to next birthday.',
+              seoTitle: 'Age Calculator Online - Singularity',
+              seoDescription: 'Calculate chronological age in years, months, and days instantly using Singularity’s free Age calculator.',
+              engine: 'utility',
+              path: '/tools/calculators/age-calculator'
+            },
+            {
+              id: 'date-difference-calculator',
+              name: 'Date Difference Calculator',
+              description: 'Calculate exact years, months, and days difference between two selected dates.',
+              seoTitle: 'Date Difference Calculator Online - Singularity',
+              seoDescription: 'Calculate exact years, months, and days difference between two selected dates instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/date-difference-calculator'
+            },
+            {
+              id: 'bmi-calculator',
+              name: 'BMI Calculator',
+              description: 'Calculate body mass index (BMI) and identify healthy weight ranges.',
+              seoTitle: 'BMI Calculator Online - Singularity',
+              seoDescription: 'Calculate body mass index (BMI) and identify healthy weight ranges instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/bmi-calculator'
+            },
+            {
+              id: 'calorie-calculator',
+              name: 'Calorie Calculator',
+              description: 'Calculate BMR and daily calorie maintenance requirements based on fitness goals.',
+              seoTitle: 'Calorie Calculator Online - Singularity',
+              seoDescription: 'Calculate BMR and daily calorie maintenance requirements based on fitness goals instantly using Singularity.',
+              engine: 'utility',
+              path: '/tools/calculators/calorie-calculator'
+            }
+          ]
+        }
+      ]
     }
   ]
 };

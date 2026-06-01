@@ -25,6 +25,7 @@ export function PageThumbnail({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [dimensions, setDimensions] = useState<{ width: number; height: number } | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -59,6 +60,7 @@ export function PageThumbnail({
         await renderTask.promise;
         
         if (active) {
+          setDimensions({ width: viewport.width, height: viewport.height });
           setLoading(false);
           if (onRenderSuccess) onRenderSuccess();
         }
@@ -93,10 +95,15 @@ export function PageThumbnail({
 
   return (
     <div 
-      className={`relative flex items-center justify-center bg-background border border-border rounded-lg overflow-hidden select-none ${className}`}
-      style={style}
+      className={`relative inline-flex items-center justify-center bg-background border border-border rounded-lg overflow-hidden select-none max-w-full ${className}`}
+      style={{
+        ...style,
+        aspectRatio: dimensions ? `${dimensions.width} / ${dimensions.height}` : undefined,
+        width: dimensions ? `${dimensions.width}px` : undefined,
+        height: 'auto',
+      }}
     >
-      <canvas ref={canvasRef} className="max-w-full max-h-full object-contain" />
+      <canvas ref={canvasRef} className="w-full h-full block" />
       
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-surface/50 backdrop-blur-xs">

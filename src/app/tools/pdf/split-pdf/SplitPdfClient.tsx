@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { DownloadButton } from '@/components/tools/DownloadButton';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { splitPDF, countPDFPages } from '@/lib/pdf/pdfHelpers';
-import { parsePageRanges, checkPdfPasswordProtected } from '@/lib/pdf/pdfValidation';
+import { parsePageRanges, checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Sliders, Scissors } from 'lucide-react';
 
@@ -17,13 +17,24 @@ export function SplitPdfClient() {
   const [rangeInput, setRangeInput] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
   const [splitBlobUrl, setSplitBlobUrl] = useState<string | null>(null);
 
   const handleFileSelected = async (selectedFiles: File[]) => {
     if (selectedFiles.length === 0) return;
     setError(null);
+    setWarning(null);
     setSplitBlobUrl(null);
     const selectedFile = selectedFiles[0];
+
+    const validation = validatePdfFile(selectedFile);
+    if (!validation.isValid) {
+      setError(validation.error || 'Invalid PDF file.');
+      return;
+    }
+    if (validation.warning) {
+      setWarning(validation.warning);
+    }
 
     try {
       const buffer = await selectedFile.arrayBuffer();
@@ -75,6 +86,7 @@ export function SplitPdfClient() {
     setRangeInput('');
     setSplitBlobUrl(null);
     setError(null);
+    setWarning(null);
   };
 
   return (
@@ -84,6 +96,7 @@ export function SplitPdfClient() {
       categoryName="PDF Tools"
       categoryHref="/tools/pdf"
       error={error}
+      warning={warning}
       onClearError={() => setError(null)}
     >
       {!file ? (

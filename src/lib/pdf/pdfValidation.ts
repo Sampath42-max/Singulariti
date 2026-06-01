@@ -82,10 +82,18 @@ export function validatePdfFile(file: File): FileValidationResult {
 
   const result: FileValidationResult = { isValid: true };
 
-  // Alert if file exceeds 50MB (arbitrary limit for browser performance)
-  const MAX_SIZE_MB = 50;
-  if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-    result.warning = `Large file warning: This file is larger than ${MAX_SIZE_MB}MB. Processing it inside the browser might be slow or run out of memory.`;
+  const MAX_SIZE_BYTES = 1024 * 1024 * 1024; // 1GB
+  const WARNING_SIZE_BYTES = 100 * 1024 * 1024; // 100MB
+
+  if (file.size > MAX_SIZE_BYTES) {
+    return {
+      isValid: false,
+      error: `File is too large (${(file.size / (1024 * 1024 * 1024)).toFixed(2)} GB). The maximum supported file size for browser-based processing is 1GB.`
+    };
+  }
+
+  if (file.size > WARNING_SIZE_BYTES) {
+    result.warning = `Large file warning: This file is ${(file.size / (1024 * 1024)).toFixed(1)}MB. Processing files between 100MB and 1GB entirely in the browser is supported, but may cause the page to lag or run out of memory depending on your computer's RAM. Keep other tabs closed for best performance.`;
   }
 
   return result;

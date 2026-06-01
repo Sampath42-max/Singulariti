@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { viewPDFMetadata, PDFMetadata } from '@/lib/pdf/pdfHelpers';
 import { formatFileSize } from '@/lib/fileHelpers';
+import { validatePdfFile } from '@/lib/pdf/pdfValidation';
 import { FileText, Eye, Info } from 'lucide-react';
 
 export function MetadataViewerClient() {
@@ -14,12 +15,24 @@ export function MetadataViewerClient() {
   const [metadata, setMetadata] = useState<PDFMetadata | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
 
   const handleFileSelected = async (selectedFiles: File[]) => {
     if (selectedFiles.length === 0) return;
     setError(null);
+    setWarning(null);
     setMetadata(null);
     const selectedFile = selectedFiles[0];
+
+    const validation = validatePdfFile(selectedFile);
+    if (!validation.isValid) {
+      setError(validation.error || 'Invalid PDF file.');
+      return;
+    }
+    if (validation.warning) {
+      setWarning(validation.warning);
+    }
+
     setFile(selectedFile);
     setIsProcessing(true);
 
@@ -38,6 +51,7 @@ export function MetadataViewerClient() {
     setFile(null);
     setMetadata(null);
     setError(null);
+    setWarning(null);
   };
 
   // Helper to format key strings
@@ -65,6 +79,7 @@ export function MetadataViewerClient() {
       categoryName="PDF Tools"
       categoryHref="/tools/pdf"
       error={error}
+      warning={warning}
       onClearError={() => setError(null)}
     >
       {!file ? (
