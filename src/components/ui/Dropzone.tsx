@@ -73,10 +73,15 @@ export function Dropzone({
           Choose File
         </Button>
       </div>
-      <div className="mt-6 flex items-center justify-center gap-4 text-[13px] font-sans text-slate pointer-events-none">
-        <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-primary mr-2"></span>Browser-based</span>
-        <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-primary mr-2"></span>No upload</span>
-        <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-primary mr-2"></span>Secure</span>
+      <div className="mt-6 flex flex-col items-center justify-center gap-2 text-[13px] font-sans text-slate pointer-events-none">
+        <div className="flex items-center gap-4">
+          <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-primary mr-2"></span>Browser-based</span>
+          <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-primary mr-2"></span>No upload</span>
+          <span className="flex items-center"><span className="w-2 h-2 rounded-full bg-primary mr-2"></span>Secure</span>
+        </div>
+        <p className="text-[12px] text-slate/85 mt-1.5 font-medium text-center max-w-md">
+          Your file is processed in your browser and is not uploaded to our server.
+        </p>
       </div>
     </div>
   );

@@ -46,6 +46,7 @@ export function Header() {
 
           <nav className="flex items-center gap-4">
             <Link href="/tools" className="hidden md:block text-[15px] font-sans font-medium text-slate hover:text-primary transition-colors">Tools</Link>
+            <Link href="/blog" className="hidden md:block text-[15px] font-sans font-medium text-slate hover:text-primary transition-colors">Blog</Link>
             
             {mounted && (
               <button 

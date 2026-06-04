@@ -7,6 +7,7 @@ import { ResultBox } from '../shared/ResultBox';
 import { Button } from '@/components/ui/Button';
 import js_beautify from 'js-beautify';
 import { format as formatSql } from 'sql-formatter';
+import { sanitizeHtml } from '@/lib/sanitization';
 
 interface DevToolContainerProps {
   toolId: string;
@@ -625,7 +626,7 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
               <div className="space-y-2">
                 <label className="text-[13px] font-sans font-semibold text-ink uppercase tracking-wider">Markdown Output Preview</label>
                 <div 
-                  dangerouslySetInnerHTML={{ __html: output }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(output) }}
                   className="w-full p-4 border border-border bg-surface rounded-xl prose max-w-none text-ink font-sans"
                 />
               </div>

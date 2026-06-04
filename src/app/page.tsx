@@ -128,21 +128,18 @@ export default function Home() {
               description="Measure your WPM, analyze your mistakes, and improve your typing accuracy."
               icon={<Keyboard />}
               href="/typing-speed-test"
-              badge={{ text: `New`, variant: 'default' }}
             />
             <Card 
               title="Pomodoro Timer"
               description="Deep focus environment with task management and ambient sounds."
               icon={<Timer />}
               href="/pomodoro-timer"
-              badge={{ text: `New`, variant: 'default' }}
             />
             <Card 
               title="Online Whiteboard"
               description="Draw, write, sketch, add shapes, and export your whiteboard directly in your browser."
               icon={<Brush />}
               href="/tools/editing/online-whiteboard"
-              badge={{ text: `New`, variant: 'default' }}
             />
           </div>
         </section>

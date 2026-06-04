@@ -35,16 +35,48 @@ export function TextBox({
 
   const stats = getStats();
 
+  const [localError, setLocalError] = React.useState<string | null>(null);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalError(null);
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // Validate size (max 5MB for text tools)
+    const MAX_TEXT_SIZE = 5 * 1024 * 1024;
+    if (file.size === 0) {
+      setLocalError("The uploaded file appears to be empty or corrupted.");
+      return;
+    }
+    if (file.size > MAX_TEXT_SIZE) {
+      setLocalError("File size is too large. Maximum supported text file size is 5MB.");
+      return;
+    }
+
+    // Validate extension
+    const allowedExts = ['.txt', '.json', '.xml', '.csv', '.html', '.css', '.js', '.yaml', '.yml', '.md'];
+    const nameLower = file.name.toLowerCase();
+    const hasValidExt = allowedExts.some(ext => nameLower.endsWith(ext));
+    if (!hasValidExt) {
+      setLocalError("This file type is not supported.");
+      return;
+    }
 
     const reader = new FileReader();
     reader.onload = (event) => {
       const text = event.target?.result as string;
       if (text !== undefined) {
-        onChange(text);
+        const textLimit = 500000;
+        if (text.length > textLimit) {
+          setLocalError(`Text content was truncated to the maximum limit of ${textLimit.toLocaleString()} characters.`);
+          onChange(text.slice(0, textLimit));
+        } else {
+          onChange(text);
+        }
       }
+    };
+    reader.onerror = () => {
+      setLocalError("Unable to read this file.");
     };
     reader.readAsText(file);
   };
@@ -87,18 +119,22 @@ export function TextBox({
       <div className="relative">
         <textarea
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            setLocalError(null);
+            onChange(e.target.value);
+          }}
           placeholder={placeholder}
           rows={rows}
+          maxLength={500000}
           className={`w-full p-4 border rounded-xl font-mono text-[14px] bg-background text-ink outline-none transition-all focus:border-primary/80 ${
-            error ? 'border-red-500/80 focus:border-red-500' : 'border-border'
+            (error || localError) ? 'border-red-500/80 focus:border-red-500' : 'border-border'
           }`}
         />
       </div>
 
       <div className="flex items-center justify-between min-h-6">
-        {error ? (
-          <p className="text-[12px] font-sans font-medium text-red-500">{error}</p>
+        {(error || localError) ? (
+          <p className="text-[12px] font-sans font-medium text-red-500">{error || localError}</p>
         ) : (
           <div />
         )}

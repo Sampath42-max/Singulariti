@@ -13,6 +13,7 @@ interface ToolLayoutProps {
   categoryHref: string;
   error?: string | null;
   warning?: string | null;
+  privacyLabel?: string;
   onClearError?: () => void;
   children: React.ReactNode;
 }
@@ -24,6 +25,7 @@ export function ToolLayout({
   categoryHref,
   error,
   warning,
+  privacyLabel,
   onClearError,
   children
 }: ToolLayoutProps) {
@@ -78,7 +80,19 @@ export function ToolLayout({
           <div className="flex items-center gap-3 bg-primary/5 border border-primary/10 rounded-xl p-4 text-primary max-w-3xl mx-auto">
             <ShieldCheck className="w-5 h-5 flex-shrink-0" />
             <p className="text-[13px] font-sans font-medium leading-relaxed">
-              Your files are processed locally in your browser. Nothing is uploaded to any server.
+              {privacyLabel || (() => {
+                const cat = (categoryName || '').toLowerCase();
+                if (cat.includes('pdf')) {
+                  return "PDFs are processed only for the selected action. No files are uploaded to our server.";
+                }
+                if (cat.includes('image') || cat.includes('editing')) {
+                  return "Images are processed locally in your browser. Nothing is uploaded to any server.";
+                }
+                if (cat.includes('text')) {
+                  return "Text is processed temporarily and not stored. No files are uploaded to our server.";
+                }
+                return "Your files are processed locally in your browser. Nothing is uploaded to any server.";
+              })()}
             </p>
           </div>
         </section>

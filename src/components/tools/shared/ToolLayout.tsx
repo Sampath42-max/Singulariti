@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react';
+import { ChevronDown, ChevronUp, ArrowLeft, ShieldCheck } from 'lucide-react';
 
 interface FaqItem {
   question: string;
@@ -18,6 +18,7 @@ interface ToolLayoutProps {
   categoryPath: string;
   howToUse: string[];
   faqs: FaqItem[];
+  privacyLabel?: string;
   children: React.ReactNode;
 }
 
@@ -28,6 +29,7 @@ export function ToolLayout({
   categoryPath,
   howToUse,
   faqs,
+  privacyLabel,
   children
 }: ToolLayoutProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -54,13 +56,35 @@ export function ToolLayout({
         </div>
 
         {/* Hero Area */}
-        <section className="container mx-auto px-4 max-w-3xl text-center mb-8">
+        <section className="container mx-auto px-4 max-w-3xl text-center mb-6">
           <h1 className="font-display font-bold text-3xl md:text-4xl text-ink mb-3 tracking-tight">
             {title}
           </h1>
           <p className="font-sans text-base text-slate leading-relaxed">
             {description}
           </p>
+        </section>
+
+        {/* Privacy Lock Banner */}
+        <section className="container mx-auto px-4 max-w-6xl mb-6 w-full">
+          <div className="flex items-center gap-3 bg-primary/5 border border-primary/10 rounded-xl p-3 text-primary max-w-3xl mx-auto">
+            <ShieldCheck className="w-4.5 h-4.5 flex-shrink-0" />
+            <p className="text-[12px] font-sans font-medium leading-relaxed">
+              {privacyLabel || (() => {
+                const cat = (categoryName || '').toLowerCase();
+                if (cat.includes('pdf')) {
+                  return "PDFs are processed only for the selected action. No files are uploaded to our server.";
+                }
+                if (cat.includes('image') || cat.includes('editing')) {
+                  return "Images are processed locally in your browser. Nothing is uploaded to any server.";
+                }
+                if (cat.includes('text')) {
+                  return "Text is processed temporarily and not stored. No files are uploaded to our server.";
+                }
+                return "Your inputs are processed locally in your browser. Nothing is uploaded to any server.";
+              })()}
+            </p>
+          </div>
         </section>
 
         {/* Active Tool Area */}
