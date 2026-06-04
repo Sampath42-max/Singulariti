@@ -4,7 +4,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { ImageIcon, Sparkles, FileText, QrCode, Wand2, Calculator, Keyboard, Timer } from 'lucide-react';
+import { ImageIcon, Sparkles, FileText, QrCode, Wand2, Calculator, Keyboard, Timer, Brush, Type, Code, Scale, Search } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { registry } from '@/registry';
 
@@ -20,6 +20,10 @@ export default function Home() {
   const pdfToolsCount = getToolCount('pdf');
   const qrToolsCount = getToolCount('qr');
   const calculatorsToolsCount = getToolCount('calculators');
+  const textToolsCount = getToolCount('text');
+  const devToolsCount = getToolCount('dev');
+  const convertToolsCount = getToolCount('convert');
+  const seoToolsCount = getToolCount('seo');
 
   return (
     <>
@@ -55,7 +59,35 @@ export default function Home() {
             <h2 className="font-display font-bold text-3xl text-ink">Explore Ecosystem</h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <Card 
+              title="Text Tools"
+              description="Count words, format cases, sort, reverse, and compare text instantly."
+              icon={<Type />}
+              href="/tools/text"
+              badge={{ text: `${textToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="Developer Tools"
+              description="Format JSON/XML/YAML/SQL, encode Base64/URLs, decode JWTs, and test regex."
+              icon={<Code />}
+              href="/tools/dev"
+              badge={{ text: `${devToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="Unit Conversion Tools"
+              description="Convert lengths, weights, temperature, area, bases and data storage."
+              icon={<Scale />}
+              href="/tools/convert"
+              badge={{ text: `${convertToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="SEO Tools"
+              description="Generate meta tags, robots.txt, sitemaps, and check heading structures."
+              icon={<Search />}
+              href="/tools/seo"
+              badge={{ text: `${seoToolsCount} Tools`, variant: 'default' }}
+            />
             <Card 
               title="Image Tools"
               description="Compress, convert, and resize images instantly in your browser."
@@ -103,6 +135,13 @@ export default function Home() {
               description="Deep focus environment with task management and ambient sounds."
               icon={<Timer />}
               href="/pomodoro-timer"
+              badge={{ text: `New`, variant: 'default' }}
+            />
+            <Card 
+              title="Online Whiteboard"
+              description="Draw, write, sketch, add shapes, and export your whiteboard directly in your browser."
+              icon={<Brush />}
+              href="/tools/editing/online-whiteboard"
               badge={{ text: `New`, variant: 'default' }}
             />
           </div>

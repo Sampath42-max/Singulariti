@@ -23,6 +23,14 @@ import { YoutubeEarningsCalculatorView } from './tools/YoutubeEarningsCalculator
 import { AdsenseRevenueCalculatorView } from './tools/AdsenseRevenueCalculatorView';
 import { MortgageCalculatorView } from './tools/MortgageCalculatorView';
 
+// New calculators
+import { BasicCalculatorView } from './tools/BasicCalculatorView';
+import { LoanCalculatorView } from './tools/LoanCalculatorView';
+import { SimpleInterestCalculatorView } from './tools/SimpleInterestCalculatorView';
+import { SalaryCalculatorView } from './tools/SalaryCalculatorView';
+import { TipCalculatorView } from './tools/TipCalculatorView';
+import { TimeDurationCalculatorView } from './tools/TimeDurationCalculatorView';
+
 interface CalculatorClientContainerProps {
   toolId: string;
   toolName: string;
@@ -77,6 +85,21 @@ export function CalculatorClientContainer({
       return <AdsenseRevenueCalculatorView toolId={toolId} title={toolName} description={toolDescription} />;
     case 'mortgage-calculator':
       return <MortgageCalculatorView toolId={toolId} title={toolName} description={toolDescription} />;
+    
+    // New calculators
+    case 'basic-calculator':
+      return <BasicCalculatorView toolId={toolId} title={toolName} description={toolDescription} />;
+    case 'loan-calculator':
+      return <LoanCalculatorView toolId={toolId} title={toolName} description={toolDescription} />;
+    case 'simple-interest-calculator':
+      return <SimpleInterestCalculatorView toolId={toolId} title={toolName} description={toolDescription} />;
+    case 'salary-calculator':
+      return <SalaryCalculatorView toolId={toolId} title={toolName} description={toolDescription} />;
+    case 'tip-calculator':
+      return <TipCalculatorView toolId={toolId} title={toolName} description={toolDescription} />;
+    case 'time-duration-calculator':
+      return <TimeDurationCalculatorView toolId={toolId} title={toolName} description={toolDescription} />;
+
     default:
       return (
         <div className="p-8 text-center text-red-500 bg-red-500/10 rounded-xl border border-red-500/20 font-sans">

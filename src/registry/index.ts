@@ -907,6 +907,15 @@ export const registry: EcosystemRegistry = {
               seoDescription: 'Estimate monthly mortgage payments, including property tax and home insurance instantly using Singularity.',
               engine: 'utility',
               path: '/tools/calculators/mortgage-calculator'
+            },
+            {
+              id: 'loan-calculator',
+              name: 'Loan Calculator',
+              description: 'Calculate monthly loan payments, total interest, and amortized schedules.',
+              seoTitle: 'Loan Calculator Online — Free Loan Repayments | Singulariti',
+              seoDescription: 'Calculate monthly loan payments, interest charges, and dynamic amortized schedules instantly.',
+              engine: 'utility',
+              path: '/tools/calculators/loan-calculator'
             }
           ]
         },
@@ -971,6 +980,24 @@ export const registry: EcosystemRegistry = {
               seoDescription: 'Estimate Google AdSense earnings based on page views, CPC, and CTR instantly using Singularity.',
               engine: 'utility',
               path: '/tools/calculators/adsense-revenue-calculator'
+            },
+            {
+              id: 'simple-interest-calculator',
+              name: 'Simple Interest Calculator',
+              description: 'Calculate simple interest earnings, principal amounts, or active interest rates.',
+              seoTitle: 'Simple Interest Calculator Online — Free Math Tool | Singulariti',
+              seoDescription: 'Calculate simple interest earnings, principal amounts, or active interest rates instantly.',
+              engine: 'utility',
+              path: '/tools/calculators/simple-interest-calculator'
+            },
+            {
+              id: 'salary-calculator',
+              name: 'Salary Calculator',
+              description: 'Convert salary figures between hourly, daily, weekly, monthly, and annual amounts.',
+              seoTitle: 'Salary Calculator — Hourly, Monthly, Annual Wage Converter | Singulariti',
+              seoDescription: 'Convert salary figures between hourly, daily, weekly, monthly, and annual amounts instantly.',
+              engine: 'utility',
+              path: '/tools/calculators/salary-calculator'
             }
           ]
         },
@@ -1008,6 +1035,15 @@ export const registry: EcosystemRegistry = {
               seoDescription: 'Full scientific calculator supporting trigonometry, logs, factorials, and powers instantly using Singularity.',
               engine: 'utility',
               path: '/tools/calculators/scientific-calculator'
+            },
+            {
+              id: 'basic-calculator',
+              name: 'Basic Calculator',
+              description: 'Simple mathematical calculator for addition, subtraction, multiplication, and division.',
+              seoTitle: 'Basic Calculator Online — Free Arithmetic Tool | Singulariti',
+              seoDescription: 'Simple mathematical calculator for addition, subtraction, multiplication, and division.',
+              engine: 'utility',
+              path: '/tools/calculators/basic-calculator'
             }
           ]
         },
@@ -1054,7 +1090,214 @@ export const registry: EcosystemRegistry = {
               seoDescription: 'Calculate BMR and daily calorie maintenance requirements based on fitness goals instantly using Singularity.',
               engine: 'utility',
               path: '/tools/calculators/calorie-calculator'
+            },
+            {
+              id: 'tip-calculator',
+              name: 'Tip Calculator',
+              description: 'Calculate split bills, tip percentages, and exact share payments.',
+              seoTitle: 'Tip Calculator Online — Split Bills & Tips | Singulariti',
+              seoDescription: 'Calculate split bills, tip percentages, and exact share payments instantly.',
+              engine: 'utility',
+              path: '/tools/calculators/tip-calculator'
+            },
+            {
+              id: 'time-duration-calculator',
+              name: 'Time Duration Calculator',
+              description: 'Calculate exact elapsed time durations in hours, minutes, and seconds between times.',
+              seoTitle: 'Time Duration Calculator — Elapsed Time Counter | Singulariti',
+              seoDescription: 'Calculate exact elapsed time durations in hours, minutes, and seconds between times instantly.',
+              engine: 'utility',
+              path: '/tools/calculators/time-duration-calculator'
             }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'text',
+      name: 'Text Tools',
+      description: 'Convert case, count words, remove duplicate lines, compare texts, and generate placeholder text securely.',
+      seoTitle: 'Text Tools — Convert, Count & Format Text Online | Singulariti',
+      seoDescription: 'A complete collection of free online text tools. Count words, lines, paragraphs, format cases, sort lists, compare texts, and generate dummy text.',
+      path: '/tools/text',
+      collections: [
+        {
+          id: 'text-manipulation',
+          name: 'Text Formatting & Manipulation',
+          description: 'Format cases, replace text, and clean up formatting.',
+          seoTitle: 'Text Manipulation Tools | Singulariti',
+          seoDescription: 'Format cases, replace text, and clean up formatting.',
+          path: '/tools/text',
+          tools: [
+            { id: 'word-counter', name: 'Word Counter', description: 'Count words, characters, sentences, and paragraphs in real time.', seoTitle: 'Word Counter — Count Words & Chars Online | Singulariti', seoDescription: 'Count words, characters, sentences, and paragraphs in real time with this free online counter.', engine: 'text-tool', path: '/tools/text/word-counter' },
+            { id: 'character-counter', name: 'Character Counter', description: 'Count characters and spaces in your text instantly.', seoTitle: 'Character Counter — Free Char Count Online | Singulariti', seoDescription: 'Count characters and spaces in your text instantly with this free online counter.', engine: 'text-tool', path: '/tools/text/character-counter' },
+            { id: 'case-converter', name: 'Case Converter', description: 'Convert text between uppercase, lowercase, sentence case, and title case.', seoTitle: 'Case Converter — Uppercase, Lowercase, Sentence Case | Singulariti', seoDescription: 'Convert text between uppercase, lowercase, sentence case, and title case instantly.', engine: 'text-tool', path: '/tools/text/case-converter' },
+            { id: 'remove-duplicate-lines', name: 'Remove Duplicate Lines', description: 'Remove duplicate lines from text or lists instantly.', seoTitle: 'Remove Duplicate Lines — Clean Up Text Online | Singulariti', seoDescription: 'Remove duplicate lines from text or lists instantly with this free online utility.', engine: 'text-tool', path: '/tools/text/remove-duplicate-lines' },
+            { id: 'text-sorter', name: 'Text Sorter', description: 'Sort text lines alphabetically or reverse list order.', seoTitle: 'Text Sorter — Sort Lists & Lines Online | Singulariti', seoDescription: 'Sort text lines alphabetically or reverse list order instantly with this free utility.', engine: 'text-tool', path: '/tools/text/text-sorter' },
+            { id: 'text-compare', name: 'Text Compare', description: 'Compare two text blocks side-by-side to highlight differences.', seoTitle: 'Text Compare — Side-by-Side Text Comparison | Singulariti', seoDescription: 'Compare two text blocks side-by-side to highlight differences instantly.', engine: 'text-tool', path: '/tools/text/text-compare' },
+            { id: 'text-diff', name: 'Text Diff Checker', description: 'Find differences between two versions of text with inline highlights.', seoTitle: 'Text Diff Checker — Compare Text Online | Singulariti', seoDescription: 'Find differences between two versions of text with inline highlights.', engine: 'text-tool', path: '/tools/text/text-diff' },
+            { id: 'remove-extra-spaces', name: 'Remove Extra Spaces', description: 'Strip multiple spaces, trailing white spaces, and empty lines.', seoTitle: 'Remove Extra Spaces — Clean Up Text Online | Singulariti', seoDescription: 'Strip multiple spaces, trailing white spaces, and empty lines instantly.', engine: 'text-tool', path: '/tools/text/remove-extra-spaces' },
+            { id: 'line-counter', name: 'Line Counter', description: 'Count the total number of lines in a text document.', seoTitle: 'Line Counter — Count Lines Online | Singulariti', seoDescription: 'Count the total number of lines in a text document instantly.', engine: 'text-tool', path: '/tools/text/line-counter' },
+            { id: 'sentence-counter', name: 'Sentence Counter', description: 'Count sentences in a block of text.', seoTitle: 'Sentence Counter — Count Sentences Online | Singulariti', seoDescription: 'Count sentences in a block of text instantly.', engine: 'text-tool', path: '/tools/text/sentence-counter' },
+            { id: 'paragraph-counter', name: 'Paragraph Counter', description: 'Count paragraphs in a block of text.', seoTitle: 'Paragraph Counter — Count Paragraphs Online | Singulariti', seoDescription: 'Count paragraphs in a block of text instantly.', engine: 'text-tool', path: '/tools/text/paragraph-counter' },
+            { id: 'text-reverser', name: 'Text Reverser', description: 'Reverse character letters or word orders.', seoTitle: 'Text Reverser — Reverse Text Online | Singulariti', seoDescription: 'Reverse character letters or word orders instantly.', engine: 'text-tool', path: '/tools/text/text-reverser' },
+            { id: 'slug-generator', name: 'Slug Generator', description: 'Convert text to URL-friendly slugs.', seoTitle: 'Slug Generator — Convert Text to URL Slugs | Singulariti', seoDescription: 'Convert text to URL-friendly slugs instantly.', engine: 'text-tool', path: '/tools/text/slug-generator' },
+            { id: 'find-replace', name: 'Find and Replace Text', description: 'Find text patterns and replace with other values.', seoTitle: 'Find and Replace Text Online — Free Utility | Singulariti', seoDescription: 'Find text patterns and replace with other values instantly.', engine: 'text-tool', path: '/tools/text/find-replace' },
+            { id: 'text-uppercase', name: 'Text to Uppercase', description: 'Convert text to all capital letters.', seoTitle: 'Text to Uppercase — Uppercase Converter | Singulariti', seoDescription: 'Convert text to all capital letters instantly.', engine: 'text-tool', path: '/tools/text/text-uppercase' },
+            { id: 'text-lowercase', name: 'Text to Lowercase', description: 'Convert text to all lowercase letters.', seoTitle: 'Text to Lowercase — Lowercase Converter | Singulariti', seoDescription: 'Convert text to all lowercase letters instantly.', engine: 'text-tool', path: '/tools/text/text-lowercase' },
+            { id: 'capitalize-text', name: 'Capitalize Text', description: 'Capitalize the first letter of each sentence.', seoTitle: 'Capitalize Text — Capitalization Tool | Singulariti', seoDescription: 'Capitalize the first letter of each sentence instantly.', engine: 'text-tool', path: '/tools/text/capitalize-text' },
+            { id: 'title-case', name: 'Title Case Converter', description: 'Convert text to Title Case capitalization.', seoTitle: 'Title Case Converter — Capitalize Titles | Singulariti', seoDescription: 'Convert text to Title Case capitalization instantly.', engine: 'text-tool', path: '/tools/text/title-case' }
+          ]
+        },
+        {
+          id: 'generators',
+          name: 'Text Generators',
+          description: 'Generate dummy lorem ipsum text or random text sequences.',
+          seoTitle: 'Lorem Ipsum & Random Text Generators | Singulariti',
+          seoDescription: 'Generate dummy lorem ipsum text or random text sequences.',
+          path: '/tools/text',
+          tools: [
+            { id: 'lorem-ipsum', name: 'Lorem Ipsum Generator', description: 'Generate dummy Lorem Ipsum paragraphs for design layouts.', seoTitle: 'Lorem Ipsum Generator — Create Placeholder Text | Singulariti', seoDescription: 'Generate dummy Lorem Ipsum paragraphs for design layouts.', engine: 'text-tool', path: '/tools/text/lorem-ipsum' },
+            { id: 'random-text', name: 'Random Text Generator', description: 'Generate random strings, passwords, or alphanumeric lists.', seoTitle: 'Random Text Generator — Create Strings Online | Singulariti', seoDescription: 'Generate random strings, passwords, or alphanumeric lists instantly.', engine: 'text-tool', path: '/tools/text/random-text' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'dev',
+      name: 'Developer Tools',
+      description: 'Format JSON, XML, YAML, format SQL, minify code, decode JWTs, and run regex patterns.',
+      seoTitle: 'Developer Tools — Code Formatters & Utilities | Singulariti',
+      seoDescription: 'Free online developer tools. Prettify JSON, format XML/YAML/SQL, encode/decode URLs and Base64, and decode JWTs locally.',
+      path: '/tools/dev',
+      collections: [
+        {
+          id: 'dev-formatters',
+          name: 'Formatters & Beautifiers',
+          description: 'Format and beautify structured data.',
+          seoTitle: 'Code Formatters & Beautifiers | Singulariti',
+          seoDescription: 'Format and beautify structured data.',
+          path: '/tools/dev',
+          tools: [
+            { id: 'json-formatter', name: 'JSON Formatter', description: 'Prettify and format JSON data with customizable spacing.', seoTitle: 'JSON Formatter — Prettify JSON Online | Singulariti', seoDescription: 'Prettify and format JSON data with customizable spacing.', engine: 'developer', path: '/tools/dev/json-formatter' },
+            { id: 'json-validator', name: 'JSON Validator', description: 'Validate and check JSON syntax structure.', seoTitle: 'JSON Validator — Check JSON Syntax Online | Singulariti', seoDescription: 'Validate and check JSON syntax structure.', engine: 'developer', path: '/tools/dev/json-validator' },
+            { id: 'xml-formatter', name: 'XML Formatter', description: 'Format and beautify XML strings.', seoTitle: 'XML Formatter — Prettify XML Online | Singulariti', seoDescription: 'Format and beautify XML strings.', engine: 'developer', path: '/tools/dev/xml-formatter' },
+            { id: 'yaml-formatter', name: 'YAML Formatter', description: 'Clean up and format YAML documents.', seoTitle: 'YAML Formatter — Prettify YAML Online | Singulariti', seoDescription: 'Clean up and format YAML documents.', engine: 'developer', path: '/tools/dev/yaml-formatter' },
+            { id: 'sql-formatter', name: 'SQL Formatter', description: 'Format and beautify SQL queries.', seoTitle: 'SQL Formatter — Prettify SQL Online | Singulariti', seoDescription: 'Format and beautify SQL queries.', engine: 'developer', path: '/tools/dev/sql-formatter' },
+            { id: 'code-beautifier', name: 'Code Beautifier', description: 'Beautify HTML, CSS, and JS code formatting.', seoTitle: 'Code Beautifier — Format HTML, CSS, JS | Singulariti', seoDescription: 'Beautify HTML, CSS, and JS code formatting.', engine: 'developer', path: '/tools/dev/code-beautifier' }
+          ]
+        },
+        {
+          id: 'dev-encoders',
+          name: 'Encoders, Decoders & Decrypters',
+          description: 'Encode or decode common formats securely in the browser.',
+          seoTitle: 'Encoders & Decoders | Singulariti',
+          seoDescription: 'Encode or decode common formats securely in the browser.',
+          path: '/tools/dev',
+          tools: [
+            { id: 'base64-encoder-decoder', name: 'Base64 Encoder/Decoder', description: 'Encode plain text to Base64 or decode Base64 strings.', seoTitle: 'Base64 Encoder/Decoder — Convert Strings Online | Singulariti', seoDescription: 'Encode plain text to Base64 or decode Base64 strings.', engine: 'developer', path: '/tools/dev/base64-encoder-decoder' },
+            { id: 'url-encoder-decoder', name: 'URL Encoder/Decoder', description: 'Percent-encode or decode URL component parameters.', seoTitle: 'URL Encoder/Decoder — Encode URLs Online | Singulariti', seoDescription: 'Percent-encode or decode URL component parameters.', engine: 'developer', path: '/tools/dev/url-encoder-decoder' },
+            { id: 'jwt-decoder', name: 'JWT Decoder', description: 'Decode JWT headers and payload values locally.', seoTitle: 'JWT Decoder — Decode JWT Tokens Online | Singulariti', seoDescription: 'Decode JWT headers and payload values locally.', engine: 'developer', path: '/tools/dev/jwt-decoder' },
+            { id: 'html-encoder-decoder', name: 'HTML Encoder/Decoder', description: 'Convert characters to HTML entities and decode them.', seoTitle: 'HTML Encoder/Decoder — Convert Entities | Singulariti', seoDescription: 'Convert characters to HTML entities and decode them.', engine: 'developer', path: '/tools/dev/html-encoder-decoder' }
+          ]
+        },
+        {
+          id: 'dev-minifiers',
+          name: 'Minifiers & Testers',
+          description: 'Minify markup and test expression matches.',
+          seoTitle: 'Minifiers & Testers | Singulariti',
+          seoDescription: 'Minify markup and test expression matches.',
+          path: '/tools/dev',
+          tools: [
+            { id: 'html-minifier', name: 'HTML Minifier', description: 'Compress HTML files to reduce loading size.', seoTitle: 'HTML Minifier — Compress HTML Online | Singulariti', seoDescription: 'Compress HTML files to reduce loading size.', engine: 'developer', path: '/tools/dev/html-minifier' },
+            { id: 'css-minifier', name: 'CSS Minifier', description: 'Minify CSS files to reduce loading size.', seoTitle: 'CSS Minifier — Compress CSS Online | Singulariti', seoDescription: 'Minify CSS files to reduce loading size.', engine: 'developer', path: '/tools/dev/css-minifier' },
+            { id: 'js-minifier', name: 'JS Minifier', description: 'Compress JavaScript code files to reduce loading size.', seoTitle: 'JS Minifier — Compress JS Online | Singulariti', seoDescription: 'Compress JavaScript code files to reduce loading size.', engine: 'developer', path: '/tools/dev/js-minifier' },
+            { id: 'regex-tester', name: 'Regex Tester', description: 'Test and check regular expression patterns live.', seoTitle: 'Regex Tester — Test Regular Expressions | Singulariti', seoDescription: 'Test and check regular expression patterns live.', engine: 'developer', path: '/tools/dev/regex-tester' }
+          ]
+        },
+        {
+          id: 'dev-utilities',
+          name: 'Utilities & Previewers',
+          description: 'Common developer aids, colors, and preview tools.',
+          seoTitle: 'Developer Utilities & Previewers | Singulariti',
+          seoDescription: 'Common developer aids, colors, and preview tools.',
+          path: '/tools/dev',
+          tools: [
+            { id: 'uuid-generator', name: 'UUID Generator', description: 'Generate RFC4122 compliant UUIDs (v4) instantly.', seoTitle: 'UUID Generator — Create UUIDs Online | Singulariti', seoDescription: 'Generate RFC4122 compliant UUIDs (v4) instantly.', engine: 'developer', path: '/tools/dev/uuid-generator' },
+            { id: 'hash-generator', name: 'Hash Generator', description: 'Generate SHA-256, SHA-512, MD5, and SHA-1 hashes.', seoTitle: 'Hash Generator — Create Cryptographic Hashes | Singulariti', seoDescription: 'Generate SHA-256, SHA-512, MD5, and SHA-1 hashes.', engine: 'developer', path: '/tools/dev/hash-generator' },
+            { id: 'color-picker-tool', name: 'Color Picker', description: 'Pick colors, create gradients, and explore palettes.', seoTitle: 'Color Picker Tool — Custom Palettes Online | Singulariti', seoDescription: 'Pick colors, create gradients, and explore palettes.', engine: 'developer', path: '/tools/dev/color-picker-tool' },
+            { id: 'hex-to-rgb', name: 'HEX to RGB Converter', description: 'Convert HEX color codes to RGB format values.', seoTitle: 'HEX to RGB Converter — Convert Colors Online | Singulariti', seoDescription: 'Convert HEX color codes to RGB format values.', engine: 'developer', path: '/tools/dev/hex-to-rgb' },
+            { id: 'rgb-to-hex', name: 'RGB to HEX Converter', description: 'Convert RGB color codes to HEX format values.', seoTitle: 'RGB to HEX Converter — Convert Colors Online | Singulariti', seoDescription: 'Convert RGB color codes to HEX format values.', engine: 'developer', path: '/tools/dev/rgb-to-hex' },
+            { id: 'timestamp-converter', name: 'Timestamp Converter', description: 'Convert human dates to epoch timestamps and vice versa.', seoTitle: 'Timestamp Converter — Epoch Date Converter | Singulariti', seoDescription: 'Convert human dates to epoch timestamps and vice versa.', engine: 'developer', path: '/tools/dev/timestamp-converter' },
+            { id: 'unix-time-converter', name: 'Unix Time Converter', description: 'Show current Unix epoch time in seconds and milliseconds.', seoTitle: 'Unix Time Converter — Live Epoch Time | Singulariti', seoDescription: 'Show current Unix epoch time in seconds and milliseconds.', engine: 'developer', path: '/tools/dev/unix-time-converter' },
+            { id: 'markdown-previewer', name: 'Markdown Previewer', description: 'Compose Markdown formatting and render HTML preview live.', seoTitle: 'Markdown Previewer — Live Markdown Rendering | Singulariti', seoDescription: 'Compose Markdown formatting and render HTML preview live.', engine: 'developer', path: '/tools/dev/markdown-previewer' },
+            { id: 'html-previewer', name: 'HTML Previewer', description: 'Render raw HTML code elements live in a safe frame.', seoTitle: 'HTML Previewer — Live HTML Rendering | Singulariti', seoDescription: 'Render raw HTML code elements live in a safe frame.', engine: 'developer', path: '/tools/dev/html-previewer' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'convert',
+      name: 'Unit Conversion Tools',
+      description: 'Convert lengths, weights, temperatures, data storage, areas, speed, and time bases.',
+      seoTitle: 'Unit Conversion Tools — Convert Anything Online | Singulariti',
+      seoDescription: 'Free online unit converters. Convert length, weight, temperature, area, volume, speed, and data storage instantly.',
+      path: '/tools/convert',
+      collections: [
+        {
+          id: 'conversions',
+          name: 'Unit Converters',
+          description: 'Convert between standard units of measurement.',
+          seoTitle: 'Measurement Converters | Singulariti',
+          seoDescription: 'Convert between standard units of measurement.',
+          path: '/tools/convert',
+          tools: [
+            { id: 'length-converter', name: 'Length Converter', description: 'Convert between kilometers, meters, centimeters, miles, and inches.', seoTitle: 'Length Converter — Convert Units Online | Singulariti', seoDescription: 'Convert between kilometers, meters, centimeters, miles, and inches.', engine: 'unit-converter', path: '/tools/convert/length-converter' },
+            { id: 'weight-converter', name: 'Weight Converter', description: 'Convert between kilograms, grams, pounds, ounces, and tons.', seoTitle: 'Weight Converter — Convert Units Online | Singulariti', seoDescription: 'Convert between kilograms, grams, pounds, ounces, and tons.', engine: 'unit-converter', path: '/tools/convert/weight-converter' },
+            { id: 'temperature-converter', name: 'Temperature Converter', description: 'Convert Celsius, Fahrenheit, and Kelvin scales.', seoTitle: 'Temperature Converter — Convert Units Online | Singulariti', seoDescription: 'Convert Celsius, Fahrenheit, and Kelvin scales.', engine: 'unit-converter', path: '/tools/convert/temperature-converter' },
+            { id: 'area-converter', name: 'Area Converter', description: 'Convert between square meters, square feet, acres, and hectares.', seoTitle: 'Area Converter — Convert Units Online | Singulariti', seoDescription: 'Convert between square meters, square feet, acres, and hectares.', engine: 'unit-converter', path: '/tools/convert/area-converter' },
+            { id: 'volume-converter', name: 'Volume Converter', description: 'Convert liters, milliliters, gallons, and cubic meters.', seoTitle: 'Volume Converter — Convert Units Online | Singulariti', seoDescription: 'Convert liters, milliliters, gallons, and cubic meters.', engine: 'unit-converter', path: '/tools/convert/volume-converter' },
+            { id: 'speed-converter', name: 'Speed Converter', description: 'Convert km/h, mph, m/s, and knots.', seoTitle: 'Speed Converter — Convert Units Online | Singulariti', seoDescription: 'Convert km/h, mph, m/s, and knots.', engine: 'unit-converter', path: '/tools/convert/speed-converter' },
+            { id: 'time-converter', name: 'Time Converter', description: 'Convert hours, minutes, seconds, days, and weeks.', seoTitle: 'Time Converter — Convert Units Online | Singulariti', seoDescription: 'Convert hours, minutes, seconds, days, and weeks.', engine: 'unit-converter', path: '/tools/convert/time-converter' },
+            { id: 'data-storage-converter', name: 'Data Storage Converter', description: 'Convert gigabytes, megabytes, terabytes, and bits.', seoTitle: 'Data Storage Converter — Convert Units Online | Singulariti', seoDescription: 'Convert gigabytes, megabytes, terabytes, and bits.', engine: 'unit-converter', path: '/tools/convert/data-storage-converter' },
+            { id: 'fuel-efficiency-converter', name: 'Fuel Efficiency Converter', description: 'Convert mpg, L/100km, and km/L values.', seoTitle: 'Fuel Efficiency Converter — Convert Units | Singulariti', seoDescription: 'Convert mpg, L/100km, and km/L values.', engine: 'unit-converter', path: '/tools/convert/fuel-efficiency-converter' },
+            { id: 'angle-converter', name: 'Angle Converter', description: 'Convert degrees, radians, and gradians.', seoTitle: 'Angle Converter — Convert Units Online | Singulariti', seoDescription: 'Convert degrees, radians, and gradians.', engine: 'unit-converter', path: '/tools/convert/angle-converter' },
+            { id: 'pressure-converter', name: 'Pressure Converter', description: 'Convert Pascal, Bar, PSI, and Atmosphere units.', seoTitle: 'Pressure Converter — Convert Units Online | Singulariti', seoDescription: 'Convert Pascal, Bar, PSI, and Atmosphere units.', engine: 'unit-converter', path: '/tools/convert/pressure-converter' },
+            { id: 'energy-converter', name: 'Energy Converter', description: 'Convert Joules, Calories, Kilowatt-hours, and BTUs.', seoTitle: 'Energy Converter — Convert Units Online | Singulariti', seoDescription: 'Convert Joules, Calories, Kilowatt-hours, and BTUs.', engine: 'unit-converter', path: '/tools/convert/energy-converter' },
+            { id: 'power-converter', name: 'Power Converter', description: 'Convert Watts, Kilowatts, and Horsepower.', seoTitle: 'Power Converter — Convert Units Online | Singulariti', seoDescription: 'Convert Watts, Kilowatts, and Horsepower.', engine: 'unit-converter', path: '/tools/convert/power-converter' },
+            { id: 'frequency-converter', name: 'Frequency Converter', description: 'Convert Hertz, Kilohertz, Megahertz, and Gigahertz.', seoTitle: 'Frequency Converter — Convert Units Online | Singulariti', seoDescription: 'Convert Hertz, Kilohertz, Megahertz, and Gigahertz.', engine: 'unit-converter', path: '/tools/convert/frequency-converter' },
+            { id: 'number-base-converter', name: 'Number Base Converter', description: 'Convert binary, octal, decimal, and hexadecimal bases.', seoTitle: 'Number Base Converter — Convert Bases Online | Singulariti', seoDescription: 'Convert binary, octal, decimal, and hexadecimal bases.', engine: 'unit-converter', path: '/tools/convert/number-base-converter' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'seo',
+      name: 'SEO Tools',
+      description: 'Generate meta tags, robots.txt, sitemaps, verify OG/Twitter tags, and check heading structures.',
+      seoTitle: 'SEO Tools — Free Search Engine Optimization Utilities | Singulariti',
+      seoDescription: 'Free online SEO utilities. Generate meta tags, sitemaps, robots.txt, preview Open Graph and Twitter cards, and analyze headings.',
+      path: '/tools/seo',
+      collections: [
+        {
+          id: 'seo-generators',
+          name: 'SEO Generators & Checkers',
+          description: 'Generate metadata files and validate page SEO formats.',
+          seoTitle: 'Search Engine Optimization Builders | Singulariti',
+          seoDescription: 'Generate metadata files and validate page SEO formats.',
+          path: '/tools/seo',
+          tools: [
+            { id: 'meta-tag-generator', name: 'Meta Tag Generator', description: 'Generate HTML search engine tags (Title, Description, Robots).', seoTitle: 'Meta Tag Generator — Generate SEO Tags Online | Singulariti', seoDescription: 'Generate HTML search engine tags (Title, Description, Robots).', engine: 'seo-tool', path: '/tools/seo/meta-tag-generator' },
+            { id: 'meta-title-checker', name: 'Meta Title Length Checker', description: 'Verify that your web page titles meet standard SEO lengths.', seoTitle: 'Meta Title Length Checker — SEO Checker | Singulariti', seoDescription: 'Verify that your web page titles meet standard SEO lengths.', engine: 'seo-tool', path: '/tools/seo/meta-title-checker' },
+            { id: 'meta-description-checker', name: 'Meta Description Length Checker', description: 'Verify descriptions fit the Google snippet pixel length limits.', seoTitle: 'Meta Description Length Checker — SEO Checker | Singulariti', seoDescription: 'Verify descriptions fit the Google snippet pixel length limits.', engine: 'seo-tool', path: '/tools/seo/meta-description-checker' },
+            { id: 'seo-keyword-density', name: 'Keyword Density Checker', description: 'Analyze your page texts for keyword density optimization.', seoTitle: 'Keyword Density Checker — SEO Text Checker | Singulariti', seoDescription: 'Analyze your page texts for keyword density optimization.', engine: 'seo-tool', path: '/tools/seo/seo-keyword-density' },
+            { id: 'seo-slug-generator', name: 'Slug Generator', description: 'Create search-friendly slugs for web page routing structures.', seoTitle: 'SEO Slug Generator — Build Clean Slugs | Singulariti', seoDescription: 'Create search-friendly slugs for web page routing structures.', engine: 'seo-tool', path: '/tools/seo/seo-slug-generator' },
+            { id: 'robots-txt-generator', name: 'Robots.txt Generator', description: 'Generate robots.txt crawl directives files for web crawlers.', seoTitle: 'Robots.txt Generator — Create robots.txt Online | Singulariti', seoDescription: 'Generate robots.txt crawl directives files for web crawlers.', engine: 'seo-tool', path: '/tools/seo/robots-txt-generator' },
+            { id: 'sitemap-xml-generator', name: 'Sitemap XML Generator', description: 'Build search XML sitemap files to index page paths.', seoTitle: 'Sitemap XML Generator — Create sitemaps.xml | Singulariti', seoDescription: 'Build search XML sitemap files to index page paths.', engine: 'seo-tool', path: '/tools/seo/sitemap-xml-generator' },
+            { id: 'open-graph-generator', name: 'Open Graph Tag Generator', description: 'Generate HTML OG metadata tags for Facebook, LinkedIn sharing.', seoTitle: 'Open Graph Generator — Generate OG Tags | Singulariti', seoDescription: 'Generate HTML OG metadata tags for Facebook, LinkedIn sharing.', engine: 'seo-tool', path: '/tools/seo/open-graph-generator' },
+            { id: 'twitter-card-generator', name: 'Twitter Card Generator', description: 'Generate summary cards tags for Twitter formatting previews.', seoTitle: 'Twitter Card Generator — Create Twitter Tags | Singulariti', seoDescription: 'Generate summary cards tags for Twitter formatting previews.', engine: 'seo-tool', path: '/tools/seo/twitter-card-generator' },
+            { id: 'seo-word-count', name: 'Word Count for SEO', description: 'Measure keyword presence and total read lengths for articles.', seoTitle: 'Word Count for SEO — Analyze Content Online | Singulariti', seoDescription: 'Measure keyword presence and total read lengths for articles.', engine: 'seo-tool', path: '/tools/seo/seo-word-count' },
+            { id: 'heading-structure-checker', name: 'Heading Structure Checker', description: 'Analyze hierarchy structures (H1-H6 tags) of pasted code.', seoTitle: 'Heading Structure Checker — Analyze HTML Online | Singulariti', seoDescription: 'Analyze hierarchy structures (H1-H6 tags) of pasted code.', engine: 'seo-tool', path: '/tools/seo/heading-structure-checker' }
           ]
         }
       ]
