@@ -1,3 +1,5 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { getCategoryById } from '@/registry';
@@ -44,38 +46,34 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: { params: Promise<{ tool: string }> }) {
   const params = await props.params;
-  const category = getCategoryById('convert');
-  let tool = null;
-  if (category) {
-    for (const collection of category.collections) {
-      const found = collection.tools.find(t => t.id === params.tool);
-      if (found) {
-        tool = found;
-        break;
-      }
-    }
+  const seo = getUtilitySEO(params.tool);
+
+  if (!seo) {
+    return {
+      title: 'Utility Not Found',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
   }
 
-  if (!tool) return {};
-
-  return {
-    title: tool.seoTitle,
-    description: tool.seoDescription,
-    alternates: {
-      canonical: `https://singulariti.app/tools/convert/${tool.id}`,
-    },
+  return buildMetadata({
+    title: seo.title,
+    description: seo.description,
+    canonical: seo.canonical,
+    robots: seo.robots,
     openGraph: {
-      title: tool.seoTitle,
-      description: tool.seoDescription,
-      url: `https://singulariti.app/tools/convert/${tool.id}`,
-      siteName: 'Singulariti',
-      locale: 'en_US',
-      type: 'website',
+      title: seo.openGraph.title,
+      description: seo.openGraph.description,
+      url: seo.openGraph.url,
+      type: seo.openGraph.type,
+      image: seo.openGraph.image,
     },
     twitter: {
-      card: 'summary_large_image',
-      title: tool.seoTitle,
-      description: tool.seoDescription,
+      title: seo.twitter.title,
+      description: seo.twitter.description,
+      image: seo.twitter.image,
     },
-  };
+  });
 }

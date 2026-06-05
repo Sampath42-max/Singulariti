@@ -1,38 +1,38 @@
 import React from 'react';
-import { Metadata } from 'next';
 import { TypingTestContainer } from '@/components/typing/TypingTestContainer';
 import { TypingSeoContent } from '@/components/typing/TypingSeoContent';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
-export const metadata: Metadata = {
-  title: 'Typing Speed Test — Check Your WPM Online Free | Singulariti',
-  description: 'Test your typing speed (WPM) and accuracy with our free online typing test. Features real-time metrics, interactive charts, and mistake analysis entirely in your browser.',
-  alternates: {
-    canonical: 'https://singulariti.app/typing-speed-test',
-  },
+const seo = getPageSEO('typing-speed-test')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
   openGraph: {
-    title: 'Typing Speed Test — Check Your WPM Online Free | Singulariti',
-    description: 'Test your typing speed (WPM) and accuracy with our free online typing test.',
-    url: 'https://singulariti.app/typing-speed-test',
-    siteName: 'Singulariti',
-    locale: 'en_US',
-    type: 'website',
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Typing Speed Test — Check Your WPM Online Free | Singulariti',
-    description: 'Test your typing speed (WPM) and accuracy with our free online typing test.',
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
   },
-};
+});
 
 export default function TypingSpeedTestPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Typing Speed Test',
-    description: 'Free online typing speed test to measure your WPM and accuracy.',
-    url: 'https://singulariti.app/typing-speed-test',
+    description: 'Free online typing speed test to measure WPM and accuracy.',
+    url: 'https://singulariti.in/typing-speed-test',
     mainEntity: {
       '@type': 'SoftwareApplication',
       name: 'Singulariti Typing Speed Test',

@@ -6,14 +6,13 @@ import { Footer } from '@/components/layout/Footer';
 import { blogSeriesList, toolRegistry } from '@/content/tools/toolRegistry';
 import { SimilarTopicsSidebar } from '@/components/blog/SimilarTopicsSidebar';
 import { ArrowLeft, Compass, Layers } from 'lucide-react';
+import { constructMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata = constructMetadata({
   title: 'Utility Guide Series Directory | Singulariti',
   description: 'Explore the complete directory of utility guide series covering formatting, compression, health, math, and code validators.',
-  alternates: {
-    canonical: 'https://singulariti.in/blog/series'
-  }
-};
+  path: '/blog/series',
+});
 
 export default function SeriesDirectoryPage() {
   const totalTools = toolRegistry.length;

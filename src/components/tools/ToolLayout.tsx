@@ -5,8 +5,11 @@ import Link from 'next/link';
 import { ShieldCheck, AlertTriangle, AlertCircle } from 'lucide-react';
 import { Header } from '../layout/Header';
 import { Footer } from '../layout/Footer';
+import { SeoSchema } from './shared/SeoSchema';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 
 interface ToolLayoutProps {
+  utilityId?: string;
   title: string;
   description: string;
   categoryName: string;
@@ -19,6 +22,7 @@ interface ToolLayoutProps {
 }
 
 export function ToolLayout({
+  utilityId,
   title,
   description,
   categoryName,
@@ -30,6 +34,7 @@ export function ToolLayout({
   children
 }: ToolLayoutProps) {
   const [mounted, setMounted] = useState(false);
+
 
   useEffect(() => {
     setMounted(true);
@@ -49,8 +54,18 @@ export function ToolLayout({
     );
   }
 
+  const seo = utilityId ? getUtilitySEO(utilityId) : undefined;
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      {seo && (
+        <SeoSchema
+          name={seo.name}
+          description={seo.description}
+          section={seo.section}
+          canonical={seo.canonical}
+        />
+      )}
       <Header />
       
       <main className="flex-1 w-full flex flex-col items-center pt-24 pb-16">

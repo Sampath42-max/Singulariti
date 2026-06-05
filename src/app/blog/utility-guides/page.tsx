@@ -5,14 +5,28 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { sectionRegistry, subSectionRegistry, toolRegistry } from '@/content/tools/toolRegistry';
 import { FolderKanban, ArrowLeft, ArrowRight, Layers } from 'lucide-react';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
-export const metadata: Metadata = {
-  title: 'Utility Guides Directory — Index Archive | Singulariti',
-  description: 'Browse the complete directory index of utility guides. Discover sections and subsections covering formatting, compression, health, and math calculators.',
-  alternates: {
-    canonical: 'https://singulariti.in/blog/utility-guides'
-  }
-};
+const seo = getPageSEO('blog-utility-guides')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function UtilityGuidesDirectoryLanding() {
   return (

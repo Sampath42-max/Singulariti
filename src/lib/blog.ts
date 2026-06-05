@@ -1100,11 +1100,16 @@ export function getFallbackPost(tool: UtilityRegistryItem): BlogPost {
   const sectionName = sectionRegistry.find(s => s.id === tool.sectionId)?.name || "Utilities";
   const subSectionName = subSectionRegistry.find(ss => ss.id === tool.subSectionId)?.name || "Tools";
   
+  const inputs = tool.inputType.length > 0 ? tool.inputType[0] : "Input";
+  const outputs = tool.outputType.length > 0 ? tool.outputType[0] : "Output";
+  const metaTitle = `How the ${name} Works: ${inputs}, ${outputs} and Operation Flow`;
+  const metaDescription = `Learn how the ${name.toLowerCase()} works, what input it needs, what output it produces, how the operation happens and what limitations users should know.`;
+
   return {
     title: `How the ${name} Works: Operation Flow, Logic, and Limits`,
     slug: tool.guideSlug,
-    metaTitle: `How the ${name} Works | Singulariti`,
-    metaDescription: `Read the educational guide explaining how the ${name.toLowerCase()} parses inputs, executes calculations, and renders outputs locally.`,
+    metaTitle,
+    metaDescription,
     category: sectionName,
     tags: [sectionName, subSectionName],
     toolUrl: tool.utilityUrl,

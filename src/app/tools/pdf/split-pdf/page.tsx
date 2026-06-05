@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { SplitPdfClient } from './SplitPdfClient';
 
-export const metadata = {
-  title: 'Split PDF Online Free — Extract Pages | Singulariti',
-  description: 'Extract specific pages or page ranges from your PDF document easily in your browser. Fully secure, client-side browser processing.',
-};
+const seo = getUtilitySEO('split-pdf')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function SplitPdfPage() {
   return <SplitPdfClient />;

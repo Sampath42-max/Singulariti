@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { PageCounterClient } from './PageCounterClient';
 
-export const metadata = {
-  title: 'PDF Page Counter Online Free — Count Pages | Singulariti',
-  description: 'Upload one or multiple PDF documents to count pages and calculate combined total pages locally inside your browser.',
-};
+const seo = getUtilitySEO('page-counter')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function PageCounterPage() {
   return <PageCounterClient />;

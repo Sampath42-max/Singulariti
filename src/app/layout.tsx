@@ -22,13 +22,12 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://singulariti.in"),
   title: {
-    default: "Singulariti | One Place. Every Tool.",
+    default: "Online Utility Tools for PDF, Image, Text, Code, SEO and Calculations | Singulariti",
     template: "%s | Singulariti",
   },
   description: "Fast, secure, browser-based utility tools designed for creators, developers, students and professionals. Zero uploads, absolute privacy.",
-  keywords: ["pdf tools", "image editing", "qr code generator", "online tools", "browser-based tools", "privacy-first tools", "financial calculators", "typing speed test", "utility tools"],
   openGraph: {
-    title: "Singulariti | One Place. Every Tool.",
+    title: "Online Utility Tools for PDF, Image, Text, Code, SEO and Calculations | Singulariti",
     description: "Fast, secure, browser-based utility tools designed for creators, developers, students and professionals.",
     url: "https://singulariti.in",
     siteName: "Singulariti",
@@ -37,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Singulariti | One Place. Every Tool.",
+    title: "Online Utility Tools for PDF, Image, Text, Code, SEO and Calculations | Singulariti",
     description: "Fast, secure, browser-based utility tools designed for creators, developers, students and professionals.",
   },
 };

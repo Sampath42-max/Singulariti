@@ -392,6 +392,7 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
 
   return (
     <ToolLayout
+      utilityId={toolId}
       title={toolName}
       description={toolDescription}
       categoryName="Developer Tools"

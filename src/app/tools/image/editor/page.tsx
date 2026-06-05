@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 import React from 'react';
 import { ImageEditorClient } from '@/components/tools/image-editor/ImageEditorClient';
 
-export const metadata = {
-  title: 'Image Editor Tools — Edit & Adjust Images Online | Singularity',
-  description: 'Free online browser-based image editor. Upscale, sharpen, denoise, enhance, adjust brightness, and overlay watermarks locally without uploading.',
-};
+const seo = getPageSEO('image-editor')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function ImageEditorPage() {
   return <ImageEditorClient />;

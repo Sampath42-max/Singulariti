@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { RearrangePdfPagesClient } from './RearrangePdfPagesClient';
 
-export const metadata = {
-  title: 'Rearrange PDF Pages Online Free — Reorder Pages | Singulariti',
-  description: 'Reorder pages of your PDF document using drag and drop visually. Safe, private, browser-based utility.',
-};
+const seo = getUtilitySEO('rearrange-pdf-pages')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function RearrangePdfPagesPage() {
   return <RearrangePdfPagesClient />;

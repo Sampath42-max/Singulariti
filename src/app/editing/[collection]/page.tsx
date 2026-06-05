@@ -5,6 +5,8 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
 import { getCategoryById } from '@/registry';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
 // Next.js 15 page component params are generally Promises
 export default async function CollectionPage(props: { params: Promise<{ collection: string }> }) {
@@ -71,13 +73,32 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: { params: Promise<{ collection: string }> }) {
   const params = await props.params;
-  const category = getCategoryById('editing');
-  const collection = category?.collections.find(c => c.id === params.collection);
+  const seoKey = `collection-editing-${params.collection}`;
+  const seo = getPageSEO(seoKey);
 
-  if (!collection) return {};
+  if (!seo) {
+    return {
+      title: 'Collection Not Found',
+      robots: { index: false, follow: false }
+    };
+  }
 
-  return {
-    title: collection.seoTitle,
-    description: collection.seoDescription,
-  };
+  return buildMetadata({
+    title: seo.title,
+    description: seo.description,
+    canonical: `https://singulariti.in${seo.path}`,
+    robots: seo.robots,
+    openGraph: {
+      title: seo.openGraph.title,
+      description: seo.openGraph.description,
+      url: seo.openGraph.url,
+      type: seo.openGraph.type,
+      image: seo.openGraph.image,
+    },
+    twitter: {
+      title: seo.twitter.title,
+      description: seo.twitter.description,
+      image: seo.twitter.image,
+    },
+  });
 }

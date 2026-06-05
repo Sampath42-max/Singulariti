@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { QrCodeGeneratorClient } from './QrCodeGeneratorClient';
 
-export const metadata = {
-  title: 'QR Code Generator Online Free — Create QR Codes | Singulariti',
-  description: 'Generate custom styled QR codes for text, URLs, Wi-Fi, UPI payments, emails, and more. Upload center logos and export to PNG, SVG, or PDF.',
-};
+const seo = getUtilitySEO('qr-code-generator')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function QrCodeGeneratorPage() {
   return <QrCodeGeneratorClient />;

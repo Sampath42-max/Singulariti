@@ -1,3 +1,4 @@
+import { buildMetadata } from '@/lib/seo/metadata';
 import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -9,6 +10,8 @@ import { UtilityEngine } from '@/components/tool/UtilityEngine';
 import { DeveloperEngine } from '@/components/tool/DeveloperEngine';
 import { SingleFeatureEditorClient } from '@/components/tools/image-editor/SingleFeatureEditorClient';
 import { getToolByPath, getCategoryById } from '@/registry';
+import { SeoSchema } from '@/components/tools/shared/SeoSchema';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 
 const EngineMap: Record<string, React.ElementType> = {
   compression: ToolEngine,
@@ -29,6 +32,8 @@ export default async function ToolPage(props: { params: Promise<{ collection: st
 
   const tool = collection.tools.find(t => t.id === params.tool);
   if (!tool) return notFound();
+
+  const seo = getUtilitySEO(tool.id);
 
   return (
     <>
@@ -67,7 +72,7 @@ export default async function ToolPage(props: { params: Promise<{ collection: st
           <article className="prose prose-slate max-w-none">
             <h2 className="text-2xl font-bold font-display text-ink mb-4">About {tool.name}</h2>
             <p className="mb-6">
-              Welcome to the best online {tool.name}. Our tool is designed to be fast, secure, and run entirely within your web browser. This means that your files are never uploaded to our servers, ensuring your data remains completely private.
+              Welcome to this online {tool.name}. The utility is designed to be fast, secure, and run entirely within the web browser. This means that files are never uploaded to servers, ensuring data remains completely private.
             </p>
             <h3 className="text-xl font-bold font-display text-ink mb-3">How it Works</h3>
             <p className="mb-6">
@@ -83,19 +88,14 @@ export default async function ToolPage(props: { params: Promise<{ collection: st
         </section>
 
         {/* Schema Markup */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              "name": tool.name,
-              "description": tool.seoDescription,
-              "applicationCategory": "MultimediaApplication",
-              "operatingSystem": "Any"
-            })
-          }}
-        />
+        {seo && (
+          <SeoSchema
+            name={seo.name}
+            description={seo.description}
+            section={seo.section}
+            canonical={seo.canonical}
+          />
+        )}
       </main>
       <Footer />
     </>
@@ -122,30 +122,26 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: { params: Promise<{ collection: string; tool: string }> }) {
   const params = await props.params;
-  const category = getCategoryById('image');
-  const collection = category?.collections.find(c => c.id === params.collection);
-  const tool = collection?.tools.find(t => t.id === params.tool);
+  const seo = getUtilitySEO(params.tool);
 
-  if (!tool) return {};
+  if (!seo) return {};
 
-  return {
-    title: tool.seoTitle,
-    description: tool.seoDescription,
-    alternates: {
-      canonical: `https://singulariti.app/image/${params.collection}/${tool.id}`,
-    },
+  return buildMetadata({
+    title: seo.title,
+    description: seo.description,
+    canonical: seo.canonical,
+    robots: seo.robots,
     openGraph: {
-      title: tool.seoTitle,
-      description: tool.seoDescription,
-      url: `https://singulariti.app/image/${params.collection}/${tool.id}`,
-      siteName: 'Singulariti',
-      locale: 'en_US',
-      type: 'website',
+      title: seo.openGraph.title,
+      description: seo.openGraph.description,
+      url: seo.openGraph.url,
+      type: seo.openGraph.type,
+      image: seo.openGraph.image,
     },
     twitter: {
-      card: 'summary_large_image',
-      title: tool.seoTitle,
-      description: tool.seoDescription,
+      title: seo.twitter.title,
+      description: seo.twitter.description,
+      image: seo.twitter.image,
     },
-  };
+  });
 }

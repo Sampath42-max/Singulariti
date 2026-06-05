@@ -375,6 +375,7 @@ export function TextToolContainer({ toolId, toolName, toolDescription }: TextToo
 
   return (
     <ToolLayout
+      utilityId={toolId}
       title={toolName}
       description={toolDescription}
       categoryName="Text Tools"
