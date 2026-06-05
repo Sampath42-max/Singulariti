@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { JpgToPdfClient } from './JpgToPdfClient';
 
-export const metadata = {
-  title: 'JPG to PDF Online Free — Images to PDF Converter | Singulariti',
-  description: 'Convert JPG, JPEG, and PNG images into a PDF document online. Customize page size, margins, and orientation with zero file uploads.',
-};
+const seo = getUtilitySEO('jpg-to-pdf')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function JpgToPdfPage() {
   return <JpgToPdfClient />;

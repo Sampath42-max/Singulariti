@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { ExtractPdfPagesClient } from './ExtractPdfPagesClient';
 
-export const metadata = {
-  title: 'Extract PDF Pages Online Free | Singulariti',
-  description: 'Select and extract specific pages from a PDF document visually. Safe, offline, browser-side file processor.',
-};
+const seo = getUtilitySEO('extract-pdf-pages')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function ExtractPdfPagesPage() {
   return <ExtractPdfPagesClient />;

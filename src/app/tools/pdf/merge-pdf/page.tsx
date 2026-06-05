@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { MergePdfClient } from './MergePdfClient';
 
-export const metadata = {
-  title: 'Merge PDF Online Free — Combine PDF Files | Singulariti',
-  description: 'Combine multiple PDF documents into a single PDF file quickly and securely. 100% browser-based with zero file uploads.',
-};
+const seo = getUtilitySEO('merge-pdf')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function MergePdfPage() {
   return <MergePdfClient />;

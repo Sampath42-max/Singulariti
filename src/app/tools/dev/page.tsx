@@ -5,11 +5,28 @@ import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
 import { registry } from '@/registry';
 import { Code, ShieldCheck } from 'lucide-react';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
-export const metadata = {
-  title: 'Developer Tools — Code Formatters, Encoders & Utilities | Singulariti',
-  description: 'Free browser-based developer utilities. Prettify JSON, format XML/YAML/SQL, encode/decode URLs and Base64, check regular expressions, and decode JWTs locally.',
-};
+const seo = getPageSEO('category-dev')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function DevCategoryPage() {
   const category = registry.categories.find(c => c.id === 'dev');
@@ -38,7 +55,7 @@ export default function DevCategoryPage() {
           <div className="flex items-center gap-3 bg-primary/5 border border-primary/10 rounded-xl p-4 text-primary">
             <ShieldCheck className="w-5 h-5 flex-shrink-0" />
             <p className="text-[13px] font-sans font-medium">
-              100% Secure & Client-Side: Code formatting, parsing, and hashing calculations occur inside your browser using JavaScript and HTML5. No data is transmitted to our servers.
+              100% Secure & Client-Side: Code formatting, parsing, and hashing calculations occur inside the browser using JavaScript and HTML5. No data is transmitted to servers.
             </p>
           </div>
         </section>

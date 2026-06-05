@@ -5,11 +5,28 @@ import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
 import { registry } from '@/registry';
 import { FileText, ShieldAlert } from 'lucide-react';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
-export const metadata = {
-  title: 'PDF Tools — Edit & Convert PDFs Online Free | Singulariti',
-  description: 'Free browser-based PDF tools. Merge, split, rotate, delete pages, sign, add watermarks, and convert files without uploading them to any server.',
-};
+const seo = getPageSEO('category-pdf')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function PDFCategoryPage() {
   const category = registry.categories.find(c => c.id === 'pdf');
@@ -38,7 +55,7 @@ export default function PDFCategoryPage() {
           <div className="flex items-center gap-3 bg-primary/5 border border-primary/10 rounded-xl p-4 text-primary">
             <ShieldAlert className="w-5 h-5 flex-shrink-0" />
             <p className="text-[13px] font-sans font-medium">
-              Privacy guaranteed: All PDF operations run locally. Your documents never touch our servers or cloud.
+              Privacy guaranteed: All PDF operations run locally. Documents never touch servers or cloud.
             </p>
           </div>
         </section>

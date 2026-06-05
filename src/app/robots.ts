@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/'], // Standard exclusion for API routes if any
     },
-    sitemap: 'https://singulariti.app/sitemap.xml',
+    sitemap: 'https://singulariti.in/sitemap.xml',
   };
 }

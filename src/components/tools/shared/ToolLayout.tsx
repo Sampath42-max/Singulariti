@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ChevronDown, ChevronUp, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { SeoSchema } from './SeoSchema';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 
 interface FaqItem {
   question: string;
@@ -12,6 +14,7 @@ interface FaqItem {
 }
 
 interface ToolLayoutProps {
+  utilityId?: string;
   title: string;
   description: string;
   categoryName: string;
@@ -23,6 +26,7 @@ interface ToolLayoutProps {
 }
 
 export function ToolLayout({
+  utilityId,
   title,
   description,
   categoryName,
@@ -38,8 +42,18 @@ export function ToolLayout({
     setOpenFaq(openFaq === index ? null : index);
   };
 
+  const seo = utilityId ? getUtilitySEO(utilityId) : undefined;
+
   return (
     <>
+      {seo && (
+        <SeoSchema
+          name={seo.name}
+          description={seo.description}
+          section={seo.section}
+          canonical={seo.canonical}
+        />
+      )}
       <Header />
       <main className="flex-1 w-full flex flex-col items-center pt-20 pb-12 bg-background">
         {/* Breadcrumbs */}

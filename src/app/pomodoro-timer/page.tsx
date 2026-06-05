@@ -1,13 +1,29 @@
 import React from 'react';
-import { Metadata } from 'next';
 import PomodoroContainer from '@/components/pomodoro/PomodoroContainer';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
-export const metadata: Metadata = {
-  title: 'Pomodoro Timer | Deep Focus Environment',
-  description: 'A beautiful, distraction-free Pomodoro timer designed for deep work. Includes ambient sounds, task management, and focus modes.',
-};
+const seo = getPageSEO('pomodoro-timer')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function PomodoroTimerPage() {
   return (

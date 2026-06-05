@@ -5,11 +5,28 @@ import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
 import { registry } from '@/registry';
 import { Scale, ShieldCheck } from 'lucide-react';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
-export const metadata = {
-  title: 'Unit Conversion Tools — Convert Anything Online | Singulariti',
-  description: 'Free online unit converters. Convert length, weight, temperature, speed, area, volume, time, frequency, pressure, data storage, and number bases instantly in your browser.',
-};
+const seo = getPageSEO('category-convert')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function ConvertCategoryPage() {
   const category = registry.categories.find(c => c.id === 'convert');

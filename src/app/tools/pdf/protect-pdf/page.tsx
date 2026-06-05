@@ -1,13 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { ProtectPdfClient } from './ProtectPdfClient';
 
-export const metadata = {
-  title: 'Protect PDF Online Free — Encrypt and Lock PDF | Singulariti',
-  description: 'Secure your PDF documents with a password entirely in your browser. No uploads, fast and private.',
-  alternates: {
-    canonical: 'https://singulariti.app/tools/pdf/protect-pdf',
-  }
-};
+const seo = getUtilitySEO('protect-pdf')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function ProtectPdfPage() {
   return <ProtectPdfClient />;

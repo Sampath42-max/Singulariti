@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { QrCodeScannerClient } from './QrCodeScannerClient';
 
-export const metadata = {
-  title: 'QR Code Scanner Online Free — Scan QR | Singulariti',
-  description: 'Scan QR codes using your device camera, uploaded images, or PDF documents locally in your browser. Totally secure and private.',
-};
+const seo = getUtilitySEO('qr-code-scanner')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function QrCodeScannerPage() {
   return <QrCodeScannerClient />;

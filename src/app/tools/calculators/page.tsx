@@ -4,11 +4,28 @@ import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
 import { registry } from '@/registry';
 import { Calculator, ShieldCheck } from 'lucide-react';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
-export const metadata = {
-  title: 'Calculator Tools — Free Online Calculators | Singulariti',
-  description: 'Free online browser-based calculators. Calculate loan EMI, SIP investment maturity, compound interest, Indian income tax, GST, BMR, and body mass index locally and securely.',
-};
+const seo = getPageSEO('category-calculators')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function CalculatorCategoryPage() {
   const category = registry.categories.find(c => c.id === 'calculators');

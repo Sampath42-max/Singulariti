@@ -33,6 +33,7 @@ export function CalculatorLayout({
 }: CalculatorLayoutProps) {
   return (
     <ToolLayout
+      utilityId={toolId}
       title={title}
       description={description}
       categoryName="Calculator Tools"

@@ -5,11 +5,28 @@ import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
 import { registry } from '@/registry';
 import { ImageIcon, FileText, QrCode, Calculator, Type, Code, Scale, Search } from 'lucide-react';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
-export const metadata = {
-  title: 'Tools Directory — Singulariti',
-  description: 'Explore our complete suite of browser-based utility tools. Compress, edit, and convert images, PDFs, and generate/scan QR codes locally and securely.',
-};
+const seo = getPageSEO('tools')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function ToolsDirectoryPage() {
   // Mapping of category icon

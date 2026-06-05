@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { blogSeriesList, blogGuidesList, toolRegistry, subSectionRegistry } from '@/content/tools/toolRegistry';
 import { getAllPosts } from '@/lib/blog';
+import { constructMetadata } from '@/lib/seo/metadata';
 import { 
   Search, 
   Compass, 
@@ -21,13 +22,28 @@ import {
   FileText
 } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Utility Guides and Usage Articles | Singulariti',
-  description: 'Read clear guides that explain how each utility works, what input it needs, what output it produces, and how the operation happens step by step.',
-  alternates: {
-    canonical: 'https://singulariti.in/blog'
-  }
-};
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
+
+const seo = getPageSEO('blog')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default async function BlogHomePage() {
   const posts = getAllPosts();

@@ -1,8 +1,10 @@
 import { MetadataRoute } from 'next';
 import { registry } from '@/registry';
+import { blogSeriesList, blogSubSeriesList, blogGuidesList } from '@/content/tools/toolRegistry';
+import { getAllPosts } from '@/lib/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://singulariti.app';
+  const baseUrl = 'https://singulariti.in';
   const lastModified = new Date();
 
   const categories = registry.categories;
@@ -38,6 +40,54 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: 'yearly',
       priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/tools`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/series`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/utility-guides`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/typing-speed-test`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/pomodoro-timer`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/tools/editing/online-whiteboard`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/tools/image/editor`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
   ];
 
@@ -75,6 +125,49 @@ export default function sitemap(): MetadataRoute.Sitemap {
           });
         }
       });
+    });
+  });
+
+  // Blog Series (e.g., /blog/series/pdf-utilities)
+  blogSeriesList.forEach((series) => {
+    routes.push({
+      url: `${baseUrl}/blog/series/${series.slug}`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    });
+
+    // Blog Sub-Series (e.g., /blog/series/pdf-utilities/management-utilities)
+    const subSections = blogSubSeriesList.filter(ss => ss.seriesId === series.id);
+    subSections.forEach((sub) => {
+      routes.push({
+        url: `${baseUrl}/blog/series/${series.slug}/${sub.slug}`,
+        lastModified,
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      });
+    });
+  });
+
+  // Blog Guides (e.g., /blog/guides/word-counter-guide)
+  blogGuidesList.forEach((guide) => {
+    routes.push({
+      url: `${baseUrl}/blog/guides/${guide.slug}`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    });
+  });
+
+  // Blog Articles (non-tool guides, e.g., /blog/articles/why-online-utility-tools-are-useful)
+  const posts = getAllPosts();
+  const articles = posts.filter(p => !p.toolUrl);
+  articles.forEach((post) => {
+    routes.push({
+      url: `${baseUrl}/blog/articles/${post.slug}`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.7,
     });
   });
 

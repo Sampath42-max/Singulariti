@@ -5,11 +5,28 @@ import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
 import { registry } from '@/registry';
 import { Globe, ShieldCheck } from 'lucide-react';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getPageSEO } from '@/lib/seo/pageMetadata';
 
-export const metadata = {
-  title: 'SEO Tools — Free Search Engine Optimization Utilities | Singulariti',
-  description: 'Free online SEO utilities. Generate meta tags, sitemaps, robots.txt crawl directives, preview Open Graph and Twitter cards, and analyze article word length locally.',
-};
+const seo = getPageSEO('category-seo')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: `https://singulariti.in${seo.path}`,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function SeoCategoryPage() {
   const category = registry.categories.find(c => c.id === 'seo');

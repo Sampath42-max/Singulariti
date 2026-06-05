@@ -848,6 +848,7 @@ export function SeoToolContainer({ toolId, toolName, toolDescription }: SeoToolC
 
   return (
     <ToolLayout
+      utilityId={toolId}
       title={toolName}
       description={toolDescription}
       categoryName="SEO Tools"

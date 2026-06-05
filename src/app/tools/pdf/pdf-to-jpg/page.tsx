@@ -1,10 +1,27 @@
+import { buildMetadata } from '@/lib/seo/metadata';
+import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { PdfToJpgClient } from './PdfToJpgClient';
 
-export const metadata = {
-  title: 'PDF to JPG Online Free — PDF to Image | Singulariti',
-  description: 'Convert PDF document pages into high-quality JPG images directly inside your browser. Download pages individually or as a ZIP archive.',
-};
+const seo = getUtilitySEO('pdf-to-jpg')!;
+export const metadata = buildMetadata({
+  title: seo.title,
+  description: seo.description,
+  canonical: seo.canonical,
+  robots: seo.robots,
+  openGraph: {
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
+    url: seo.openGraph.url,
+    type: seo.openGraph.type,
+    image: seo.openGraph.image,
+  },
+  twitter: {
+    title: seo.twitter.title,
+    description: seo.twitter.description,
+    image: seo.twitter.image,
+  },
+});
 
 export default function PdfToJpgPage() {
   return <PdfToJpgClient />;
