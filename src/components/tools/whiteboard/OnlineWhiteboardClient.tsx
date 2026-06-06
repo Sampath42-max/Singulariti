@@ -88,16 +88,48 @@ export default function OnlineWhiteboardClient() {
     }
   }, [successMsg]);
 
-  // Escape key exits maximized mode
+  // Escape key and native fullscreen exits maximized mode
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isMaximized) {
         setIsMaximized(false);
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        }
       }
     };
+    
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement && isMaximized) {
+        setIsMaximized(false);
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
   }, [isMaximized]);
+
+  const handleToggleMaximize = () => {
+    if (!isMaximized) {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn(`Error attempting to enable full-screen mode: ${err.message}`);
+        });
+      }
+      setIsMaximized(true);
+    } else {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(err => {
+          console.warn(`Error attempting to exit full-screen mode: ${err.message}`);
+        });
+      }
+      setIsMaximized(false);
+    }
+  };
 
   // Spacebar panning shortcut
   const [previousTool, setPreviousTool] = useState<WhiteboardTool | null>(null);
@@ -372,7 +404,7 @@ export default function OnlineWhiteboardClient() {
         hasSavedBoard={boardSavedExists}
         onClearSavedBoard={handleClearSavedBoard}
         isMaximized={isMaximized}
-        onToggleMaximize={() => setIsMaximized(!isMaximized)}
+        onToggleMaximize={handleToggleMaximize}
       />
 
       {/* Success alert */}
