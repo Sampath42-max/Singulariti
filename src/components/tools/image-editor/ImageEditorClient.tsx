@@ -540,7 +540,7 @@ export function ImageEditorClient() {
         <FileUploader
           onFilesSelected={handleFileSelected}
           multiple={false}
-          accept={{ 'image/*': ['.png', '.jpg', '.jpeg', '.webp'] }}
+          accept={{ 'image/*': ['.png', '.jpg', '.jpeg', '.webp', '.svg'] }}
           title="Upload an image to start editing"
           subtitle="Supports JPG, JPEG, PNG, or WEBP formats up to 15MB"
         />

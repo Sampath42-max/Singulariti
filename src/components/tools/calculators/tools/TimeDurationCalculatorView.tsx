@@ -40,7 +40,7 @@ export function TimeDurationCalculatorView({ toolId, title, description }: TimeD
       return;
     }
 
-    let startMinutes = startH * 60 + startM;
+    const startMinutes = startH * 60 + startM;
     let endMinutes = endH * 60 + endM;
 
     if (endMinutes < startMinutes) {

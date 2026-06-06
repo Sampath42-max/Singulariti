@@ -10,7 +10,7 @@ export function TypingSeoContent() {
 
       <h3 className="text-2xl font-display font-bold mt-8">What is WPM?</h3>
       <p>
-        WPM stands for Words Per Minute. It is the standard measurement for typing speed. In modern typing tests, a "word" is standardized as exactly 5 keystrokes (including spaces). This ensures that your WPM score remains consistent regardless of whether you are typing short or long words.
+        WPM stands for Words Per Minute. It is the standard measurement for typing speed. In modern typing tests, a &quot;word&quot; is standardized as exactly 5 keystrokes (including spaces). This ensures that your WPM score remains consistent regardless of whether you are typing short or long words.
       </p>
 
       <h3 className="text-2xl font-display font-bold mt-8">How is typing speed calculated?</h3>
@@ -63,14 +63,14 @@ export function TypingSeoContent() {
         Improving your typing speed is a marathon, not a sprint. Follow these proven tips:
       </p>
       <ol>
-        <li><strong>Proper Hand Placement:</strong> Always rest your index fingers on the 'F' and 'J' keys. These keys usually have small tactile bumps to help you find them without looking.</li>
-        <li><strong>Don't Look at the Keyboard:</strong> Train your muscle memory by keeping your eyes on the screen. Looking down breaks your flow and slows you down.</li>
+        <li><strong>Proper Hand Placement:</strong> Always rest your index fingers on the &apos;F&apos; and &apos;J&apos; keys. These keys usually have small tactile bumps to help you find them without looking.</li>
+        <li><strong>Don&apos;t Look at the Keyboard:</strong> Train your muscle memory by keeping your eyes on the screen. Looking down breaks your flow and slows you down.</li>
         <li><strong>Focus on Accuracy First:</strong> Speed comes naturally with muscle memory. If you try to type fast while making mistakes, you are training your muscles to make mistakes. Aim for 98%+ accuracy.</li>
         <li><strong>Practice Consistently:</strong> Take our 60-second typing test for just 10 minutes every day. Consistent, focused practice yields the best results.</li>
       </ol>
       
       <p className="mt-8 text-sm text-slate">
-        <em>Note: This tool runs 100% locally in your browser. We do not store or transmit any of your typing data to external servers. Your personal records and achievements are saved securely in your browser's local storage.</em>
+        <em>Note: This tool runs 100% locally in your browser. We do not store or transmit any of your typing data to external servers. Your personal records and achievements are saved securely in your browser&apos;s local storage.</em>
       </p>
     </article>
   );

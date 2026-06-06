@@ -57,17 +57,24 @@ export function CurrencyConverterView({ toolId, title, description }: CurrencyCo
     customRate?: string | null;
   }>({});
 
-  // Fetch live exchange rates on mount
+  // Fetch live exchange rates on mount and every 1 hour
   useEffect(() => {
-    fetch('https://open.er-api.com/v6/latest/USD')
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.rates) {
-          setRates(data.rates);
-        }
-      })
-      .catch(err => console.error('Failed to fetch live currency rates:', err))
-      .finally(() => setIsLoadingRates(false));
+    const fetchRates = () => {
+      setIsLoadingRates(true);
+      fetch('https://open.er-api.com/v6/latest/USD')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.rates) {
+            setRates(data.rates);
+          }
+        })
+        .catch(err => console.error('Failed to fetch live currency rates:', err))
+        .finally(() => setIsLoadingRates(false));
+    };
+
+    fetchRates();
+    const interval = setInterval(fetchRates, 3600000);
+    return () => clearInterval(interval);
   }, []);
 
   // Recalculate rate when currencies change (if not in manual edit mode)
@@ -80,26 +87,20 @@ export function CurrencyConverterView({ toolId, title, description }: CurrencyCo
     }
   }, [fromCurrency, toCurrency, isManualRate, rates]);
 
+  // Auto-calculate on changes
+  useEffect(() => {
+    if (amount >= 0 && customRate >= 0) {
+      const convertedAmount = amount * customRate;
+      setResult({
+        convertedAmount,
+        rateUsed: customRate
+      });
+      setErrors({});
+    }
+  }, [amount, customRate]);
+
   const handleCalculate = (e: React.FormEvent) => {
     e.preventDefault();
-    const amountErr = validatePositiveNumber(amount, 'Amount');
-    const rateErr = validatePositiveNumber(customRate, 'Exchange rate');
-
-    if (amountErr || rateErr) {
-      setErrors({
-        amount: amountErr,
-        customRate: rateErr
-      });
-      setResult(null);
-      return;
-    }
-
-    setErrors({});
-    const convertedAmount = amount * customRate;
-    setResult({
-      convertedAmount,
-      rateUsed: customRate
-    });
   };
 
   const handleReset = () => {
@@ -140,7 +141,7 @@ export function CurrencyConverterView({ toolId, title, description }: CurrencyCo
           value={fromCurrency}
           onChange={(e) => {
             setFromCurrency(e.target.value);
-            setResult(null);
+            setIsManualRate(false);
           }}
           options={currencyOptions}
         />
@@ -149,7 +150,7 @@ export function CurrencyConverterView({ toolId, title, description }: CurrencyCo
           value={toCurrency}
           onChange={(e) => {
             setToCurrency(e.target.value);
-            setResult(null);
+            setIsManualRate(false);
           }}
           options={currencyOptions}
         />

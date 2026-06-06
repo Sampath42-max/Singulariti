@@ -27,7 +27,7 @@ export function useConversion() {
 
       // SVG to Raster conversion CANNOT happen in a web worker due to lack of DOM for parsing XML.
       // We must handle it here on the main thread.
-      const isSvgInput = file.type.includes('svg') || (file.name && file.name.toLowerCase().endsWith('.svg'));
+      const isSvgInput = file.type.includes('svg') || (file.name && file.name.toLowerCase().includes('.svg'));
       
       if (isSvgInput && toFormat !== 'image/svg+xml') {
         file.text().then(text => {

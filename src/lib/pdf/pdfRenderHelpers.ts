@@ -73,7 +73,6 @@ export async function extractTextFromPage(
   const textContent = await page.getTextContent();
   const items = textContent.items as { str: string; hasEOL: boolean }[];
   
-  let lastY = -1;
   let text = '';
   
   for (const item of items) {

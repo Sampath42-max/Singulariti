@@ -41,10 +41,12 @@ export function usePomodoroEngine() {
     try {
       const storedStats = localStorage.getItem('singulariti_pomodoro_stats');
       if (storedStats) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setStats(JSON.parse(storedStats));
       }
       const storedTasks = localStorage.getItem('singulariti_pomodoro_tasks');
       if (storedTasks) {
+         
         setTasks(JSON.parse(storedTasks));
       }
     } catch (e) {
@@ -60,6 +62,12 @@ export function usePomodoroEngine() {
   useEffect(() => {
     localStorage.setItem('singulariti_pomodoro_tasks', JSON.stringify(tasks));
   }, [tasks]);
+
+  const changeMode = useCallback((newMode: PomodoroMode) => {
+    setIsRunning(false);
+    setMode(newMode);
+    setTimeLeft(DEFAULT_TIMES[newMode]);
+  }, []);
 
   const handleSessionComplete = useCallback(() => {
     if (mode === 'pomodoro' || mode === 'custom') {
@@ -89,7 +97,7 @@ export function usePomodoroEngine() {
       // After break, switch to pomodoro
       changeMode('pomodoro');
     }
-  }, [mode]);
+  }, [mode, changeMode]);
 
   // Timer logic
   useEffect(() => {
@@ -114,12 +122,6 @@ export function usePomodoroEngine() {
   }, [isRunning, timeLeft, handleSessionComplete]);
 
   const toggleTimer = () => setIsRunning(!isRunning);
-  
-  const changeMode = (newMode: PomodoroMode) => {
-    setIsRunning(false);
-    setMode(newMode);
-    setTimeLeft(DEFAULT_TIMES[newMode]);
-  };
 
   const resetTimer = () => {
     setIsRunning(false);

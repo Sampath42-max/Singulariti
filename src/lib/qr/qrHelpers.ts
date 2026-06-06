@@ -212,7 +212,7 @@ export async function exportQRToPDF(
   const qrHeight = 200;
 
   // Calculate layout coordinates
-  let qrX = (pageWidth - qrWidth) / 2;
+  const qrX = (pageWidth - qrWidth) / 2;
   let qrY = (pageHeight - qrHeight) / 2; // default: center
 
   if (pdfSettings.position === 'top') {

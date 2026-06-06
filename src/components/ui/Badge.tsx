@@ -6,7 +6,7 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 export function Badge({ variant = 'default', className = '', children, ...props }: BadgeProps) {
-  let baseStyle = "inline-flex items-center justify-center font-sans text-[11px] font-medium leading-none";
+  const baseStyle = "inline-flex items-center justify-center font-sans text-[11px] font-medium leading-none";
   let variantStyle = "";
 
   switch (variant) {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CalculatorLayout } from '../CalculatorLayout';
 import { CalculatorInput } from '../CalculatorInput';
 import { CalculatorSelect } from '../CalculatorSelect';
@@ -33,20 +33,21 @@ export function CgpaCalculatorView({ toolId, title, description }: CgpaCalculato
 
   const [errors, setErrors] = useState<string | null>(null);
 
-  const handleCalculate = (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
     if (semesters.length === 0) {
       setErrors('At least one semester GPA is required.');
       setResult(null);
       return;
     }
 
-    // Validate inputs
+    // Validate inputs silently for auto-calc
     for (let i = 0; i < semesters.length; i++) {
       const gpa = semesters[i].gpa;
       const maxGpa = scale === '10' ? 10 : 4;
       if (isNaN(gpa) || gpa < 0 || gpa > maxGpa) {
-        setErrors(`Semester ${i + 1} GPA must be between 0 and ${maxGpa}.`);
+        if (gpa !== 0) {
+          setErrors(`Semester ${i + 1} GPA must be between 0 and ${maxGpa}.`);
+        }
         setResult(null);
         return;
       }
@@ -55,6 +56,10 @@ export function CgpaCalculatorView({ toolId, title, description }: CgpaCalculato
     setErrors(null);
     const res = calculateCgpa(semesters, scale);
     setResult(res);
+  }, [semesters, scale]);
+
+  const handleCalculate = (e: React.FormEvent) => {
+    e.preventDefault();
   };
 
   const handleReset = () => {
@@ -137,7 +142,7 @@ export function CgpaCalculatorView({ toolId, title, description }: CgpaCalculato
             <CalculatorInput
               label="Credits (Optional)"
               value={sem.credits || ''}
-              onChange={(val) => handleRowChange(idx, 'credits', val)}
+              onChange={(val) => handleRowChange(idx, 'credits', isNaN(val) ? 0 : val)}
               min="0"
               className="flex-1"
             />

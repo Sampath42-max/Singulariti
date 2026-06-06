@@ -625,6 +625,7 @@ export const WhiteboardCanvas = forwardRef<WhiteboardCanvasRef, WhiteboardCanvas
       canvas.dispose();
       fabricCanvasRef.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Update Canvas Configuration based on current tool/brush/shapes

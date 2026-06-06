@@ -164,29 +164,29 @@ export function ScientificCalculatorView({ toolId, title, description }: Scienti
   ];
 
   const getBtnClass = (type: string) => {
-    const base = "flex items-center justify-center h-14 rounded-2xl font-display text-[17px] transition-all select-none active:scale-95 shadow-sm border ";
+    const base = "flex items-center justify-center h-14 rounded-2xl font-display text-[18px] transition-all select-none active:scale-95 shadow-sm border relative overflow-hidden ";
     switch (type) {
       case 'sci':
-        return base + "bg-surface border-border text-slate hover:bg-slate/5";
+        return base + "bg-surface border-border text-slate hover:bg-slate/5 hover:text-ink hover:border-slate/30";
       case 'action':
         return base + "bg-red-500/10 border-red-500/20 text-red-500 hover:bg-red-500/20 font-semibold";
       case 'op':
-        return base + "bg-primary/10 border-primary/20 text-primary hover:bg-primary/20 font-semibold";
+        return base + "bg-primary/10 border-primary/20 text-primary hover:bg-primary/20 font-semibold text-xl";
       case 'eval':
-        return base + "bg-primary border-primary hover:bg-primary/90 text-dark font-bold row-span-2 h-[7.5rem] shadow-md";
+        return base + "bg-primary border-primary hover:bg-primary/90 text-dark font-bold row-span-2 h-[7.5rem] shadow-md text-2xl";
       case 'num':
       default:
-        return base + "bg-surface border-border text-ink hover:bg-slate/5 font-semibold text-lg";
+        return base + "bg-surface border-border/50 text-ink hover:bg-slate/10 font-bold text-xl shadow-xs";
     }
   };
 
   const inputs = (
-    <div className="w-full max-w-[400px] mx-auto bg-background/50 p-4 sm:p-6 rounded-[2rem] border border-border shadow-sm">
+    <div className="w-full max-w-[420px] mx-auto bg-surface/50 backdrop-blur-md p-5 sm:p-7 rounded-[2.5rem] border border-border shadow-xl shadow-primary/5">
       {/* Display Screen */}
       <div 
-        className="bg-surface border border-border/80 rounded-3xl p-5 text-right space-y-1 mb-6 flex flex-col justify-end shadow-inner relative overflow-hidden"
+        className="bg-background border border-border/80 rounded-3xl p-6 text-right space-y-2 mb-6 flex flex-col justify-end shadow-inner relative overflow-hidden h-36"
       >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/40 via-primary/20 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary/50 via-primary/30 to-transparent"></div>
         
         {/* Editable Expression Input */}
         <input 
@@ -196,16 +196,16 @@ export function ScientificCalculatorView({ toolId, title, description }: Scienti
           onChange={(e) => setExpression(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="0"
-          className="w-full bg-transparent text-right outline-none font-mono text-slate text-lg mb-2 truncate"
+          className="w-full bg-transparent text-right outline-none font-mono text-slate text-xl mb-1 truncate tracking-wide"
           autoComplete="off"
           autoCorrect="off"
           spellCheck="false"
         />
         
         {/* Live Result */}
-        <div className="flex justify-between items-end">
-          <span className="text-red-500 text-[11px] font-sans font-medium">{error || ''}</span>
-          <span className={`font-mono text-4xl tracking-tight font-bold truncate ${result === 'Error' ? 'text-red-500' : 'text-ink'}`}>
+        <div className="flex justify-between items-end flex-1">
+          <span className="text-red-500 text-[12px] font-sans font-medium">{error || ''}</span>
+          <span className={`font-mono text-[2.75rem] tracking-tight font-bold truncate ${result === 'Error' ? 'text-red-500' : 'text-ink'}`}>
             {result ? (result === 'Error' ? 'Error' : `= ${result}`) : ''}
           </span>
         </div>

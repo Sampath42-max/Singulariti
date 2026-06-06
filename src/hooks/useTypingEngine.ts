@@ -74,10 +74,11 @@ export function useTypingEngine() {
 
   // Set default words on mount
   useEffect(() => {
-    if (state.words.length === 0) {
-      initializeTest(state.mode, state.timeLimit, state.wordLimit, state.difficulty);
-    }
-  }, [initializeTest, state]);
+    // Run once on mount to populate initial words
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    initializeTest(state.mode, state.timeLimit, state.wordLimit, state.difficulty);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initializeTest]);
 
   // Finish test
   const finishTest = useCallback(() => {
@@ -94,7 +95,7 @@ export function useTypingEngine() {
     setState(prev => {
       if (prev.status === 'finished') return prev;
 
-      let newState = { ...prev };
+      const newState = { ...prev };
 
       // Start test on first keystroke
       if (prev.status === 'idle') {

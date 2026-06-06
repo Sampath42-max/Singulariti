@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useTypingEngine, TypingMode } from '@/hooks/useTypingEngine';
 import { useTypingMetrics } from '@/hooks/useTypingMetrics';
 import { useMistakeIntelligence } from '@/hooks/useMistakeIntelligence';
@@ -10,7 +10,7 @@ import { ResultDashboard } from './ResultDashboard';
 import { TypingDifficulty } from '@/lib/typing/words';
 
 export function TypingTestContainer() {
-  const { state, handleInput, initializeTest, finishTest } = useTypingEngine();
+  const { state, handleInput, initializeTest } = useTypingEngine();
   const metrics = useTypingMetrics(state);
   const intelligence = useMistakeIntelligence(state);
 

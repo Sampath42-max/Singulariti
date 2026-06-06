@@ -3,11 +3,11 @@ self.addEventListener('message', async (e) => {
   const { id, file, quality, maxWidth } = e.data;
   
   try {
-    const isSvg = file.type.includes('svg') || (file.name && file.name.toLowerCase().endsWith('.svg'));
+    const isSvg = file.type.includes('svg') || (file.name && file.name.toLowerCase().includes('.svg'));
     if (isSvg) {
       const text = await file.text();
       // Simple SVG compression: remove comments, extra whitespaces, newlines, and empty tags
-      let compressedText = text
+      const compressedText = text
         .replace(/<!--[\s\S]*?-->/g, '') // remove comments
         .replace(/>\s+</g, '><') // remove whitespace between tags
         .replace(/\s{2,}/g, ' ') // collapse multiple spaces
@@ -23,7 +23,12 @@ self.addEventListener('message', async (e) => {
       return;
     }
 
-    const bitmap = await createImageBitmap(file);
+    let bitmap: ImageBitmap;
+    try {
+      bitmap = await createImageBitmap(file);
+    } catch {
+      throw new Error("The source image could not be decoded or is an invalid format.");
+    }
     let width = bitmap.width;
     let height = bitmap.height;
     
@@ -57,7 +62,7 @@ self.addEventListener('message', async (e) => {
     } else {
       self.postMessage({ id, success: true, useOriginal: false, blob, originalSize: file.size, compressedSize: blob.size });
     }
-  } catch (error: any) {
-    self.postMessage({ id, success: false, error: error.message });
+  } catch (error) {
+    self.postMessage({ id, success: false, error: error instanceof Error ? error.message : String(error) });
   }
 });

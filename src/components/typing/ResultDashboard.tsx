@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { MetricsSnapshot } from '@/hooks/useTypingMetrics';
 import { captureImageCard, generateCertificate } from '@/lib/typing/exportUtils';
-import { Download, Share2, Award, RotateCcw } from 'lucide-react';
+import { Share2, Award, RotateCcw } from 'lucide-react';
 import { updateTypingProfile } from '@/lib/typing/typingProfile';
 
 interface ResultDashboardProps {

@@ -18,13 +18,11 @@ import {
   ZoomIn,
   ZoomOut,
   Maximize2,
-  Minimize2,
   Expand,
   Shrink,
   Trash2,
   Save,
-  FolderOpen,
-  RefreshCw
+  FolderOpen
 } from 'lucide-react';
 
 import { WhiteboardTool } from '@/lib/whiteboard/whiteboardTypes';
@@ -46,7 +44,7 @@ interface WhiteboardToolbarProps {
   onSaveBoard: () => void;
   onLoadBoard: () => void;
   hasSavedBoard: boolean;
-  onClearSavedBoard: () => void;
+  onClearSavedBoard?: () => void;
   isMaximized?: boolean;
   onToggleMaximize?: () => void;
 }
@@ -69,7 +67,7 @@ export function WhiteboardToolbar({
   onSaveBoard,
   onLoadBoard,
   hasSavedBoard,
-  onClearSavedBoard,
+  onClearSavedBoard: _onClearSavedBoard,
   isMaximized = false,
   onToggleMaximize
 }: WhiteboardToolbarProps) {

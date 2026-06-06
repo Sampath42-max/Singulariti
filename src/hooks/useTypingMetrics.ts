@@ -9,6 +9,7 @@ export interface MetricsSnapshot {
 
 export function useTypingMetrics(state: TypingState) {
   const [history, setHistory] = useState<MetricsSnapshot[]>([]);
+  const [now, setNow] = useState(() => Date.now());
   const lastUpdateRef = useRef<number>(0);
 
   // Calculate WPM
@@ -56,17 +57,26 @@ export function useTypingMetrics(state: TypingState) {
     }
 
     if (state.status === 'idle') {
-      setHistory([]);
+      setTimeout(() => setHistory([]), 0);
       lastUpdateRef.current = 0;
     }
 
     return () => clearInterval(interval);
   }, [state.status, state.startTime, state.correctChars, state.incorrectChars, state.extraChars]);
 
+  // Track current time cleanly for pure rendering
+  useEffect(() => {
+    let t: NodeJS.Timeout;
+    if (state.status === 'running') {
+      t = setInterval(() => setNow(Date.now()), 100);
+    }
+    return () => clearInterval(t);
+  }, [state.status]);
+
   // Final metrics
   const elapsedMs = state.status === 'finished' && state.endTime && state.startTime
     ? state.endTime - state.startTime
-    : (state.startTime ? Date.now() - state.startTime : 0);
+    : (state.startTime ? now - state.startTime : 0);
   const elapsedMinutes = elapsedMs / 60000;
 
   const currentWpm = calculateWpm(state.correctChars, elapsedMinutes);

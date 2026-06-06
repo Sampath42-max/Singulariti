@@ -41,7 +41,7 @@ export function TypingArea({ state, onInput, onRestart }: TypingAreaProps) {
       const isCurrentWord = wIdx === state.wordIndex;
       const isPastWord = wIdx < state.wordIndex;
       
-      let wordClass = "inline-block mx-1.5 my-1.5 text-3xl font-mono ";
+      const wordClass = "inline-block mx-1.5 my-1.5 text-3xl font-mono ";
       
       return (
         <div 

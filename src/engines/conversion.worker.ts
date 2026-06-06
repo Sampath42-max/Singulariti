@@ -9,23 +9,29 @@ self.addEventListener('message', async (e) => {
         self.postMessage({ id, success: true, blob: file, originalSize: file.size, newSize: file.size });
         return;
       }
-      const dataUrl = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-      const bitmap = await createImageBitmap(file);
-      const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="${bitmap.width}" height="${bitmap.height}"><image href="${dataUrl}" width="100%" height="100%"/></svg>`;
-      const blob = new Blob([svgString], { type: 'image/svg+xml' });
-      self.postMessage({ id, success: true, blob, originalSize: file.size, newSize: blob.size });
+      
+      let bitmap: ImageBitmap;
+      try {
+        const dataUrl = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        bitmap = await createImageBitmap(file);
+        const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="${bitmap.width}" height="${bitmap.height}"><image href="${dataUrl}" width="100%" height="100%"/></svg>`;
+        const blob = new Blob([svgString], { type: 'image/svg+xml' });
+        self.postMessage({ id, success: true, blob, originalSize: file.size, newSize: blob.size });
+      } catch {
+        throw new Error("The source image could not be decoded or is an invalid format.");
+      }
       return;
     }
 
     let bitmap: ImageBitmap;
     try {
       bitmap = await createImageBitmap(file);
-    } catch (err) {
+    } catch {
       if (isSvgInput) {
         const text = await file.text();
         let newText = text;
@@ -41,7 +47,7 @@ self.addEventListener('message', async (e) => {
         const newBlob = new Blob([newText], { type: 'image/svg+xml' });
         bitmap = await createImageBitmap(newBlob);
       } else {
-        throw err;
+        throw new Error("The source image could not be decoded or is an invalid format.");
       }
     }
     
@@ -63,7 +69,7 @@ self.addEventListener('message', async (e) => {
     });
     
     self.postMessage({ id, success: true, blob, originalSize: file.size, newSize: blob.size });
-  } catch (error: any) {
-    self.postMessage({ id, success: false, error: error.message });
+  } catch (error) {
+    self.postMessage({ id, success: false, error: error instanceof Error ? error.message : String(error) });
   }
 });

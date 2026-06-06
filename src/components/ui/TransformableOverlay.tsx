@@ -14,13 +14,12 @@ export interface TransformableOverlayProps {
   onSelect: (e?: React.PointerEvent) => void;
   onChange: (updates: { x: number; y: number; width: number; height: number; rotation: number }) => void;
   children: React.ReactNode;
-  containerRef?: React.RefObject<HTMLDivElement | null>;
   zoom?: number;
 }
 
 export function TransformableOverlay({
   x, y, width, height, rotation, lockAspect = true, minWidth = 20, minHeight = 20,
-  isActive, onSelect, onChange, children, containerRef, zoom = 100
+  isActive, onSelect, onChange, children, zoom = 100
 }: TransformableOverlayProps) {
   
   const elementRef = useRef<HTMLDivElement>(null);

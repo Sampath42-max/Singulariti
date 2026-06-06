@@ -104,7 +104,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
             </div>
           ) : (
             <div className="py-12 text-center text-slate font-sans text-[13px]">
-              No tools found matching "{query}"
+              No tools found matching &quot;{query}&quot;
             </div>
           )}
         </div>

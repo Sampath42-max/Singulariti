@@ -485,7 +485,7 @@ export function SingleFeatureEditorClient({ tool }: Props) {
 
       const vx = mouseX - cx;
       const vy = mouseY - cy;
-      let angleDeg = Math.round(Math.atan2(vx, -vy) * (180 / Math.PI));
+      const angleDeg = Math.round(Math.atan2(vx, -vy) * (180 / Math.PI));
       logoStateRef.current.rotation = angleDeg;
       requestDraw();
     } else {
@@ -981,7 +981,7 @@ export function SingleFeatureEditorClient({ tool }: Props) {
         <FileUploader
           onFilesSelected={handleFileSelected}
           multiple={false}
-          accept={{ 'image/*': ['.png', '.jpg', '.jpeg', '.webp'] }}
+          accept={{ 'image/*': ['.png', '.jpg', '.jpeg', '.webp', '.svg'] }}
           title={`Upload an image to ${tool.name.toLowerCase()}`}
           subtitle="Supports JPG, JPEG, PNG, or WEBP formats up to 15MB"
         />

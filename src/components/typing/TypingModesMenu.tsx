@@ -1,7 +1,7 @@
 import React from 'react';
 import { TypingMode } from '@/hooks/useTypingEngine';
 import { TypingDifficulty } from '@/lib/typing/words';
-import { Settings, Clock, Type, Hash, Quote, Code } from 'lucide-react';
+import { Clock, Type, Hash, Quote, Code } from 'lucide-react';
 
 interface TypingModesMenuProps {
   mode: TypingMode;

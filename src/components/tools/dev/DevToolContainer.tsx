@@ -206,8 +206,8 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
         }
         case 'xml-formatter': {
           let formatted = '';
-          let reg = /(>)(<)(\/*)/g;
-          let xml = input.replace(reg, '$1\r\n$2$3');
+          const reg = /(>)(<)(\/*)/g;
+          const xml = input.replace(reg, '$1\r\n$2$3');
           let pad = 0;
           xml.split('\r\n').forEach((node) => {
             let indent = 0;
@@ -228,7 +228,7 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
           let indentLevel = 0;
           const lines = input.split('\n');
           const beauty = lines.map(line => {
-            let l = line.trim();
+            const l = line.trim();
             if (l.startsWith('}') || l.startsWith(']')) indentLevel = Math.max(0, indentLevel - 1);
             const res = '  '.repeat(indentLevel) + l;
             if (l.endsWith('{') || l.endsWith('[') || l.endsWith('(')) indentLevel += 1;
@@ -281,7 +281,7 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
           break;
         }
         case 'markdown-previewer': {
-          let html = input
+          const html = input
             .replace(/^### (.*$)/gim, '<h3>$1</h3>')
             .replace(/^## (.*$)/gim, '<h2>$1</h2>')
             .replace(/^# (.*$)/gim, '<h1>$1</h1>')
