@@ -14,13 +14,5 @@ export const metadata = buildMetadata({
 });
 
 export default function WebCompilerPage() {
-  return (
-    <div className="min-h-screen flex flex-col bg-background selection:bg-primary/20">
-      <Header />
-      <main className="flex-1 w-full flex flex-col items-center pt-24 pb-12">
-        <WebCompilerClient />
-      </main>
-      <Footer />
-    </div>
-  );
+  return <WebCompilerClient />;
 }

@@ -58,6 +58,28 @@ export function HtmlPreviewerClient() {
     }
   };
 
+  const howToUse = [
+    "Paste your raw HTML code into the Code Editor panel.",
+    "The Live Preview panel will automatically render your HTML.",
+    "Use the top toolbar to load templates, format your code, or export the result as an HTML file.",
+    "Toggle between different layout modes using the layout icons in the toolbar."
+  ];
+
+  const faqs = [
+    {
+      question: "Is my code saved on your servers?",
+      answer: "No, all code processing and rendering happens entirely locally in your browser. We do not store or transmit any of your code to our servers."
+    },
+    {
+      question: "Can I use external CSS or JavaScript libraries?",
+      answer: "Yes! You can include standard <link> and <script> tags within your HTML code to pull in external resources via CDN."
+    },
+    {
+      question: "How do I format my code?",
+      answer: "Simply click the 'Beautify' button in the toolbar. It will automatically indent and format your HTML code for better readability."
+    }
+  ];
+
   const renderEditor = () => {
     return (
       <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1 relative">
@@ -78,6 +100,8 @@ export function HtmlPreviewerClient() {
       description="A lightning-fast, production-grade HTML renderer with Monaco Editor, live responsive preview, and automatic validation."
       categoryName="Developer Tools"
       categoryPath="/tools/dev"
+      howToUse={howToUse}
+      faqs={faqs}
     >
       <div className="flex flex-col w-full h-[85vh] border border-border rounded-2xl overflow-hidden bg-background shadow-sm relative">
         

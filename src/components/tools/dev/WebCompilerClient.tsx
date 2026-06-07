@@ -142,6 +142,28 @@ export function WebCompilerClient() {
     }
   };
 
+  const howToUse = [
+    "Write your HTML, CSS, and JS code in the top panels.",
+    "The output will automatically render in the bottom Live Preview panel.",
+    "Check the Console overlay in the bottom panel for any JavaScript logs or errors.",
+    "Use the top toolbar to load templates, format your code, or export the project as a ZIP file."
+  ];
+
+  const faqs = [
+    {
+      question: "Is my code saved on your servers?",
+      answer: "No, all code processing and rendering happens entirely locally in your browser. We do not store or transmit any of your code to our servers."
+    },
+    {
+      question: "How does the Console work?",
+      answer: "The console captures output from console.log(), console.warn(), and console.error() in your JavaScript code and displays it securely in the overlay."
+    },
+    {
+      question: "Can I use external libraries?",
+      answer: "Yes! You can include standard <link> and <script> tags within your HTML code to pull in external resources via CDN."
+    }
+  ];
+
   const renderEditors = () => {
     if (isMobile) {
       return (
@@ -167,7 +189,7 @@ export function WebCompilerClient() {
     }
 
     return (
-      <PanelGroup direction={store.layout === 'horizontal' ? 'horizontal' : 'vertical'}>
+      <PanelGroup direction="horizontal">
         <Panel defaultSize={33} minSize={20}>
           <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1">
             <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider">
@@ -176,7 +198,7 @@ export function WebCompilerClient() {
             <MonacoEditorWrapper language="html" value={store.html} onChange={(v) => store.setHtml(v || '')} />
           </div>
         </Panel>
-        <PanelResizeHandle className={`bg-transparent hover:bg-primary/20 transition-colors ${store.layout === 'horizontal' ? 'w-2' : 'h-2'}`} />
+        <PanelResizeHandle className="bg-transparent hover:bg-primary/20 transition-colors w-2" />
         <Panel defaultSize={33} minSize={20}>
           <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1">
             <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider">
@@ -185,7 +207,7 @@ export function WebCompilerClient() {
             <MonacoEditorWrapper language="css" value={store.css} onChange={(v) => store.setCss(v || '')} />
           </div>
         </Panel>
-        <PanelResizeHandle className={`bg-transparent hover:bg-primary/20 transition-colors ${store.layout === 'horizontal' ? 'w-2' : 'h-2'}`} />
+        <PanelResizeHandle className="bg-transparent hover:bg-primary/20 transition-colors w-2" />
         <Panel defaultSize={33} minSize={20}>
           <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1">
             <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider">
@@ -205,6 +227,8 @@ export function WebCompilerClient() {
       description="A production-grade HTML, CSS, and JS playground with Monaco Editor, live responsive preview, and console integration."
       categoryName="Developer Tools"
       categoryPath="/tools/dev"
+      howToUse={howToUse}
+      faqs={faqs}
     >
       <div className="flex flex-col w-full h-[85vh] border border-border rounded-2xl overflow-hidden bg-background shadow-sm">
         
@@ -245,18 +269,25 @@ export function WebCompilerClient() {
             <div className="h-6 w-px bg-border mx-2 hidden md:block" />
             <div className="hidden md:flex items-center gap-1 bg-background p-1 rounded-lg border border-border">
               <button 
-                onClick={() => store.setLayout('horizontal')}
-                className={`p-1.5 rounded-md ${store.layout === 'horizontal' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
-                title="Horizontal Split"
+                onClick={() => store.setLayout('code-only')}
+                className={`p-1.5 rounded-md ${store.layout === 'code-only' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
+                title="Code Only"
+              >
+                <FileJson className="w-4 h-4" />
+              </button>
+              <button 
+                onClick={() => store.setLayout('vertical')}
+                className={`p-1.5 rounded-md ${store.layout === 'vertical' || store.layout === 'horizontal' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
+                title="Split View"
               >
                 <Layout className="w-4 h-4" />
               </button>
               <button 
-                onClick={() => store.setLayout('vertical')}
-                className={`p-1.5 rounded-md ${store.layout === 'vertical' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
-                title="Vertical Split"
+                onClick={() => store.setLayout('preview-only')}
+                className={`p-1.5 rounded-md ${store.layout === 'preview-only' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
+                title="Preview Only"
               >
-                <Layout className="w-4 h-4 rotate-90" />
+                <Play className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -272,13 +303,13 @@ export function WebCompilerClient() {
           ) : store.layout === 'code-only' ? (
             renderEditors()
           ) : (
-            <PanelGroup direction={isMobile || store.layout === 'horizontal' ? 'vertical' : 'horizontal'}>
+            <PanelGroup direction="vertical">
               <Panel defaultSize={50} minSize={30}>
                 {renderEditors()}
               </Panel>
-              <PanelResizeHandle className={`bg-border hover:bg-primary/50 transition-colors ${isMobile || store.layout === 'horizontal' ? 'h-2' : 'w-2'}`} />
+              <PanelResizeHandle className="bg-border hover:bg-primary/50 transition-colors h-2" />
               <Panel defaultSize={50} minSize={30}>
-                <div className="w-full h-full relative flex flex-col">
+                <div className="w-full h-full relative flex flex-col p-1">
                   <DevicePreviewFrame srcDoc={srcDoc} deviceView={store.deviceView} setDeviceView={store.setDeviceView} />
                   <ConsoleOverlay logs={logs} onClear={() => setLogs([])} />
                 </div>
