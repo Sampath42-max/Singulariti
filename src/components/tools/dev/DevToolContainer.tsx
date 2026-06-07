@@ -598,29 +598,40 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
 
         {/* Input & Output */}
         {toolId !== 'uuid-generator' && toolId !== 'unix-time-converter' && toolId !== 'color-picker-tool' && (
-          <div className="grid grid-cols-1 gap-6">
-            <TextBox 
-              value={input} 
-              onChange={setInput} 
-              label="Source Input" 
-              error={error} 
-              placeholder={
-                toolId === 'jwt-decoder' 
-                  ? 'Paste encoded JWT token here...' 
-                  : toolId === 'html-previewer' 
-                  ? 'Paste raw HTML and styles here...' 
-                  : 'Paste raw content here...'
-              }
-            />
-            {toolId === 'html-previewer' && output && (
-              <div className="space-y-2">
+          <div className={`grid ${toolId === 'html-previewer' ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'} gap-6`}>
+            <div className={toolId === 'html-previewer' ? 'h-full flex flex-col' : ''}>
+              <TextBox 
+                value={input} 
+                onChange={setInput} 
+                label={toolId === 'html-previewer' ? 'HTML / CSS / JS Code' : 'Source Input'} 
+                error={error} 
+                rows={toolId === 'html-previewer' ? 24 : 8}
+                placeholder={
+                  toolId === 'jwt-decoder' 
+                    ? 'Paste encoded JWT token here...' 
+                    : toolId === 'html-previewer' 
+                    ? 'Paste raw HTML, inline CSS, and scripts here...' 
+                    : 'Paste raw content here...'
+                }
+              />
+            </div>
+            {toolId === 'html-previewer' && (
+              <div className="space-y-2 h-full flex flex-col">
                 <label className="text-[13px] font-sans font-semibold text-ink uppercase tracking-wider">Live Preview</label>
-                <iframe 
-                  srcDoc={output}
-                  title="HTML Previewer Frame" 
-                  className="w-full min-h-[400px] border border-border bg-white rounded-xl"
-                  sandbox=""
-                />
+                <div className="flex-1 min-h-[400px] lg:min-h-full border border-border bg-white rounded-xl overflow-hidden relative">
+                  {output ? (
+                    <iframe 
+                      srcDoc={output}
+                      title="HTML Previewer Frame" 
+                      className="w-full h-full border-none absolute inset-0"
+                      sandbox="allow-scripts"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-slate font-sans text-sm p-4 text-center">
+                      Your live preview will appear here as you type.
+                    </div>
+                  )}
+                </div>
               </div>
             )}
             {toolId === 'markdown-previewer' && output && (

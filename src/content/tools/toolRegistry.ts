@@ -3713,6 +3713,32 @@ export const toolRegistry: UtilityRegistryItem[] = [
     ]
   },
   {
+    "id": "web-compiler",
+    "name": "Web Compiler",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/web-compiler",
+    "guideSlug": "web-compiler-guide",
+    "shortDescription": "Write HTML, CSS, and JavaScript and see the results instantly in your browser.",
+    "inputType": [
+      "HTML Code",
+      "CSS Styles",
+      "JavaScript Code"
+    ],
+    "outputType": [
+      "Isolated Interactive Sandbox Preview"
+    ],
+    "operationType": "previewer",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false,
+    "relatedToolIds": [
+      "html-previewer",
+      "markdown-previewer",
+      "code-beautifier"
+    ]
+  },
+  {
     "id": "length-converter",
     "name": "Length Converter",
     "sectionId": "convert",
