@@ -3689,6 +3689,30 @@ export const toolRegistry: UtilityRegistryItem[] = [
     ]
   },
   {
+    "id": "html-previewer",
+    "name": "HTML Previewer",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/html-previewer",
+    "guideSlug": "html-previewer-guide",
+    "shortDescription": "Render raw HTML code elements live in a safe frame.",
+    "inputType": [
+      "HTML Code"
+    ],
+    "outputType": [
+      "Isolated Interactive Sandbox Preview"
+    ],
+    "operationType": "previewer",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false,
+    "relatedToolIds": [
+      "markdown-previewer",
+      "web-compiler",
+      "code-beautifier"
+    ]
+  },
+  {
     "id": "web-compiler",
     "name": "Web Compiler",
     "sectionId": "dev",
