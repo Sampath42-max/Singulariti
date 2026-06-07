@@ -119,46 +119,11 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <Card 
-              title="Text Tools"
-              description="Count words, format cases, sort, reverse, and compare text instantly."
-              icon={<Type />}
-              href="/tools/text"
-              badge={{ text: `${textToolsCount} Tools`, variant: 'default' }}
-            />
-            <Card 
-              title="Developer Tools"
-              description="Format JSON/XML/YAML/SQL, encode Base64/URLs, decode JWTs, and test regex."
-              icon={<Code />}
-              href="/tools/dev"
-              badge={{ text: `${devToolsCount} Tools`, variant: 'default' }}
-            />
-            <Card 
-              title="Unit Conversion Tools"
-              description="Convert lengths, weights, temperature, area, bases and data storage."
-              icon={<Scale />}
-              href="/tools/convert"
-              badge={{ text: `${convertToolsCount} Tools`, variant: 'default' }}
-            />
-            <Card 
-              title="SEO Tools"
-              description="Generate meta tags, robots.txt, sitemaps, and check heading structures."
-              icon={<Search />}
-              href="/tools/seo"
-              badge={{ text: `${seoToolsCount} Tools`, variant: 'default' }}
-            />
-            <Card 
               title="Image Tools"
               description="Compress, convert, and resize images instantly in your browser."
               icon={<ImageIcon />}
               href="/image"
               badge={{ text: `${imageToolsCount} Tools`, variant: 'default' }}
-            />
-            <Card 
-              title="Image Editing Tools"
-              description="Edit, crop, apply filters, and enhance images instantly."
-              icon={<Wand2 />}
-              href="/editing"
-              badge={{ text: `${editingToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="PDF Tools"
@@ -168,11 +133,11 @@ export default function Home() {
               badge={{ text: `${pdfToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
-              title="QR Tools"
-              description="Generate custom styled QR codes or scan them securely."
-              icon={<QrCode />}
-              href="/tools/qr"
-              badge={{ text: `${qrToolsCount} Tools`, variant: 'default' }}
+              title="Developer Tools"
+              description="Format JSON/XML/YAML/SQL, encode Base64/URLs, decode JWTs, and test regex."
+              icon={<Code />}
+              href="/tools/dev"
+              badge={{ text: `${devToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="Calculator Tools"
@@ -180,6 +145,41 @@ export default function Home() {
               icon={<Calculator />}
               href="/tools/calculators"
               badge={{ text: `${calculatorsToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="SEO Tools"
+              description="Generate meta tags, robots.txt, sitemaps, and check heading structures."
+              icon={<Search />}
+              href="/tools/seo"
+              badge={{ text: `${seoToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="Text Tools"
+              description="Count words, format cases, sort, reverse, and compare text instantly."
+              icon={<Type />}
+              href="/tools/text"
+              badge={{ text: `${textToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="Unit Conversion Tools"
+              description="Convert lengths, weights, temperature, area, bases and data storage."
+              icon={<Scale />}
+              href="/tools/convert"
+              badge={{ text: `${convertToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="QR Tools"
+              description="Generate custom styled QR codes or scan them securely."
+              icon={<QrCode />}
+              href="/tools/qr"
+              badge={{ text: `${qrToolsCount} Tools`, variant: 'default' }}
+            />
+            <Card 
+              title="Image Editing Tools"
+              description="Edit, crop, apply filters, and enhance images instantly."
+              icon={<Wand2 />}
+              href="/editing"
+              badge={{ text: `${editingToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="Typing Speed Test"
