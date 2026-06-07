@@ -213,15 +213,21 @@ export function WatermarkPdfClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload your PDF document.",
+        "Type the text you want to use as a watermark and adjust the size, opacity, and angle.",
+        "Click 'Apply Watermark' to stamp the document.",
+        "Download your watermarked PDF."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Can the watermark be easily removed?",
+                "answer": "The watermark is embedded into the PDF structure, making it difficult for average users to remove, though not impossible for advanced editing tools."
+        },
+        {
+                "question": "Does this upload my document?",
+                "answer": "No, the stamping process is strictly client-side."
+        }
+]}
       
       title="Add Watermark to PDF"
       description="Add text or image watermarks to your PDF pages in your browser. Customize styling, colors, size, and positions."

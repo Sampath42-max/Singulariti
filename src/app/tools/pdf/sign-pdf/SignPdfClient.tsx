@@ -251,15 +251,21 @@ export function SignPdfClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload the PDF document that requires a signature.",
+        "Draw your signature using your mouse or touch screen, or type it out.",
+        "Place and resize the signature on the document preview.",
+        "Click 'Apply Signature' and download the signed PDF."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Is this legally binding?",
+                "answer": "This tool adds a visual electronic signature. Legal validity depends on your local jurisdiction's laws regarding electronic signatures."
+        },
+        {
+                "question": "Is my signature stored anywhere?",
+                "answer": "No. Your signature is drawn and applied locally in your browser and vanishes when you refresh the page."
+        }
+]}
       
       title="Sign PDF"
       description="Draw or upload your signature and position it on any page of your PDF document. Processed 100% locally in your browser."

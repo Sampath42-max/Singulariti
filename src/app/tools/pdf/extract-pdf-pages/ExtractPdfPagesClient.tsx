@@ -119,15 +119,21 @@ export function ExtractPdfPagesClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Select and upload the PDF file you want to extract pages from.",
+        "Click on the page thumbnails to select the specific pages you need.",
+        "Click 'Extract Selected Pages' to generate a new document.",
+        "Download the new PDF containing only your selected pages."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Does this affect my original PDF?",
+                "answer": "No, your original file remains untouched. The tool creates a new PDF with the extracted pages."
+        },
+        {
+                "question": "Is there a limit to how many pages I can extract?",
+                "answer": "There are no artificial limits. Since it runs in your browser, it depends only on your device's memory."
+        }
+]}
       
       title="Extract PDF Pages"
       description="Choose specific pages to extract from your PDF document. Select thumbnails visually and compile them into a new document."

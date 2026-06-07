@@ -122,15 +122,21 @@ export function RotatePdfClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload a PDF with incorrectly oriented pages.",
+        "Click the rotate buttons on individual page thumbnails, or rotate all pages at once.",
+        "Click 'Apply Rotation' to save the orientation.",
+        "Download the corrected PDF."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Is the rotation permanent?",
+                "answer": "Yes, the downloaded PDF will have the new rotation embedded in its structure."
+        },
+        {
+                "question": "Can I rotate only specific pages?",
+                "answer": "Absolutely. You can rotate individual pages 90, 180, or 270 degrees."
+        }
+]}
       
       title="Rotate PDF"
       description="Rotate individual pages or all pages of a PDF document visually. Completely secure, offline in-browser processing."

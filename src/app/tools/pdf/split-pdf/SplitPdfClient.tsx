@@ -92,15 +92,21 @@ export function SplitPdfClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload a multi-page PDF document.",
+        "Specify the page ranges where you want to split the document.",
+        "Click 'Split PDF' to divide it into multiple files.",
+        "Download a ZIP file containing your separated PDFs."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Can I split a PDF into individual pages?",
+                "answer": "Yes, you can configure the split settings to extract every single page as its own PDF."
+        },
+        {
+                "question": "Are the split files secure?",
+                "answer": "Yes, all file splitting occurs securely within your browser's memory."
+        }
+]}
       
       title="Split PDF"
       description="Split a PDF document into specific pages or page ranges in your browser. Totally private and secure."

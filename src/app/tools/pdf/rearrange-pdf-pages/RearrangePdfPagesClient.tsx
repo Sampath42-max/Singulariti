@@ -130,15 +130,21 @@ export function RearrangePdfPagesClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload the PDF document you want to reorder.",
+        "Drag and drop the page thumbnails into your desired sequence.",
+        "Click 'Apply Changes' to rebuild the document.",
+        "Download the reorganized PDF."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Does rearranging degrade the PDF quality?",
+                "answer": "No, the pages are moved structurally without re-rendering or compressing them, so quality is 100% preserved."
+        },
+        {
+                "question": "Is this secure for sensitive documents?",
+                "answer": "Yes, all rearrangements happen client-side in your browser."
+        }
+]}
       
       title="Rearrange PDF Pages"
       description="Reorder the pages of your PDF document visually using drag and drop. Processed securely in your browser."

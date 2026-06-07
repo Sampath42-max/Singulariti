@@ -121,15 +121,21 @@ export function PdfToJpgClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload the PDF you want to convert into images.",
+        "The tool will render each page of the PDF into a high-quality JPG image.",
+        "Review the image previews.",
+        "Download the images individually or as a bulk ZIP file."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "What resolution are the JPGs generated at?",
+                "answer": "The images are rendered at a high scale to ensure clear, readable text and crisp graphics."
+        },
+        {
+                "question": "Are my documents safe?",
+                "answer": "Yes, the conversion from PDF to JPG happens locally using JavaScript, ensuring your files never leave your device."
+        }
+]}
       
       title="PDF to JPG"
       description="Convert PDF document pages into high-quality JPG images directly inside your browser. Instant conversion, zero server uploads."

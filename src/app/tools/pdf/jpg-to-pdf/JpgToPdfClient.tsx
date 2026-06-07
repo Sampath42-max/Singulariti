@@ -106,15 +106,21 @@ export function JpgToPdfClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload one or more JPG/JPEG images.",
+        "Drag and drop the image thumbnails to rearrange their order.",
+        "Click 'Convert to PDF' to compile the images into a single document.",
+        "Download your new PDF file."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Can I convert other image formats like PNG?",
+                "answer": "While this tool is optimized for JPGs, it generally supports standard web image formats depending on your browser."
+        },
+        {
+                "question": "Is my data private during conversion?",
+                "answer": "Absolutely. The entire image-to-PDF conversion process is performed locally on your machine."
+        }
+]}
       
       title="JPG to PDF"
       description="Convert images (JPG, JPEG, PNG) into a PDF document instantly in your browser. Rearrange pages, adjust margin offsets, and choose formatting."

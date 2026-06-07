@@ -272,15 +272,21 @@ export function QrCodeScannerClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Grant the browser permission to access your device's camera.",
+        "Point the camera at a physical or digital QR code.",
+        "Alternatively, upload an image of a QR code from your device.",
+        "The tool will instantly decode the information and display it on screen."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Are images from my camera uploaded?",
+                "answer": "Absolutely not. The camera feed is analyzed directly by your browser in real-time."
+        },
+        {
+                "question": "What types of barcodes does it support?",
+                "answer": "It is primarily optimized for standard 2D QR codes."
+        }
+]}
       
       title="QR Code Scanner"
       description="Scan QR codes using your device camera, uploaded images, or pages of a PDF document. Completely processed client-side in the browser."

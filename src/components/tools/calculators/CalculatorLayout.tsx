@@ -3,6 +3,7 @@ import { ToolLayout } from '@/components/tools/ToolLayout';
 import { Button } from '@/components/ui/Button';
 import { RelatedCalculators } from './RelatedCalculators';
 import { RefreshCw, Play } from 'lucide-react';
+import { getCalculatorContent } from './calculatorContent';
 
 interface CalculatorLayoutProps {
   toolId: string;
@@ -31,18 +32,12 @@ export function CalculatorLayout({
   inputs,
   results
 }: CalculatorLayoutProps) {
+  const content = getCalculatorContent(toolId);
+
   return (
     <ToolLayout
-      howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
-      faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+      howToUse={content.howToUse}
+      faqs={content.faqs}
       
       utilityId={toolId}
       title={title}

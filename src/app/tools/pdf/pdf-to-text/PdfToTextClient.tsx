@@ -89,15 +89,21 @@ export function PdfToTextClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload a PDF containing text.",
+        "Wait a moment while the text is extracted locally.",
+        "Review the extracted text in the browser.",
+        "Copy the text to your clipboard or download it as a .txt file."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Can it extract text from scanned images?",
+                "answer": "This tool extracts embedded digital text. If the PDF is purely scanned images without OCR, it will not extract text."
+        },
+        {
+                "question": "Is formatting preserved?",
+                "answer": "The tool extracts raw text. Complex layouts, tables, and exact fonts are not preserved."
+        }
+]}
       
       title="PDF to Text"
       description="Extract readable text content from any PDF file. The text extraction happens entirely inside your browser. No uploads, total privacy."

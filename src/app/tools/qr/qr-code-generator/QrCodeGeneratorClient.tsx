@@ -262,15 +262,21 @@ export function QrCodeGeneratorClient({
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Enter the text, URL, or data you want to encode.",
+        "Customize the colors, size, and error correction level if desired.",
+        "The QR code will generate instantly in real-time.",
+        "Click 'Download' to save the QR code as an image file."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Do these QR codes expire?",
+                "answer": "No, they are static QR codes. As long as the destination URL or text remains valid, the QR code will work forever."
+        },
+        {
+                "question": "Is my data sent to a server to generate the code?",
+                "answer": "No, the QR code generation algorithm runs entirely locally in your web browser."
+        }
+]}
       
       title={toolName}
       description={toolDescription}

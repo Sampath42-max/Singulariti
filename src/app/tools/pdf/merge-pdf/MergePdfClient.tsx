@@ -131,15 +131,21 @@ export function MergePdfClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload two or more PDF files you want to combine.",
+        "Drag and drop the files in the list to set your preferred order.",
+        "Click 'Merge PDFs' to join them together.",
+        "Download the combined PDF document."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Is there a file size limit for merging?",
+                "answer": "There are no strict size limits since processing is local, though very large files may depend on your device's RAM."
+        },
+        {
+                "question": "Are bookmarks and links preserved?",
+                "answer": "Basic structure is preserved, but complex interactive elements like bookmarks may be reset during the merge."
+        }
+]}
       
       title="Merge PDF"
       description="Combine multiple PDF files into one single PDF document online. Safe, secure, and processed completely inside your browser."

@@ -93,15 +93,21 @@ export function CompressPdfClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Click 'Select PDF' or drag and drop your PDF file into the uploader.",
+        "Review the visual preview to compare the original and compressed document structure.",
+        "Click 'Compress PDF' to securely reduce the file size within your browser.",
+        "Download the optimized, smaller PDF file instantly."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Will compressing my PDF reduce its visual quality?",
+                "answer": "Our compression engine optimizes the internal structure and image streams carefully to minimize file size while maintaining excellent visual fidelity."
+        },
+        {
+                "question": "Is my PDF uploaded to any server?",
+                "answer": "No, all compression happens locally on your device, ensuring complete data privacy and security."
+        }
+]}
       
       title="Compress PDF"
       description="Optimize and shrink PDF files to reduce file size in the browser. Processed securely and locally on your device."

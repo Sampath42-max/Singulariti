@@ -111,15 +111,21 @@ export function DeletePdfPagesClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload your PDF document to the tool.",
+        "View all pages as thumbnails and select the ones you wish to delete.",
+        "Click 'Delete Selected Pages' to remove them.",
+        "Download your newly modified PDF."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "Can I delete multiple pages at once?",
+                "answer": "Yes, you can click on multiple page thumbnails to select and delete them in one go."
+        },
+        {
+                "question": "Are my files secure?",
+                "answer": "Yes, the deletion process runs entirely in your browser. No data is sent to external servers."
+        }
+]}
       
       title="Delete PDF Pages"
       description="Remove unwanted pages from a PDF document. Select pages to discard and download a new compiled file."

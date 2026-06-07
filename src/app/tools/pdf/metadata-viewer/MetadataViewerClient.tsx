@@ -75,15 +75,21 @@ export function MetadataViewerClient() {
   return (
     <ToolLayout
       howToUse={[
-        "Select your file or input your data.",
-        "Adjust any specific settings or options as needed.",
-        "Click the main action button to process.",
-        "Download or copy the result instantly."
-      ]}
+        "Upload a PDF file to analyze its metadata.",
+        "The tool will instantly read and display hidden information like Author, Creator, Producer, and Dates.",
+        "Review the extracted information securely on your screen.",
+        "No download is needed as this is a viewing tool."
+]}
       faqs={[
-        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
-        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
-      ]}
+        {
+                "question": "What kind of metadata does this tool reveal?",
+                "answer": "It reveals standard document properties including title, author, subject, creation date, modification date, and the software used to create it."
+        },
+        {
+                "question": "Can I edit the metadata here?",
+                "answer": "This specific tool is a viewer. Editing capabilities would require a different utility."
+        }
+]}
       
       title="PDF Metadata Viewer"
       description="View hidden properties and EXIF data of any PDF file locally. Extract author, title, dates, keywords, and creation tools instantly."
