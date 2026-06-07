@@ -4,12 +4,6 @@ import React, { useRef, useEffect } from 'react';
 import Editor, { useMonaco, loader } from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 
-// Ensure Monaco loads efficiently
-loader.config({
-  paths: {
-    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs'
-  }
-});
 
 interface MonacoEditorWrapperProps {
   language: 'html' | 'css' | 'javascript';

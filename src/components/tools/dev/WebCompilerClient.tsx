@@ -52,10 +52,16 @@ export function WebCompilerClient() {
         };
 
         function sendLog(type, args) {
-          const content = Array.from(args).map(arg => 
-            typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
-          ).join(' ');
-          window.parent.postMessage({ source: 'singulariti-compiler-console', type, content }, '*');
+          try {
+            const content = Array.from(args).map(arg => {
+              if (arg instanceof Event) return '[object Event]';
+              if (arg instanceof Error) return arg.toString();
+              return typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg);
+            }).join(' ');
+            window.parent.postMessage({ source: 'singulariti-compiler-console', type, content }, '*');
+          } catch(e) {
+            window.parent.postMessage({ source: 'singulariti-compiler-console', type: 'error', content: 'Console logging error: ' + String(e) }, '*');
+          }
         }
 
         console.log = function() { sendLog('log', arguments); originalConsole.log.apply(console, arguments); };
@@ -161,7 +167,7 @@ export function WebCompilerClient() {
     }
 
     return (
-      <PanelGroup direction={store.layout === 'vertical' ? 'horizontal' : 'vertical'}>
+      <PanelGroup direction={store.layout === 'horizontal' ? 'horizontal' : 'vertical'}>
         <Panel defaultSize={33} minSize={20}>
           <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1">
             <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider">
@@ -170,7 +176,7 @@ export function WebCompilerClient() {
             <MonacoEditorWrapper language="html" value={store.html} onChange={(v) => store.setHtml(v || '')} />
           </div>
         </Panel>
-        <PanelResizeHandle className="w-2 bg-transparent hover:bg-primary/20 transition-colors" />
+        <PanelResizeHandle className={`bg-transparent hover:bg-primary/20 transition-colors ${store.layout === 'horizontal' ? 'w-2' : 'h-2'}`} />
         <Panel defaultSize={33} minSize={20}>
           <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1">
             <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider">
@@ -179,7 +185,7 @@ export function WebCompilerClient() {
             <MonacoEditorWrapper language="css" value={store.css} onChange={(v) => store.setCss(v || '')} />
           </div>
         </Panel>
-        <PanelResizeHandle className="w-2 bg-transparent hover:bg-primary/20 transition-colors" />
+        <PanelResizeHandle className={`bg-transparent hover:bg-primary/20 transition-colors ${store.layout === 'horizontal' ? 'w-2' : 'h-2'}`} />
         <Panel defaultSize={33} minSize={20}>
           <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1">
             <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider">
