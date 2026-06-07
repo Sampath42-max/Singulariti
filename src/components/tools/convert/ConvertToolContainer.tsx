@@ -185,6 +185,13 @@ export function ConvertToolContainer({ toolId, toolName, toolDescription }: Conv
 
   const { units } = getUnitConfig();
 
+  // Reset input values, result, and errors when switching/re-entering tools
+  useEffect(() => {
+    setInputValue('1');
+    setResult('');
+    setError('');
+  }, [toolId]);
+
   // Initialize from/to units when config loads
   useEffect(() => {
     if (units.length > 1) {

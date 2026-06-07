@@ -5,9 +5,14 @@ import { ToolLayout } from '../shared/ToolLayout';
 import { TextBox } from '../shared/TextBox';
 import { ResultBox } from '../shared/ResultBox';
 import { Button } from '@/components/ui/Button';
-import js_beautify from 'js-beautify';
 import { format as formatSql } from 'sql-formatter';
 import { sanitizeHtml } from '@/lib/sanitization';
+import { useHtmlPreviewerStore } from '@/store/useCompilerStore';
+import { MonacoEditorWrapper } from '../shared/MonacoEditorWrapper';
+import { DevicePreviewFrame } from '../shared/DevicePreviewFrame';
+import { Group as PanelGroup, Panel, Separator as PanelResizeHandle } from 'react-resizable-panels';
+import { Play, Download, Layout, FileJson, AlignLeft, Image as ImageIcon } from 'lucide-react';
+import { saveAs } from 'file-saver';
 
 interface DevToolContainerProps {
   toolId: string;
@@ -74,11 +79,94 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
 
   // Code Beautifier language selection
   const [beautifyLanguage, setBeautifyLanguage] = useState<'js' | 'html' | 'css'>('js');
+  const [beautifierLoaded, setBeautifierLoaded] = useState(false);
 
   // UUID states
   const [uuidResult, setUuidResult] = useState('');
   const [copiedUuid, setCopiedUuid] = useState(false);
+
+  // HTML Previewer states & store
+  const htmlPreviewStore = useHtmlPreviewerStore();
+  const [srcDoc, setSrcDoc] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeTab, setActiveTab] = useState<'editor' | 'preview'>('editor');
+
+  // Dynamic script loader for js-beautify CDN
+  useEffect(() => {
+    if (toolId !== 'code-beautifier' && toolId !== 'html-previewer') return;
+
+    let active = true;
+    const loadScript = (url: string): Promise<void> => {
+      return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${url}"]`)) {
+          resolve();
+          return;
+        }
+        const script = document.createElement('script');
+        script.src = url;
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
+        document.head.appendChild(script);
+      });
+    };
+
+    Promise.all([
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify.min.js'),
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify-css.min.js'),
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify-html.min.js')
+    ]).then(() => {
+      if (active) setBeautifierLoaded(true);
+    }).catch((err) => {
+      if (active) setError('Failed to load code beautifier libraries: ' + err.message);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [toolId]);
+
+  // Resize listener for mobile/desktop layout threshold
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // HTML Previewer auto-run logic
+  useEffect(() => {
+    if (toolId !== 'html-previewer') return;
+    if (htmlPreviewStore.autoRun) {
+      const timeout = setTimeout(() => {
+        setSrcDoc(htmlPreviewStore.html);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [htmlPreviewStore.html, htmlPreviewStore.autoRun, toolId]);
   
+  // Reset all states when switching/re-entering tools
+  useEffect(() => {
+    setInput('');
+    setOutput('');
+    setError('');
+    setRegexPattern('[a-zA-Z]+');
+    setRegexFlags('g');
+    setHashType('SHA-256');
+    setColorInput('#0f766e');
+    setColorRgb('rgb(15, 118, 110)');
+    setColorHsl('hsl(175, 77%, 26%)');
+    setColorError('');
+    setCopiedType(null);
+    setBeautifyLanguage('js');
+    setUuidResult('');
+    setCopiedUuid(false);
+    if (toolId === 'html-previewer') {
+      setSrcDoc(htmlPreviewStore.html);
+    } else {
+      setSrcDoc('');
+    }
+  }, [toolId]);
+
   // Live Unix clock interval
   useEffect(() => {
     if (toolId !== 'unix-time-converter') return;
@@ -259,6 +347,10 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
             setOutput('');
             break;
           }
+          if (!beautifierLoaded) {
+            setOutput('Loading beautifier libraries...');
+            break;
+          }
           try {
             const options = {
               indent_size: 2,
@@ -267,12 +359,15 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
               end_with_newline: true
             };
             let formatted = '';
-            if (beautifyLanguage === 'js') {
-              formatted = js_beautify.js(input, options);
-            } else if (beautifyLanguage === 'html') {
-              formatted = js_beautify.html(input, options);
-            } else if (beautifyLanguage === 'css') {
-              formatted = js_beautify.css(input, options);
+            const w = window as any;
+            if (beautifyLanguage === 'js' && typeof w.js_beautify === 'function') {
+              formatted = w.js_beautify(input, options);
+            } else if (beautifyLanguage === 'html' && typeof w.html_beautify === 'function') {
+              formatted = w.html_beautify(input, options);
+            } else if (beautifyLanguage === 'css' && typeof w.css_beautify === 'function') {
+              formatted = w.css_beautify(input, options);
+            } else {
+              throw new Error('Beautifier library is not loaded yet.');
             }
             setOutput(formatted);
           } catch (err: any) {
@@ -290,10 +385,6 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
             .replace(/`(.*)`/gim, '<code>$1</code>')
             .replace(/\n$/gim, '<br />');
           setOutput(html);
-          break;
-        }
-        case 'html-previewer': {
-          setOutput(input);
           break;
         }
         default:
@@ -390,6 +481,37 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
     setTimeout(() => setCopiedType(null), 2000);
   };
 
+  const handleManualRun = () => {
+    setSrcDoc(htmlPreviewStore.html);
+  };
+
+  const loadHtmlTemplate = (name: string) => {
+    if (name === 'blank') {
+      htmlPreviewStore.setHtml('<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <title>Blank Template</title>\n</head>\n<body>\n  <h1>Hello World</h1>\n</body>\n</html>');
+    } else if (name === 'login') {
+      htmlPreviewStore.setHtml('<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <title>Login Form</title>\n  <style>\n    body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f1f5f9; margin: 0; }\n    .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); width: 300px; }\n    h2 { margin-top: 0; color: #0f766e; }\n    input { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; }\n    button { width: 100%; padding: 0.5rem; background: #0f766e; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }\n  </style>\n</head>\n<body>\n  <div class="card">\n    <h2>Login</h2>\n    <input type="email" placeholder="Email">\n    <input type="password" placeholder="Password">\n    <button>Sign In</button>\n  </div>\n</body>\n</html>');
+    }
+  };
+
+  const handleExportHTML = () => {
+    const blob = new Blob([htmlPreviewStore.html], { type: 'text/html;charset=utf-8' });
+    saveAs(blob, 'singulariti-preview.html');
+  };
+
+  const formatHtmlCode = () => {
+    const w = window as any;
+    if (typeof w.html_beautify === 'function') {
+      try {
+        const formatted = w.html_beautify(htmlPreviewStore.html, { indent_size: 2 });
+        htmlPreviewStore.setHtml(formatted);
+      } catch (err) {
+        console.error('HTML Beautification failed', err);
+      }
+    } else {
+      setError('Beautifier library is not loaded yet.');
+    }
+  };
+
   return (
     <ToolLayout
       utilityId={toolId}
@@ -397,10 +519,23 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
       description={toolDescription}
       categoryName="Developer Tools"
       categoryPath="/tools/dev"
-      howToUse={["Enter code, text, or parameters into the source input.", "View formatted or computed result instantly in the output section.", "Click Copy Result to save the formatted result."]}
-      faqs={[
-        { question: "Is my code secure?", answer: "Yes, all formatting, minification, and encodings occur strictly inside your browser. No files or text segments are uploaded." }
-      ]}
+      howToUse={
+        toolId === 'html-previewer'
+          ? [
+              "Write or paste raw HTML code into the code editor panel.",
+              "Click the Run button to load or update the preview.",
+              "Switch between desktop, tablet, and mobile layouts to preview responsive designs."
+            ]
+          : ["Enter code, text, or parameters into the source input.", "View formatted or computed result instantly in the output section.", "Click Copy Result to save the formatted result."]
+      }
+      faqs={
+        toolId === 'html-previewer'
+          ? [
+              { question: "Is this preview safe?", answer: "Yes, the HTML is rendered inside a sandboxed iframe, restricting direct access to the parent document and preventing security issues." },
+              { question: "Can I download the HTML file?", answer: "Yes, click the Export button to download the HTML file directly to your device." }
+            ]
+          : [{ question: "Is my code secure?", answer: "Yes, all formatting, minification, and encodings occur strictly inside your browser. No files or text segments are uploaded." }]
+      }
     >
       <div className="space-y-6">
         {/* Custom Actions */}
@@ -596,44 +731,173 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
           </div>
         )}
 
+        {/* HTML Previewer UI */}
+        {toolId === 'html-previewer' && (
+          <div className="flex flex-col w-full h-[80vh] border border-border rounded-2xl overflow-hidden bg-background shadow-sm relative">
+            {/* Top Toolbar */}
+            <div className="flex items-center justify-between px-4 py-3 bg-surface border-b border-border shrink-0">
+              <div className="flex items-center gap-2">
+                <Button 
+                  id="html-preview-run-btn"
+                  onClick={handleManualRun}
+                  variant="primary"
+                  className="flex items-center gap-2 text-[13px] font-bold"
+                >
+                  <Play className="w-4 h-4 fill-current" /> Run
+                </Button>
+                <div className="h-6 w-px bg-border mx-2" />
+                <select 
+                  id="html-preview-template-select"
+                  onChange={(e) => loadHtmlTemplate(e.target.value)}
+                  className="px-3 py-1.5 bg-background border border-border rounded-lg text-[13px] font-medium text-ink outline-none focus:border-primary cursor-pointer hidden md:block"
+                >
+                  <option value="">Load Template...</option>
+                  <option value="blank">Blank HTML5</option>
+                  <option value="login">Login Form</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button 
+                  id="html-preview-beautify-btn"
+                  onClick={formatHtmlCode}
+                  className="p-2 text-slate hover:bg-slate/10 hover:text-ink rounded-lg transition-colors flex items-center gap-2 text-[13px] font-medium"
+                  title="Beautify HTML"
+                >
+                  <AlignLeft className="w-4 h-4" /> <span className="hidden md:inline">Beautify</span>
+                </button>
+                <button 
+                  id="html-preview-export-btn"
+                  onClick={handleExportHTML}
+                  className="p-2 text-slate hover:bg-slate/10 hover:text-ink rounded-lg transition-colors flex items-center gap-2 text-[13px] font-medium"
+                  title="Download HTML"
+                >
+                  <Download className="w-4 h-4" /> <span className="hidden md:inline">Export</span>
+                </button>
+                <div className="h-6 w-px bg-border mx-2 hidden md:block" />
+                <div className="hidden md:flex items-center gap-1 bg-background p-1 rounded-lg border border-border">
+                  <button 
+                    id="html-preview-layout-horiz-btn"
+                    onClick={() => htmlPreviewStore.setLayout('horizontal')}
+                    className={`p-1.5 rounded-md ${htmlPreviewStore.layout === 'horizontal' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
+                    title="Horizontal Split"
+                  >
+                    <Layout className="w-4 h-4" />
+                  </button>
+                  <button 
+                    id="html-preview-layout-vert-btn"
+                    onClick={() => htmlPreviewStore.setLayout('vertical')}
+                    className={`p-1.5 rounded-md ${htmlPreviewStore.layout === 'vertical' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
+                    title="Vertical Split"
+                  >
+                    <Layout className="w-4 h-4 rotate-90" />
+                  </button>
+                  <button 
+                    id="html-preview-layout-preview-btn"
+                    onClick={() => htmlPreviewStore.setLayout('preview-only')}
+                    className={`p-1.5 rounded-md ${htmlPreviewStore.layout === 'preview-only' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
+                    title="Preview Only"
+                  >
+                    <ImageIcon className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Main Workspace */}
+            <div className="flex-1 overflow-hidden relative">
+              {isMobile ? (
+                <div className="flex flex-col h-full bg-surface">
+                  <div className="flex border-b border-border bg-background shrink-0">
+                    <button
+                      id="html-preview-tab-editor"
+                      onClick={() => setActiveTab('editor')}
+                      className={`flex-1 py-3 text-[13px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'editor' ? 'border-b-2 border-primary text-primary' : 'text-slate hover:bg-slate/5'}`}
+                    >
+                      Code Editor
+                    </button>
+                    <button
+                      id="html-preview-tab-preview"
+                      onClick={() => setActiveTab('preview')}
+                      className={`flex-1 py-3 text-[13px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'preview' ? 'border-b-2 border-primary text-primary' : 'text-slate hover:bg-slate/5'}`}
+                    >
+                      Live Preview
+                    </button>
+                  </div>
+                  <div className="flex-1 relative">
+                    {activeTab === 'editor' ? (
+                      <MonacoEditorWrapper 
+                        language="html" 
+                        value={htmlPreviewStore.html} 
+                        onChange={(v) => htmlPreviewStore.setHtml(v || '')} 
+                      />
+                    ) : (
+                      <DevicePreviewFrame 
+                        srcDoc={srcDoc} 
+                        deviceView={htmlPreviewStore.deviceView} 
+                        setDeviceView={htmlPreviewStore.setDeviceView} 
+                      />
+                    )}
+                  </div>
+                </div>
+              ) : htmlPreviewStore.layout === 'preview-only' ? (
+                <div className="w-full h-full relative p-2">
+                  <DevicePreviewFrame 
+                    srcDoc={srcDoc} 
+                    deviceView={htmlPreviewStore.deviceView} 
+                    setDeviceView={htmlPreviewStore.setDeviceView} 
+                  />
+                </div>
+              ) : htmlPreviewStore.layout === 'code-only' ? (
+                <MonacoEditorWrapper 
+                  language="html" 
+                  value={htmlPreviewStore.html} 
+                  onChange={(v) => htmlPreviewStore.setHtml(v || '')} 
+                />
+              ) : (
+                <PanelGroup orientation={htmlPreviewStore.layout === 'vertical' ? 'horizontal' : 'vertical'}>
+                  <Panel defaultSize={50} minSize={30}>
+                    <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1 relative">
+                      <MonacoEditorWrapper 
+                        language="html" 
+                        value={htmlPreviewStore.html} 
+                        onChange={(v) => htmlPreviewStore.setHtml(v || '')} 
+                      />
+                    </div>
+                  </Panel>
+                  <PanelResizeHandle className={`bg-border hover:bg-primary/50 transition-colors ${htmlPreviewStore.layout === 'horizontal' ? 'h-2' : 'w-2'}`} />
+                  <Panel defaultSize={50} minSize={30}>
+                    <div className="w-full h-full relative flex flex-col p-1">
+                      <DevicePreviewFrame 
+                        srcDoc={srcDoc} 
+                        deviceView={htmlPreviewStore.deviceView} 
+                        setDeviceView={htmlPreviewStore.setDeviceView} 
+                      />
+                    </div>
+                  </Panel>
+                </PanelGroup>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Input & Output */}
-        {toolId !== 'uuid-generator' && toolId !== 'unix-time-converter' && toolId !== 'color-picker-tool' && (
-          <div className={`grid ${toolId === 'html-previewer' ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'} gap-6`}>
-            <div className={toolId === 'html-previewer' ? 'h-full flex flex-col' : ''}>
+        {toolId !== 'uuid-generator' && toolId !== 'unix-time-converter' && toolId !== 'color-picker-tool' && toolId !== 'html-previewer' && (
+          <div className="grid grid-cols-1 gap-6">
+            <div>
               <TextBox 
                 value={input} 
                 onChange={setInput} 
-                label={toolId === 'html-previewer' ? 'HTML / CSS / JS Code' : 'Source Input'} 
+                label="Source Input" 
                 error={error} 
-                rows={toolId === 'html-previewer' ? 24 : 8}
+                rows={8}
                 placeholder={
                   toolId === 'jwt-decoder' 
                     ? 'Paste encoded JWT token here...' 
-                    : toolId === 'html-previewer' 
-                    ? 'Paste raw HTML, inline CSS, and scripts here...' 
                     : 'Paste raw content here...'
                 }
               />
             </div>
-            {toolId === 'html-previewer' && (
-              <div className="space-y-2 h-full flex flex-col">
-                <label className="text-[13px] font-sans font-semibold text-ink uppercase tracking-wider">Live Preview</label>
-                <div className="flex-1 min-h-[400px] lg:min-h-full border border-border bg-white rounded-xl overflow-hidden relative">
-                  {output ? (
-                    <iframe 
-                      srcDoc={output}
-                      title="HTML Previewer Frame" 
-                      className="w-full h-full border-none absolute inset-0"
-                      sandbox="allow-scripts"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-slate font-sans text-sm p-4 text-center">
-                      Your live preview will appear here as you type.
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
             {toolId === 'markdown-previewer' && output && (
               <div className="space-y-2">
                 <label className="text-[13px] font-sans font-semibold text-ink uppercase tracking-wider">Markdown Output Preview</label>
@@ -643,9 +907,7 @@ export function DevToolContainer({ toolId, toolName, toolDescription }: DevToolC
                 />
               </div>
             )}
-            {toolId !== 'html-previewer' && (
-              <ResultBox value={output} downloadFileName={`${toolId}-result.txt`} />
-            )}
+            <ResultBox value={output} downloadFileName={`${toolId}-result.txt`} />
           </div>
         )}
       </div>

@@ -3933,24 +3933,24 @@ export const utilityMetadataRegistry: Record<string, UtilitySEO> = {
     "section": "Developer Utilities",
     "subSection": "Utilities & Previewers",
     "url": "/tools/dev/html-previewer",
-    "title": "HTML Previewer - Developer Utility Tool",
-    "description": "Generate hashes, pick colors, or preview code files locally using the html previewer utility. Safe and secure client-side tools for software developer workflows.",
+    "title": "HTML Previewer Online – Render and Preview HTML Code Free",
+    "description": "Render and preview raw HTML code live in your browser using this free online HTML Previewer. Secure client-side execution with responsive device sizing options.",
     "canonical": "https://singulariti.in/tools/dev/html-previewer",
     "robots": {
         "index": true,
         "follow": true
     },
     "openGraph": {
-        "title": "HTML Previewer - Developer Utility Tool",
-        "description": "Generate hashes, pick colors, or preview code files locally using the html previewer utility. Safe and secure client-side tools for software developer workflows.",
+        "title": "HTML Previewer Online – Render and Preview HTML Code Free",
+        "description": "Render and preview raw HTML code live in your browser using this free online HTML Previewer. Secure client-side execution with responsive device sizing options.",
         "url": "https://singulariti.in/tools/dev/html-previewer",
         "type": "website",
         "image": "https://singulariti.in/og-fallback.png"
     },
     "twitter": {
         "card": "summary_large_image",
-        "title": "HTML Previewer - Developer Utility Tool",
-        "description": "Generate hashes, pick colors, or preview code files locally using the html previewer utility. Safe and secure client-side tools for software developer workflows.",
+        "title": "HTML Previewer Online – Render and Preview HTML Code Free",
+        "description": "Render and preview raw HTML code live in your browser using this free online HTML Previewer. Secure client-side execution with responsive device sizing options.",
         "image": "https://singulariti.in/og-fallback.png"
     },
     "schemaType": "WebApplication"

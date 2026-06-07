@@ -17,6 +17,17 @@ export function WebCompilerClient() {
   const [logs, setLogs] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<'html' | 'css' | 'js'>('html');
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Reset compiler inputs to default template when entering/re-entering the page
+    store.loadTemplate({
+      html: '<h1>Welcome to Singulariti Compiler</h1>\n<p>Start writing HTML, CSS, and JS...</p>',
+      css: 'body {\n  font-family: system-ui, sans-serif;\n  padding: 1rem;\n}',
+      js: 'console.log("Ready to code!");'
+    });
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -133,10 +144,34 @@ export function WebCompilerClient() {
 
   const formatCode = async () => {
     try {
-      const beautify = (await import('js-beautify')).default;
-      store.setHtml(beautify.html(store.html, { indent_size: 2 }));
-      store.setCss(beautify.css(store.css, { indent_size: 2 }));
-      store.setJs(beautify.js(store.js, { indent_size: 2 }));
+      const loadScript = (url: string): Promise<void> => {
+        return new Promise((resolve, reject) => {
+          if (document.querySelector(`script[src="${url}"]`)) {
+            resolve();
+            return;
+          }
+          const script = document.createElement('script');
+          script.src = url;
+          script.onload = () => resolve();
+          script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
+          document.head.appendChild(script);
+        });
+      };
+
+      await Promise.all([
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify.min.js'),
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify-css.min.js'),
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify-html.min.js')
+      ]);
+
+      const w = window as any;
+      if (typeof w.html_beautify === 'function' && typeof w.css_beautify === 'function' && typeof w.js_beautify === 'function') {
+        store.setHtml(w.html_beautify(store.html, { indent_size: 2 }));
+        store.setCss(w.css_beautify(store.css, { indent_size: 2 }));
+        store.setJs(w.js_beautify(store.js, { indent_size: 2 }));
+      } else {
+        console.error('Beautifier libraries failed to initialize on window.');
+      }
     } catch (e) {
       console.error('Beautify failed', e);
     }
@@ -189,36 +224,67 @@ export function WebCompilerClient() {
     }
 
     return (
-      <PanelGroup direction="horizontal">
-        <Panel defaultSize={33} minSize={20}>
+      <PanelGroup id="inner-editors-group" orientation="horizontal">
+        <Panel id="inner-html-panel" defaultSize={33} minSize={20}>
           <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1">
-            <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider">
+            <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider shrink-0">
               HTML
             </div>
-            <MonacoEditorWrapper language="html" value={store.html} onChange={(v) => store.setHtml(v || '')} />
+            <div className="flex-1 min-h-0 relative">
+              <MonacoEditorWrapper language="html" value={store.html} onChange={(v) => store.setHtml(v || '')} />
+            </div>
           </div>
         </Panel>
         <PanelResizeHandle className="bg-transparent hover:bg-primary/20 transition-colors w-2" />
-        <Panel defaultSize={33} minSize={20}>
+        <Panel id="inner-css-panel" defaultSize={33} minSize={20}>
           <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1">
-            <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider">
+            <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider shrink-0">
               CSS
             </div>
-            <MonacoEditorWrapper language="css" value={store.css} onChange={(v) => store.setCss(v || '')} />
+            <div className="flex-1 min-h-0 relative">
+              <MonacoEditorWrapper language="css" value={store.css} onChange={(v) => store.setCss(v || '')} />
+            </div>
           </div>
         </Panel>
         <PanelResizeHandle className="bg-transparent hover:bg-primary/20 transition-colors w-2" />
-        <Panel defaultSize={33} minSize={20}>
+        <Panel id="inner-js-panel" defaultSize={33} minSize={20}>
           <div className="flex flex-col h-full bg-surface border border-border rounded-lg overflow-hidden m-1">
-            <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider">
+            <div className="bg-background px-4 py-2 border-b border-border flex justify-between items-center text-[12px] font-sans font-bold text-ink uppercase tracking-wider shrink-0">
               JS
             </div>
-            <MonacoEditorWrapper language="javascript" value={store.js} onChange={(v) => store.setJs(v || '')} />
+            <div className="flex-1 min-h-0 relative">
+              <MonacoEditorWrapper language="javascript" value={store.js} onChange={(v) => store.setJs(v || '')} />
+            </div>
           </div>
         </Panel>
       </PanelGroup>
     );
   };
+
+  if (!mounted) {
+    return (
+      <ToolLayout
+        utilityId="web-compiler"
+        title="Premium Web Compiler"
+        description="A production-grade HTML, CSS, and JS playground with Monaco Editor, live responsive preview, and console integration."
+        categoryName="Developer Tools"
+        categoryPath="/tools/dev"
+        howToUse={[
+          "Write HTML, CSS, and JavaScript in their respective editor panels.",
+          "The preview frame will render the output dynamically.",
+          "Check the integrated console overlay to view JavaScript outputs and error logs."
+        ]}
+        faqs={[
+          { question: "Is this compiler running code on the server?", answer: "No, this is a client-side environment. All code execution runs in an isolated frame directly inside your browser." },
+          { question: "Can I download my project?", answer: "Yes, click the Export button to download a ZIP archive containing index.html, styles.css, and script.js." }
+        ]}
+      >
+        <div className="flex flex-col w-full h-[85vh] border border-border rounded-2xl items-center justify-center bg-background shadow-sm">
+          <div className="text-slate text-sm animate-pulse">Loading Web Compiler...</div>
+        </div>
+      </ToolLayout>
+    );
+  }
 
   return (
     <ToolLayout
@@ -303,12 +369,12 @@ export function WebCompilerClient() {
           ) : store.layout === 'code-only' ? (
             renderEditors()
           ) : (
-            <PanelGroup direction="vertical">
-              <Panel defaultSize={50} minSize={30}>
+            <PanelGroup id="outer-workspace-group" orientation="vertical">
+              <Panel id="outer-editors-panel" defaultSize={50} minSize={30}>
                 {renderEditors()}
               </Panel>
               <PanelResizeHandle className="bg-border hover:bg-primary/50 transition-colors h-2" />
-              <Panel defaultSize={50} minSize={30}>
+              <Panel id="outer-preview-panel" defaultSize={50} minSize={30}>
                 <div className="w-full h-full relative flex flex-col p-1">
                   <DevicePreviewFrame srcDoc={srcDoc} deviceView={store.deviceView} setDeviceView={store.setDeviceView} />
                   <ConsoleOverlay logs={logs} onClear={() => setLogs([])} />

@@ -4,6 +4,21 @@ import React, { useRef, useEffect } from 'react';
 import Editor, { useMonaco, loader } from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 
+// Configure Monaco Editor to load from CDNjs (Cloudflare) instead of jsDelivr.
+// CDNjs is much more reliable and rarely blocked by ISPs or firewalls.
+loader.config({
+  paths: {
+    vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs',
+  },
+});
+
+// Pre-initialize the loader and handle any loading promise rejection
+// to prevent Next.js from throwing an unhandled rejection overlay error.
+if (typeof window !== 'undefined') {
+  loader.init().catch((err) => {
+    console.error("Monaco Editor loader failed to load scripts:", err);
+  });
+}
 
 interface MonacoEditorWrapperProps {
   language: 'html' | 'css' | 'javascript';

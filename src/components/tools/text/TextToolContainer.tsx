@@ -47,6 +47,20 @@ export function TextToolContainer({ toolId, toolName, toolDescription }: TextToo
     }
   }, [input, input2, toolId]);
 
+  // Reset all states when switching/re-entering tools
+  useEffect(() => {
+    setInput('');
+    setInput2('');
+    setOutput('');
+    setError('');
+    setCount(3);
+    setStringLength(12);
+    setFindStr('');
+    setReplaceStr('');
+    setCompareSummary(null);
+    setCompareMode('line');
+  }, [toolId]);
+
   // Auto-run logic for tools that process on-the-fly
   useEffect(() => {
     setError('');

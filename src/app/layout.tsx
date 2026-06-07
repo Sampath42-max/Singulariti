@@ -52,6 +52,21 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${syne.variable} ${outfit.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('unhandledrejection', function(event) {
+                var reason = event && event.reason;
+                if (reason && (reason.type === 'cancelation' || reason.msg === 'operation is manually canceled' || reason.message === 'operation is manually canceled')) {
+                  event.preventDefault();
+                  event.stopImmediatePropagation();
+                }
+              }, { capture: true });
+            `
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground transition-colors duration-300">
         <ThemeProvider>
           {children}

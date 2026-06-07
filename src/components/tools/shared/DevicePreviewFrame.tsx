@@ -137,10 +137,11 @@ export function DevicePreviewFrame({ srcDoc, deviceView, setDeviceView }: Device
           }}
         >
           <iframe
+            key={srcDoc}
             srcDoc={srcDoc}
             title="Preview Frame"
             className="w-full h-full border-none bg-white block"
-            sandbox="allow-scripts allow-modals allow-same-origin"
+            sandbox="allow-scripts allow-modals"
           />
         </div>
       </div>

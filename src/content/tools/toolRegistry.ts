@@ -3697,7 +3697,7 @@ export const toolRegistry: UtilityRegistryItem[] = [
     "guideSlug": "html-previewer-guide",
     "shortDescription": "Render raw HTML code elements live in a safe frame.",
     "inputType": [
-      "HTML/CSS/JS Markup Code"
+      "HTML Code"
     ],
     "outputType": [
       "Isolated Interactive Sandbox Preview"
@@ -3707,9 +3707,9 @@ export const toolRegistry: UtilityRegistryItem[] = [
     "requiresBackend": false,
     "hasFormula": false,
     "relatedToolIds": [
-      "uuid-generator",
-      "hash-generator",
-      "color-picker-tool"
+      "markdown-previewer",
+      "web-compiler",
+      "code-beautifier"
     ]
   },
   {
@@ -3733,7 +3733,6 @@ export const toolRegistry: UtilityRegistryItem[] = [
     "requiresBackend": false,
     "hasFormula": false,
     "relatedToolIds": [
-      "html-previewer",
       "markdown-previewer",
       "code-beautifier"
     ]

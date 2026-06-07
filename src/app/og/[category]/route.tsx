@@ -5,10 +5,11 @@ export const runtime = 'edge';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { category: string } }
+  { params }: { params: Promise<{ category: string }> }
 ) {
   try {
-    const categoryName = params.category
+    const resolvedParams = await params;
+    const categoryName = resolvedParams.category
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');

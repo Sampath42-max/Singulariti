@@ -5,13 +5,14 @@ import { getAllPosts } from '@/lib/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://singulariti.in';
-  
+
   // Static dates to preserve crawl budget
   const STATIC_DATE = new Date('2026-06-01');
   const TOOLS_DATE = new Date('2026-06-07');
+  const lastModified = TOOLS_DATE;
 
   const categories = registry.categories;
-  
+
   // Base routes
   const routes: MetadataRoute.Sitemap = [
     {
@@ -22,25 +23,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/about`,
-      lastModified,
+      lastModified: STATIC_DATE,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified,
+      lastModified: STATIC_DATE,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/terms`,
-      lastModified,
+      lastModified: STATIC_DATE,
       changeFrequency: 'yearly',
       priority: 0.5,
     },
     {
       url: `${baseUrl}/privacy`,
-      lastModified,
+      lastModified: STATIC_DATE,
       changeFrequency: 'yearly',
       priority: 0.5,
     },

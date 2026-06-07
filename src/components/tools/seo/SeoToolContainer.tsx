@@ -78,6 +78,50 @@ export function SeoToolContainer({ toolId, toolName, toolDescription }: SeoToolC
   const [headingTree, setHeadingTree] = useState<{ tag: string; text: string; level: number; error?: string }[]>([]);
   const [headingIssues, setHeadingIssues] = useState<string[]>([]);
 
+  // Reset all states when switching/re-entering tools
+  useEffect(() => {
+    setInput('');
+    setOutput('');
+    setError('');
+    setKeywordInput('');
+    setKeywordDensityTotalWords(0);
+    setMetaTitle('');
+    setMetaDescription('');
+    setMetaKeywords('');
+    setMetaAuthor('');
+    setMetaPageUrl('');
+    setMetaImageUrl('');
+    setMetaSiteName('');
+    setMetaPageType('website');
+    setMetaRobotsIndex('index');
+    setMetaRobotsFollow('follow');
+    setMetaLanguage('English');
+    setMetaCharset('UTF-8');
+    setRobotsUserAgent('*');
+    setRobotsCrawlDelay('none');
+    setRobotsSitemapUrl('');
+    setRobotsDisallowed('/admin\n/cgi-bin\n/temp');
+    setSitemapBaseUrl('https://example.com');
+    setSitemapPaths('/\n/about\n/contact\n/blog');
+    setSitemapFreq('weekly');
+    setSitemapPriority('0.8');
+    setOgTitle('');
+    setOgDescription('');
+    setOgUrl('');
+    setOgType('website');
+    setOgImage('');
+    setOgSiteName('');
+    setTwitterTitle('');
+    setTwitterDescription('');
+    setTwitterImage('');
+    setTwitterCard('summary_large_image');
+    setTwitterSite('');
+    setKeywordDensity([]);
+    setSeoWordStats(null);
+    setHeadingTree([]);
+    setHeadingIssues([]);
+  }, [toolId]);
+
   // Automatically compute values as user interacts
   useEffect(() => {
     setError('');
