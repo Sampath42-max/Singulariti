@@ -121,6 +121,17 @@ export function RotatePdfClient() {
 
   return (
     <ToolLayout
+      howToUse={[
+        "Select your file or input your data.",
+        "Adjust any specific settings or options as needed.",
+        "Click the main action button to process.",
+        "Download or copy the result instantly."
+      ]}
+      faqs={[
+        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
+        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
+      ]}
+      
       title="Rotate PDF"
       description="Rotate individual pages or all pages of a PDF document visually. Completely secure, offline in-browser processing."
       categoryName="PDF Tools"

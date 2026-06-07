@@ -110,6 +110,17 @@ export function DeletePdfPagesClient() {
 
   return (
     <ToolLayout
+      howToUse={[
+        "Select your file or input your data.",
+        "Adjust any specific settings or options as needed.",
+        "Click the main action button to process.",
+        "Download or copy the result instantly."
+      ]}
+      faqs={[
+        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
+        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
+      ]}
+      
       title="Delete PDF Pages"
       description="Remove unwanted pages from a PDF document. Select pages to discard and download a new compiled file."
       categoryName="PDF Tools"

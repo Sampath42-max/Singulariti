@@ -129,6 +129,17 @@ export function RearrangePdfPagesClient() {
 
   return (
     <ToolLayout
+      howToUse={[
+        "Select your file or input your data.",
+        "Adjust any specific settings or options as needed.",
+        "Click the main action button to process.",
+        "Download or copy the result instantly."
+      ]}
+      faqs={[
+        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
+        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
+      ]}
+      
       title="Rearrange PDF Pages"
       description="Reorder the pages of your PDF document visually using drag and drop. Processed securely in your browser."
       categoryName="PDF Tools"

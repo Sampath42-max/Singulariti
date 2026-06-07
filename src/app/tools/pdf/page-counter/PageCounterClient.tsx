@@ -80,6 +80,17 @@ export function PageCounterClient() {
 
   return (
     <ToolLayout
+      howToUse={[
+        "Select your file or input your data.",
+        "Adjust any specific settings or options as needed.",
+        "Click the main action button to process.",
+        "Download or copy the result instantly."
+      ]}
+      faqs={[
+        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
+        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
+      ]}
+      
       title="PDF Page Counter"
       description="Upload one or multiple PDF documents to count pages and calculate the total count. Safe and processed completely in the browser."
       categoryName="PDF Tools"

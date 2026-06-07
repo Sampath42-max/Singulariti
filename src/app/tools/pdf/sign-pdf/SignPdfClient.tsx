@@ -250,6 +250,17 @@ export function SignPdfClient() {
 
   return (
     <ToolLayout
+      howToUse={[
+        "Select your file or input your data.",
+        "Adjust any specific settings or options as needed.",
+        "Click the main action button to process.",
+        "Download or copy the result instantly."
+      ]}
+      faqs={[
+        { question: "Is this tool free to use?", answer: "Yes, this tool is completely free with no hidden limits." },
+        { question: "Are my files uploaded to a server?", answer: "No, all processing happens locally in your browser ensuring complete privacy and security." }
+      ]}
+      
       title="Sign PDF"
       description="Draw or upload your signature and position it on any page of your PDF document. Processed 100% locally in your browser."
       categoryName="PDF Tools"
