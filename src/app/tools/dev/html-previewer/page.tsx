@@ -1,7 +1,6 @@
 import React from 'react';
 import { HtmlPreviewerClient } from '@/components/tools/dev/HtmlPreviewerClient';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 

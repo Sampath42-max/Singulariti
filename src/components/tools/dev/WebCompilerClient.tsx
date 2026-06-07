@@ -339,28 +339,38 @@ export function WebCompilerClient() {
             >
               <Download className="w-4 h-4" /> <span className="hidden md:inline">Export</span>
             </button>
+            {/* Auto Run Toggle */}
+            <label className="hidden md:flex items-center gap-2 mr-2 cursor-pointer text-[13px] font-medium text-slate hover:text-ink transition-colors">
+              <input 
+                type="checkbox" 
+                checked={store.autoRun} 
+                onChange={(e) => store.setAutoRun(e.target.checked)} 
+                className="w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-background bg-background" 
+              />
+              Auto Run
+            </label>
             <div className="h-6 w-px bg-border mx-2 hidden md:block" />
             <div className="hidden md:flex items-center gap-1 bg-background p-1 rounded-lg border border-border">
               <button 
                 onClick={() => store.setLayout('code-only')}
-                className={`p-1.5 rounded-md ${store.layout === 'code-only' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[13px] font-medium transition-colors ${store.layout === 'code-only' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
                 title="Code Only"
               >
-                <FileJson className="w-4 h-4" />
+                <FileJson className="w-4 h-4" /> Code Only
               </button>
               <button 
                 onClick={() => store.setLayout('vertical')}
-                className={`p-1.5 rounded-md ${store.layout === 'vertical' || store.layout === 'horizontal' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[13px] font-medium transition-colors ${store.layout === 'vertical' || store.layout === 'horizontal' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
                 title="Split View"
               >
-                <Layout className="w-4 h-4" />
+                <Layout className="w-4 h-4" /> Split View
               </button>
               <button 
                 onClick={() => store.setLayout('preview-only')}
-                className={`p-1.5 rounded-md ${store.layout === 'preview-only' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
-                title="Preview Only"
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[13px] font-medium transition-colors ${store.layout === 'preview-only' ? 'bg-primary text-white' : 'text-slate hover:bg-slate/10'}`}
+                title="Full Screen Preview"
               >
-                <Play className="w-4 h-4" />
+                <Play className="w-4 h-4" /> Full Screen
               </button>
             </div>
           </div>
