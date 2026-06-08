@@ -53,6 +53,15 @@ export function ConvertToolContainer({ toolId, toolName, toolDescription }: Conv
             { value: 'ton', label: 'Tons (t)', factor: 1000 }
           ]
         };
+      case 'temperature-converter':
+        return {
+          category: 'Temperature',
+          units: [
+            { value: 'c', label: 'Celsius (°C)', factor: 1 },
+            { value: 'f', label: 'Fahrenheit (°F)', factor: 1 },
+            { value: 'k', label: 'Kelvin (K)', factor: 1 }
+          ]
+        };
       case 'area-converter':
         return {
           category: 'Area',
@@ -281,14 +290,7 @@ export function ConvertToolContainer({ toolId, toolName, toolDescription }: Conv
     navigator.clipboard.writeText(result);
   };
 
-  // Custom temperature options
-  const tempUnits = [
-    { value: 'c', label: 'Celsius (°C)', factor: 1 },
-    { value: 'f', label: 'Fahrenheit (°F)', factor: 1 },
-    { value: 'k', label: 'Kelvin (K)', factor: 1 }
-  ];
-
-  const activeUnits = toolId === 'temperature-converter' ? tempUnits : units;
+  const activeUnits = units;
   const content = getConvertContent(toolId);
 
   return (

@@ -17,7 +17,7 @@ const navItems = [
     icon: LayoutGrid,
     dropdownItems: [
       { name: 'PDF Tools', url: '/tools/pdf' },
-      { name: 'Image Tools', url: '/tools/image' },
+      { name: 'Image Tools', url: '/image' },
       { name: 'Text Tools', url: '/tools/text' },
       { name: 'Developer Tools', url: '/tools/dev' },
       { name: 'Calculators', url: '/tools/calculators' },
