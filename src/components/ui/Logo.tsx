@@ -1,14 +1,13 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
 
 interface LogoProps {
   className?: string;
   showText?: boolean;
 }
 
-export function Logo({ className, showText = true }: LogoProps) {
+export function Logo({ className = '', showText = true }: LogoProps) {
   return (
-    <div className={cn("flex items-center gap-3", className)}>
+    <div className={`flex items-center gap-3 ${className}`}>
       {/* Prism Mark */}
       <svg 
         viewBox="0 0 100 100" 
