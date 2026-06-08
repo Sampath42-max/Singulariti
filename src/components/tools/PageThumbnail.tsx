@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
+import { pdfjsLib } from '@/lib/pdfjsSetup';
 // import { renderPageToCanvas } from '../../lib/pdf/pdfRenderHelpers';
 import { Loader2 } from 'lucide-react';
 

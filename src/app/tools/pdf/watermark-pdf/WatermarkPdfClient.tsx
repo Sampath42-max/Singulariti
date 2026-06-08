@@ -7,10 +7,11 @@ import { Button } from '@/components/ui/Button';
 import { DownloadButton } from '@/components/tools/DownloadButton';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { PageThumbnail } from '@/components/tools/PageThumbnail';
-import * as pdfjsLib from 'pdfjs-dist';
+import { pdfjsLib } from '@/lib/pdfjsSetup';
 import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
 import { addWatermarkToPDF, WatermarkOptions, countPDFPages } from '@/lib/pdf/pdfHelpers';
 import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
+import { readPdfFile } from '@/lib/pdf/readPdfFile';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Type, Image as ImageIcon, Sparkles, Settings } from 'lucide-react';
 
@@ -104,10 +105,10 @@ export function WatermarkPdfClient() {
     }
 
     try {
-      const buffer = await selectedFile.arrayBuffer();
-      const isProtected = await checkPdfPasswordProtected(buffer);
+      const buffer = await readPdfFile(selectedFile);
+      const isProtected = await checkPdfPasswordProtected(buffer.slice(0));
       if (isProtected) {
-        setError('This PDF is password protected. Password protected PDFs are not supported.');
+        setError('This PDF may be encrypted or password-protected. Please upload an unlocked PDF.');
         return;
       }
 

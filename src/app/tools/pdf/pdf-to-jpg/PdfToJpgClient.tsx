@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
+import { pdfjsLib } from '@/lib/pdfjsSetup';
 import { ToolLayout } from '@/components/tools/ToolLayout';
 import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import { loadPdfDocument, renderPageToDataUrl } from '@/lib/pdf/pdfRenderHelpers';
-import { downloadAllAsZip, downloadBlob } from '@/lib/downloadHelpers';
+import { downloadAllAsZip } from '@/lib/downloadHelpers';
+import { downloadBlob } from '@/lib/pdf/downloadBlob';
 import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
+import { readPdfFile } from '@/lib/pdf/readPdfFile';
 import { formatFileSize, dataUrlToBlob } from '@/lib/fileHelpers';
 import { FileText, Download, FileImage, Image as ImageIcon } from 'lucide-react';
 
@@ -39,10 +41,10 @@ export function PdfToJpgClient() {
     }
 
     try {
-      const buffer = await selectedFile.arrayBuffer();
-      const isProtected = await checkPdfPasswordProtected(buffer);
+      const buffer = await readPdfFile(selectedFile);
+      const isProtected = await checkPdfPasswordProtected(buffer.slice(0));
       if (isProtected) {
-        setError('This PDF is password protected. Password protected PDFs are not supported.');
+        setError('This PDF may be encrypted or password-protected. Please upload an unlocked PDF.');
         return;
       }
 

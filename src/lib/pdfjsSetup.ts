@@ -1,8 +1,10 @@
-import * as pdfjsLib from "pdfjs-dist";
+"use client";
+
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 
 if (typeof window !== "undefined") {
   pdfjsLib.GlobalWorkerOptions.workerSrc =
-    `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+    `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
 }
 
 export { pdfjsLib };

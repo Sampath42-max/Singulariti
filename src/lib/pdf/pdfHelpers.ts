@@ -1,6 +1,7 @@
 import { PDFDocument, rgb, degrees, StandardFonts } from 'pdf-lib';
 import { encryptPDF } from '@pdfsmaller/pdf-encrypt-lite';
 import { dataUrlToArrayBuffer } from '../fileHelpers';
+import { readPdfFile } from './readPdfFile';
 
 // Helper to convert hex colors to normalized RGB values for pdf-lib
 function hexToRgb(hex: string) {
@@ -19,8 +20,8 @@ export async function mergePDFs(files: File[]): Promise<Uint8Array> {
   const mergedPdf = await PDFDocument.create();
 
   for (const file of files) {
-    const arrayBuffer = await file.arrayBuffer();
-    const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+    const arrayBuffer = await readPdfFile(file);
+    const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true, updateMetadata: false });
     const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
     copiedPages.forEach((page) => mergedPdf.addPage(page));
   }
@@ -33,8 +34,8 @@ export async function mergePDFs(files: File[]): Promise<Uint8Array> {
  * Ranges: 1-based indices (e.g. [1, 2, 3, 5, 7, 8])
  */
 export async function splitPDF(file: File, pageNumbers: number[]): Promise<Uint8Array> {
-  const arrayBuffer = await file.arrayBuffer();
-  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+  const arrayBuffer = await readPdfFile(file);
+  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true, updateMetadata: false });
   const newPdf = await PDFDocument.create();
 
   // Convert 1-based page numbers to 0-based indices
@@ -53,8 +54,8 @@ export async function rotatePDF(
   file: File,
   pageRotations: Record<number, number>
 ): Promise<Uint8Array> {
-  const arrayBuffer = await file.arrayBuffer();
-  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+  const arrayBuffer = await readPdfFile(file);
+  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true, updateMetadata: false });
   const pages = pdfDoc.getPages();
 
   Object.entries(pageRotations).forEach(([pageIndexStr, rotation]) => {
@@ -77,8 +78,8 @@ export async function deletePDFPages(
   file: File,
   pageNumbersToDelete: number[]
 ): Promise<Uint8Array> {
-  const arrayBuffer = await file.arrayBuffer();
-  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+  const arrayBuffer = await readPdfFile(file);
+  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true, updateMetadata: false });
   
   // Sort descending to avoid index shifting when deleting
   const indicesToDelete = pageNumbersToDelete
@@ -102,8 +103,8 @@ export async function rearrangePDFPages(
   file: File,
   newOrder: number[]
 ): Promise<Uint8Array> {
-  const arrayBuffer = await file.arrayBuffer();
-  const srcDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+  const arrayBuffer = await readPdfFile(file);
+  const srcDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true, updateMetadata: false });
   const newPdf = await PDFDocument.create();
 
   const copiedPages = await newPdf.copyPages(srcDoc, newOrder);
@@ -223,8 +224,8 @@ export async function imagesToPDF(
  * Basic browser-side structural compression.
  */
 export async function compressPDF(file: File): Promise<Uint8Array> {
-  const arrayBuffer = await file.arrayBuffer();
-  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+  const arrayBuffer = await readPdfFile(file);
+  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true, updateMetadata: false });
   
   // Re-serialization with object streams enabled removes unreferenced objects,
   // compresses cross-reference tables and standard streams
@@ -246,7 +247,7 @@ export async function signPDF(
   sigHeight: number,
   sigRotation: number
 ): Promise<Uint8Array> {
-  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true, updateMetadata: false });
   const page = pdfDoc.getPage(pageIndex);
   const { width: pdfW, height: pdfH } = page.getSize();
 
@@ -301,8 +302,8 @@ export async function addWatermarkToPDF(
   file: File,
   options: WatermarkOptions
 ): Promise<Uint8Array> {
-  const arrayBuffer = await file.arrayBuffer();
-  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+  const arrayBuffer = await readPdfFile(file);
+  const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true, updateMetadata: false });
   const pageCount = pdfDoc.getPageCount();
 
   const pagesToWatermark: number[] = [];
@@ -514,8 +515,8 @@ export async function countPDFPages(
   let total = 0;
 
   for (const file of files) {
-    const arrayBuffer = await file.arrayBuffer();
-    const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+    const arrayBuffer = await readPdfFile(file);
+    const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true, updateMetadata: false });
     const pageCount = pdfDoc.getPageCount();
     counts.push({ fileName: file.name, pages: pageCount });
     total += pageCount;
@@ -529,7 +530,7 @@ export async function countPDFPages(
  * Supports standard browser-based encryption without server dependencies.
  */
 export async function protectPDFDocument(file: File, password: string): Promise<Uint8Array> {
-  const arrayBuffer = await file.arrayBuffer();
+  const arrayBuffer = await readPdfFile(file);
   const pdfBytes = new Uint8Array(arrayBuffer);
   
   // The encryptPDF function returns a Uint8Array

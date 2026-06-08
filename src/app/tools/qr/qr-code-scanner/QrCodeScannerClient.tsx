@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
+import { pdfjsLib } from '@/lib/pdfjsSetup';
 import { ToolLayout } from '@/components/tools/ToolLayout';
 import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';

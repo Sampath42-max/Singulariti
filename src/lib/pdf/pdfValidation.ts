@@ -118,6 +118,11 @@ export function getPdfErrorMessage(error: any): string {
   
   const message = (error.message || '').toLowerCase();
   
+  // toHex Error
+  if (message.includes('tohex')) {
+    return 'PDF rendering failed because the production PDF.js worker setup is invalid. Please refresh and try again.';
+  }
+
   // Encrypted / Password Protected
   if (
     message.includes('password') || 
@@ -125,7 +130,7 @@ export function getPdfErrorMessage(error: any): string {
     message.includes('decrypt') ||
     message.includes('security')
   ) {
-    return 'This PDF is encrypted or password-protected. Please upload an unlocked PDF.';
+    return 'This PDF may be encrypted or password-protected. Please upload an unlocked PDF.';
   }
   
   // Format / Parsing issues
