@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import React from 'react';
 import { RearrangePdfPagesClient } from './RearrangePdfPagesClient';
+import NoSSR from '@/components/NoSSR';
 
 const seo = getUtilitySEO('rearrange-pdf-pages')!;
 export const metadata = buildMetadata({
@@ -24,5 +24,10 @@ export const metadata = buildMetadata({
 });
 
 export default function RearrangePdfPagesPage() {
-  return <RearrangePdfPagesClient />;
+  return (
+    <NoSSR>
+      <RearrangePdfPagesClient />
+    </NoSSR>
+  );
 }
+

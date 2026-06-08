@@ -242,28 +242,19 @@ export function WatermarkPdfClient() {
       if (!previewContainerRef.current) return;
 
       const pageRect = previewContainerRef.current.getBoundingClientRect();
-      const localMouseX = event.clientX - pageRect.left;
-      const localMouseY = event.clientY - pageRect.top;
+      const mouseX = event.clientX - pageRect.left;
+      const mouseY = event.clientY - pageRect.top;
 
       const dragOffsetX = dragStartRef.current.dragOffsetX;
       const dragOffsetY = dragStartRef.current.dragOffsetY;
 
-      let newLeft = localMouseX - dragOffsetX;
-      let newTop = localMouseY - dragOffsetY;
-
-      const wWidth = getWatermarkWidth(pageRect.width);
-      const wHeight = getWatermarkHeight(pageRect.height);
-
-      const maxLeft = pageRect.width - wWidth;
-      const maxTop = pageRect.height - wHeight;
-
-      newLeft = Math.max(0, Math.min(maxLeft, newLeft));
-      newTop = Math.max(0, Math.min(maxTop, newTop));
+      const left = mouseX - dragOffsetX;
+      const top = mouseY - dragOffsetY;
 
       setPositionPreset('custom');
       setPosition({
-        xPercent: newLeft / pageRect.width,
-        yPercent: newTop / pageRect.height,
+        xPercent: left / pageRect.width,
+        yPercent: top / pageRect.height,
       });
       setResultBlobUrl(null);
     };
@@ -279,7 +270,7 @@ export function WatermarkPdfClient() {
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', handlePointerUp);
     };
-  }, [isDragging, getWatermarkWidth, getWatermarkHeight]);
+  }, [isDragging]);
 
   const handleApply = async () => {
     if (!file || pageCount === null) return;
@@ -720,8 +711,8 @@ export function WatermarkPdfClient() {
                             }`}
                             style={{
                               position: "absolute",
-                              left: `${xPercent * 100}%`,
-                              top: `${yPercent * 100}%`,
+                              left: `${position.xPercent * 100}%`,
+                              top: `${position.yPercent * 100}%`,
                               width: `${wWidth}px`,
                               height: `${wHeight}px`,
                               transform: `rotate(${rotation}deg)`,

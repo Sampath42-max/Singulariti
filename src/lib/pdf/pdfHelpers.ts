@@ -312,7 +312,6 @@ export async function addWatermarkToPDF(
     pagesToWatermark.push(...options.selectedPages);
   }
 
-  // Load font or embed image
   let helveticaFont;
   let embeddedImage: any;
 
@@ -339,35 +338,21 @@ export async function addWatermarkToPDF(
     const pageRotation = page.getRotation().angle;
     
     const isRotated90or270 = pageRotation === 90 || pageRotation === 270;
-    const visualWidth = isRotated90or270 ? pageHeight : pageWidth;
-    const visualHeight = isRotated90or270 ? pageWidth : pageHeight;
+    const pdfWidth = isRotated90or270 ? pageHeight : pageWidth;
+    const pdfHeight = isRotated90or270 ? pageWidth : pageHeight;
 
     const opacity = options.opacity ?? 0.3;
 
     if (options.type === 'text' && options.text && helveticaFont) {
-      const text = options.text;
+      const watermarkText = options.text;
       const rgbColor = hexToRgb(options.color ?? '#FF0000');
 
       const fontSizePercent = options.fontSizePercent ?? 0.08;
-      const fontSize = fontSizePercent * visualHeight;
-      const watermarkWidth = helveticaFont.widthOfTextAtSize(text, fontSize);
+      const fontSize = pdfHeight * fontSizePercent;
       const watermarkHeight = fontSize;
 
-      const pdfX = options.xPercent * visualWidth;
-      const pdfY = visualHeight - (options.yPercent * visualHeight) - watermarkHeight;
-
-      console.log({
-        previewPageWidth: options.previewPageWidth ?? 0,
-        previewPageHeight: options.previewPageHeight ?? 0,
-        xPercent: options.xPercent,
-        yPercent: options.yPercent,
-        pdfWidth: visualWidth,
-        pdfHeight: visualHeight,
-        watermarkWidth,
-        watermarkHeight,
-        pdfX,
-        pdfY,
-      });
+      const pdfX = options.xPercent * pdfWidth;
+      const pdfY = pdfHeight - (options.yPercent * pdfHeight) - watermarkHeight;
 
       const userRotation = options.rotation ?? 45;
       
@@ -389,7 +374,7 @@ export async function addWatermarkToPDF(
         rotation_p = userRotation - 90;
       }
 
-      page.drawText(text, {
+      page.drawText(watermarkText, {
         x: x_p,
         y: y_p,
         size: fontSize,
@@ -402,24 +387,11 @@ export async function addWatermarkToPDF(
       const imageWidthPercent = options.imageWidthPercent ?? 0.4;
       const imageHeightPercent = options.imageHeightPercent ?? 0.4;
 
-      const watermarkWidth = imageWidthPercent * visualWidth;
-      const watermarkHeight = imageHeightPercent * visualHeight;
+      const imageWidth = imageWidthPercent * pdfWidth;
+      const imageHeight = imageHeightPercent * pdfHeight;
 
-      const pdfX = options.xPercent * visualWidth;
-      const pdfY = visualHeight - (options.yPercent * visualHeight) - watermarkHeight;
-
-      console.log({
-        previewPageWidth: options.previewPageWidth ?? 0,
-        previewPageHeight: options.previewPageHeight ?? 0,
-        xPercent: options.xPercent,
-        yPercent: options.yPercent,
-        pdfWidth: visualWidth,
-        pdfHeight: visualHeight,
-        watermarkWidth,
-        watermarkHeight,
-        pdfX,
-        pdfY,
-      });
+      const pdfX = options.xPercent * pdfWidth;
+      const pdfY = pdfHeight - (options.yPercent * pdfHeight) - imageHeight;
 
       const userRotation = options.rotation ?? 0;
       
@@ -444,8 +416,8 @@ export async function addWatermarkToPDF(
       page.drawImage(embeddedImage, {
         x: x_p,
         y: y_p,
-        width: watermarkWidth,
-        height: watermarkHeight,
+        width: imageWidth,
+        height: imageHeight,
         opacity,
         rotate: degrees(rotation_p)
       });

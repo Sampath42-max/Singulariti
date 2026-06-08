@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import React from 'react';
 import { QrCodeScannerClient } from './QrCodeScannerClient';
+import NoSSR from '@/components/NoSSR';
 
 const seo = getUtilitySEO('qr-code-scanner')!;
 export const metadata = buildMetadata({
@@ -24,5 +24,10 @@ export const metadata = buildMetadata({
 });
 
 export default function QrCodeScannerPage() {
-  return <QrCodeScannerClient />;
+  return (
+    <NoSSR>
+      <QrCodeScannerClient />
+    </NoSSR>
+  );
 }
+

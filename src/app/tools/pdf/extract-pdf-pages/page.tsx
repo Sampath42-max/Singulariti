@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import React from 'react';
 import { ExtractPdfPagesClient } from './ExtractPdfPagesClient';
+import NoSSR from '@/components/NoSSR';
 
 const seo = getUtilitySEO('extract-pdf-pages')!;
 export const metadata = buildMetadata({
@@ -24,5 +24,10 @@ export const metadata = buildMetadata({
 });
 
 export default function ExtractPdfPagesPage() {
-  return <ExtractPdfPagesClient />;
+  return (
+    <NoSSR>
+      <ExtractPdfPagesClient />
+    </NoSSR>
+  );
 }
+
