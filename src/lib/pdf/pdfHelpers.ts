@@ -1,6 +1,6 @@
 import { PDFDocument, rgb, degrees, StandardFonts } from 'pdf-lib';
 import { encryptPDF } from '@pdfsmaller/pdf-encrypt-lite';
-import { readFileAsArrayBuffer, dataUrlToArrayBuffer } from '../fileHelpers';
+import { dataUrlToArrayBuffer } from '../fileHelpers';
 
 // Helper to convert hex colors to normalized RGB values for pdf-lib
 function hexToRgb(hex: string) {
@@ -19,7 +19,7 @@ export async function mergePDFs(files: File[]): Promise<Uint8Array> {
   const mergedPdf = await PDFDocument.create();
 
   for (const file of files) {
-    const arrayBuffer = await readFileAsArrayBuffer(file);
+    const arrayBuffer = await file.arrayBuffer();
     const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
     const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
     copiedPages.forEach((page) => mergedPdf.addPage(page));
@@ -33,7 +33,7 @@ export async function mergePDFs(files: File[]): Promise<Uint8Array> {
  * Ranges: 1-based indices (e.g. [1, 2, 3, 5, 7, 8])
  */
 export async function splitPDF(file: File, pageNumbers: number[]): Promise<Uint8Array> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
+  const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   const newPdf = await PDFDocument.create();
 
@@ -53,7 +53,7 @@ export async function rotatePDF(
   file: File,
   pageRotations: Record<number, number>
 ): Promise<Uint8Array> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
+  const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   const pages = pdfDoc.getPages();
 
@@ -77,7 +77,7 @@ export async function deletePDFPages(
   file: File,
   pageNumbersToDelete: number[]
 ): Promise<Uint8Array> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
+  const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   
   // Sort descending to avoid index shifting when deleting
@@ -102,7 +102,7 @@ export async function rearrangePDFPages(
   file: File,
   newOrder: number[]
 ): Promise<Uint8Array> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
+  const arrayBuffer = await file.arrayBuffer();
   const srcDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   const newPdf = await PDFDocument.create();
 
@@ -148,7 +148,7 @@ export async function imagesToPDF(
   };
 
   for (const file of files) {
-    const arrayBuffer = await readFileAsArrayBuffer(file);
+    const arrayBuffer = await file.arrayBuffer();
     let image;
     
     if (file.type === 'image/png' || file.name.toLowerCase().endsWith('.png')) {
@@ -223,7 +223,7 @@ export async function imagesToPDF(
  * Basic browser-side structural compression.
  */
 export async function compressPDF(file: File): Promise<Uint8Array> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
+  const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   
   // Re-serialization with object streams enabled removes unreferenced objects,
@@ -301,7 +301,7 @@ export async function addWatermarkToPDF(
   file: File,
   options: WatermarkOptions
 ): Promise<Uint8Array> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
+  const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   const pageCount = pdfDoc.getPageCount();
 
@@ -312,13 +312,14 @@ export async function addWatermarkToPDF(
     pagesToWatermark.push(...options.selectedPages);
   }
 
+  // Load font or embed image
   let helveticaFont;
   let embeddedImage: any;
 
   if (options.type === 'text') {
     helveticaFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
   } else if (options.type === 'image' && options.imageFile) {
-    const imgBuffer = await readFileAsArrayBuffer(options.imageFile);
+    const imgBuffer = await options.imageFile.arrayBuffer();
     if (
       options.imageFile.type === 'image/png' || 
       options.imageFile.name.toLowerCase().endsWith('.png')
@@ -338,21 +339,35 @@ export async function addWatermarkToPDF(
     const pageRotation = page.getRotation().angle;
     
     const isRotated90or270 = pageRotation === 90 || pageRotation === 270;
-    const pdfWidth = isRotated90or270 ? pageHeight : pageWidth;
-    const pdfHeight = isRotated90or270 ? pageWidth : pageHeight;
+    const visualWidth = isRotated90or270 ? pageHeight : pageWidth;
+    const visualHeight = isRotated90or270 ? pageWidth : pageHeight;
 
     const opacity = options.opacity ?? 0.3;
 
     if (options.type === 'text' && options.text && helveticaFont) {
-      const watermarkText = options.text;
+      const text = options.text;
       const rgbColor = hexToRgb(options.color ?? '#FF0000');
 
       const fontSizePercent = options.fontSizePercent ?? 0.08;
-      const fontSize = pdfHeight * fontSizePercent;
+      const fontSize = fontSizePercent * visualHeight;
+      const watermarkWidth = helveticaFont.widthOfTextAtSize(text, fontSize);
       const watermarkHeight = fontSize;
 
-      const pdfX = options.xPercent * pdfWidth;
-      const pdfY = pdfHeight - (options.yPercent * pdfHeight) - watermarkHeight;
+      const pdfX = options.xPercent * visualWidth;
+      const pdfY = visualHeight - (options.yPercent * visualHeight) - watermarkHeight;
+
+      console.log({
+        previewPageWidth: options.previewPageWidth ?? 0,
+        previewPageHeight: options.previewPageHeight ?? 0,
+        xPercent: options.xPercent,
+        yPercent: options.yPercent,
+        pdfWidth: visualWidth,
+        pdfHeight: visualHeight,
+        watermarkWidth,
+        watermarkHeight,
+        pdfX,
+        pdfY,
+      });
 
       const userRotation = options.rotation ?? 45;
       
@@ -374,7 +389,7 @@ export async function addWatermarkToPDF(
         rotation_p = userRotation - 90;
       }
 
-      page.drawText(watermarkText, {
+      page.drawText(text, {
         x: x_p,
         y: y_p,
         size: fontSize,
@@ -387,11 +402,24 @@ export async function addWatermarkToPDF(
       const imageWidthPercent = options.imageWidthPercent ?? 0.4;
       const imageHeightPercent = options.imageHeightPercent ?? 0.4;
 
-      const imageWidth = imageWidthPercent * pdfWidth;
-      const imageHeight = imageHeightPercent * pdfHeight;
+      const watermarkWidth = imageWidthPercent * visualWidth;
+      const watermarkHeight = imageHeightPercent * visualHeight;
 
-      const pdfX = options.xPercent * pdfWidth;
-      const pdfY = pdfHeight - (options.yPercent * pdfHeight) - imageHeight;
+      const pdfX = options.xPercent * visualWidth;
+      const pdfY = visualHeight - (options.yPercent * visualHeight) - watermarkHeight;
+
+      console.log({
+        previewPageWidth: options.previewPageWidth ?? 0,
+        previewPageHeight: options.previewPageHeight ?? 0,
+        xPercent: options.xPercent,
+        yPercent: options.yPercent,
+        pdfWidth: visualWidth,
+        pdfHeight: visualHeight,
+        watermarkWidth,
+        watermarkHeight,
+        pdfX,
+        pdfY,
+      });
 
       const userRotation = options.rotation ?? 0;
       
@@ -416,8 +444,8 @@ export async function addWatermarkToPDF(
       page.drawImage(embeddedImage, {
         x: x_p,
         y: y_p,
-        width: imageWidth,
-        height: imageHeight,
+        width: watermarkWidth,
+        height: watermarkHeight,
         opacity,
         rotate: degrees(rotation_p)
       });
@@ -448,7 +476,7 @@ export interface PDFMetadata {
  * Retrieve metadata from a PDF file.
  */
 export async function viewPDFMetadata(file: File): Promise<PDFMetadata> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
+  const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   
   const title = pdfDoc.getTitle();
@@ -486,7 +514,7 @@ export async function countPDFPages(
   let total = 0;
 
   for (const file of files) {
-    const arrayBuffer = await readFileAsArrayBuffer(file);
+    const arrayBuffer = await file.arrayBuffer();
     const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
     const pageCount = pdfDoc.getPageCount();
     counts.push({ fileName: file.name, pages: pageCount });
@@ -501,7 +529,7 @@ export async function countPDFPages(
  * Supports standard browser-based encryption without server dependencies.
  */
 export async function protectPDFDocument(file: File, password: string): Promise<Uint8Array> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
+  const arrayBuffer = await file.arrayBuffer();
   const pdfBytes = new Uint8Array(arrayBuffer);
   
   // The encryptPDF function returns a Uint8Array

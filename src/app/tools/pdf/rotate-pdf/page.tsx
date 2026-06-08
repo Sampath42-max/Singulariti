@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { RotatePdfClient } from './RotatePdfClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { RotatePdfPageClient } from './RotatePdfPageClient';
 
 const seo = getUtilitySEO('rotate-pdf')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function RotatePdfPage() {
-  return (
-    <NoSSR>
-      <RotatePdfClient />
-    </NoSSR>
-  );
+  return <RotatePdfPageClient />;
 }
-

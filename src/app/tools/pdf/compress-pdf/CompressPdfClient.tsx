@@ -10,7 +10,7 @@ import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import * as pdfjsLib from 'pdfjs-dist';
 import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
 import { compressPDF } from '@/lib/pdf/pdfHelpers';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Percent, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
@@ -52,7 +52,7 @@ export function CompressPdfClient() {
       setPdfDoc(doc);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to parse PDF document. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     }
   };
 
@@ -75,7 +75,7 @@ export function CompressPdfClient() {
       });
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred while compressing the PDF.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

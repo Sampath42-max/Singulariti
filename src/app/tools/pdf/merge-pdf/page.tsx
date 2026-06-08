@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { MergePdfClient } from './MergePdfClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { MergePdfPageClient } from './MergePdfPageClient';
 
 const seo = getUtilitySEO('merge-pdf')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function MergePdfPage() {
-  return (
-    <NoSSR>
-      <MergePdfClient />
-    </NoSSR>
-  );
+  return <MergePdfPageClient />;
 }
-

@@ -9,6 +9,7 @@ import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { QRScannerResult } from '@/components/tools/QRScannerResult';
 import { detectQRResultType, QRScanResult } from '@/lib/qr/qrHelpers';
 import { loadPdfDocument, renderPageToCanvas } from '@/lib/pdf/pdfRenderHelpers';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { Camera, Image as ImageIcon, FileText, CameraOff, RefreshCw, AlertCircle, AlertTriangle } from 'lucide-react';
 
@@ -202,7 +203,15 @@ export function QrCodeScannerClient() {
     setScanResult(null);
     setPdfPagesResults([]);
     const file = selectedFiles[0];
-    setPdfFile(file);
+
+    const validation = validatePdfFile(file);
+    if (!validation.isValid) {
+      setError(validation.error || 'Invalid PDF file.');
+      return;
+    }
+    if (validation.warning) {
+      setWarning(validation.warning);
+    }
 
     if (!Html5QrcodeClass) {
       setError('Scanner library is loading. Please retry.');
@@ -212,6 +221,15 @@ export function QrCodeScannerClient() {
     setIsProcessing(true);
 
     try {
+      const buffer = await file.arrayBuffer();
+      const isProtected = await checkPdfPasswordProtected(buffer);
+      if (isProtected) {
+        setError('This PDF is encrypted or password-protected. Please upload an unlocked PDF.');
+        setIsProcessing(false);
+        return;
+      }
+
+      setPdfFile(file);
       const doc = await loadPdfDocument(file);
       const results: { page: number; text: string }[] = [];
       
@@ -251,7 +269,7 @@ export function QrCodeScannerClient() {
       try { html5QrCode.clear(); } catch {}
     } catch (err: any) {
       console.error(err);
-      setError('Failed to parse PDF document.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

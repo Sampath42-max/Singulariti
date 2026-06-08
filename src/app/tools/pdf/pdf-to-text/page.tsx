@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { PdfToTextClient } from './PdfToTextClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { PdfToTextPageClient } from './PdfToTextPageClient';
 
 const seo = getUtilitySEO('pdf-to-text')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function PdfToTextPage() {
-  return (
-    <NoSSR>
-      <PdfToTextClient />
-    </NoSSR>
-  );
+  return <PdfToTextPageClient />;
 }
-

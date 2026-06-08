@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { WatermarkPdfClient } from './WatermarkPdfClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { WatermarkPdfPageClient } from './WatermarkPdfPageClient';
 
 const seo = getUtilitySEO('watermark-pdf')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function WatermarkPdfPage() {
-  return (
-    <NoSSR>
-      <WatermarkPdfClient />
-    </NoSSR>
-  );
+  return <WatermarkPdfPageClient />;
 }
-

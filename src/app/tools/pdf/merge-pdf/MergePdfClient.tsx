@@ -10,7 +10,7 @@ import { mergePDFs, countPDFPages } from '@/lib/pdf/pdfHelpers';
 import { downloadBlob } from '@/lib/downloadHelpers';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { ArrowUp, ArrowDown, Trash2, Plus, FileText } from 'lucide-react';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 
 export function MergePdfClient() {
   const [files, setFiles] = useState<File[]>([]);
@@ -36,12 +36,12 @@ export function MergePdfClient() {
         const buffer = await file.arrayBuffer();
         const isProtected = await checkPdfPasswordProtected(buffer);
         if (isProtected) {
-          setError(`File "${file.name}" is password protected. Password protected files are not supported.`);
+          setError(`File "${file.name}": This PDF is encrypted or password-protected. Please upload an unlocked PDF.`);
           return;
         }
         validFiles.push(file);
-      } catch (err) {
-        setError(`Failed to parse file "${file.name}". It might be corrupted.`);
+      } catch (err: any) {
+        setError(`File "${file.name}": ${getPdfErrorMessage(err)}`);
         return;
       }
     }
@@ -114,7 +114,7 @@ export function MergePdfClient() {
       setMergedBlobUrl(url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred while merging PDF files.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

@@ -10,7 +10,7 @@ import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import * as pdfjsLib from 'pdfjs-dist';
 import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
 import { addWatermarkToPDF, WatermarkOptions, countPDFPages } from '@/lib/pdf/pdfHelpers';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Type, Image as ImageIcon, Sparkles, Settings } from 'lucide-react';
 
@@ -119,7 +119,7 @@ export function WatermarkPdfClient() {
       setPdfDoc(doc);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to parse PDF document. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     }
   };
 
@@ -242,19 +242,28 @@ export function WatermarkPdfClient() {
       if (!previewContainerRef.current) return;
 
       const pageRect = previewContainerRef.current.getBoundingClientRect();
-      const mouseX = event.clientX - pageRect.left;
-      const mouseY = event.clientY - pageRect.top;
+      const localMouseX = event.clientX - pageRect.left;
+      const localMouseY = event.clientY - pageRect.top;
 
       const dragOffsetX = dragStartRef.current.dragOffsetX;
       const dragOffsetY = dragStartRef.current.dragOffsetY;
 
-      const left = mouseX - dragOffsetX;
-      const top = mouseY - dragOffsetY;
+      let newLeft = localMouseX - dragOffsetX;
+      let newTop = localMouseY - dragOffsetY;
+
+      const wWidth = getWatermarkWidth(pageRect.width);
+      const wHeight = getWatermarkHeight(pageRect.height);
+
+      const maxLeft = pageRect.width - wWidth;
+      const maxTop = pageRect.height - wHeight;
+
+      newLeft = Math.max(0, Math.min(maxLeft, newLeft));
+      newTop = Math.max(0, Math.min(maxTop, newTop));
 
       setPositionPreset('custom');
       setPosition({
-        xPercent: left / pageRect.width,
-        yPercent: top / pageRect.height,
+        xPercent: newLeft / pageRect.width,
+        yPercent: newTop / pageRect.height,
       });
       setResultBlobUrl(null);
     };
@@ -270,7 +279,7 @@ export function WatermarkPdfClient() {
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', handlePointerUp);
     };
-  }, [isDragging]);
+  }, [isDragging, getWatermarkWidth, getWatermarkHeight]);
 
   const handleApply = async () => {
     if (!file || pageCount === null) return;
@@ -340,7 +349,7 @@ export function WatermarkPdfClient() {
       setResultBlobUrl(url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred while watermarking the PDF.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }
@@ -711,8 +720,8 @@ export function WatermarkPdfClient() {
                             }`}
                             style={{
                               position: "absolute",
-                              left: `${position.xPercent * 100}%`,
-                              top: `${position.yPercent * 100}%`,
+                              left: `${xPercent * 100}%`,
+                              top: `${yPercent * 100}%`,
                               width: `${wWidth}px`,
                               height: `${wHeight}px`,
                               transform: `rotate(${rotation}deg)`,

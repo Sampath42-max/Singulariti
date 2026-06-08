@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { PdfToJpgClient } from './PdfToJpgClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { PdfToJpgPageClient } from './PdfToJpgPageClient';
 
 const seo = getUtilitySEO('pdf-to-jpg')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function PdfToJpgPage() {
-  return (
-    <NoSSR>
-      <PdfToJpgClient />
-    </NoSSR>
-  );
+  return <PdfToJpgPageClient />;
 }
-

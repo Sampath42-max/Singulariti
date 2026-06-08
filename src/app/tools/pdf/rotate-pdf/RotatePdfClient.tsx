@@ -10,7 +10,7 @@ import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import { rotatePDF } from '@/lib/pdf/pdfHelpers';
 import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, RotateCw, RefreshCw } from 'lucide-react';
 
@@ -59,7 +59,7 @@ export function RotatePdfClient() {
       setPageRotations(initialRotations);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to parse PDF document. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     }
   };
 
@@ -104,7 +104,7 @@ export function RotatePdfClient() {
       setRotatedBlobUrl(url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred while rotating PDF pages.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

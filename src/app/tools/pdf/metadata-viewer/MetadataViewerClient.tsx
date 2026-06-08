@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { viewPDFMetadata, PDFMetadata } from '@/lib/pdf/pdfHelpers';
 import { formatFileSize } from '@/lib/fileHelpers';
-import { validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { FileText, Eye, Info } from 'lucide-react';
 
 export function MetadataViewerClient() {
@@ -37,11 +37,18 @@ export function MetadataViewerClient() {
     setIsProcessing(true);
 
     try {
+      const buffer = await selectedFile.arrayBuffer();
+      const isProtected = await checkPdfPasswordProtected(buffer);
+      if (isProtected) {
+        setError('This PDF is encrypted or password-protected. Please upload an unlocked PDF.');
+        setIsProcessing(false);
+        return;
+      }
       const data = await viewPDFMetadata(selectedFile);
       setMetadata(data);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to extract metadata. The PDF might be corrupted or encrypted.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

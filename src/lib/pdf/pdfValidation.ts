@@ -54,7 +54,13 @@ export async function checkPdfPasswordProtected(arrayBuffer: ArrayBuffer): Promi
     await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
     return false;
   } catch (error: any) {
-    if (error.message && (error.message.includes('password') || error.message.includes('encrypt') || error.message.includes('Encrypt'))) {
+    const message = (error?.message || '').toLowerCase();
+    if (
+      message.includes('password') || 
+      message.includes('encrypt') || 
+      message.includes('decrypt') ||
+      message.includes('security')
+    ) {
       return true;
     }
     // If it's another parsing error, throw it so it can be handled as corrupted
@@ -73,28 +79,69 @@ export interface FileValidationResult {
 
 export function validatePdfFile(file: File): FileValidationResult {
   if (!file) {
-    return { isValid: false, error: 'No file selected.' };
+    return { isValid: false, error: 'Please upload a PDF file.' };
   }
   
-  if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
-    return { isValid: false, error: 'Unsupported file type. Only PDF files are allowed.' };
+  const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+  if (!isPdf) {
+    return { isValid: false, error: 'Only PDF files are allowed.' };
   }
 
-  const result: FileValidationResult = { isValid: true };
+  if (file.size === 0) {
+    return { isValid: false, error: 'The selected PDF file is empty.' };
+  }
 
-  const MAX_SIZE_BYTES = 1024 * 1024 * 1024; // 1GB
+  const MAX_SIZE_BYTES = 500 * 1024 * 1024; // 500MB
   const WARNING_SIZE_BYTES = 100 * 1024 * 1024; // 100MB
 
   if (file.size > MAX_SIZE_BYTES) {
     return {
       isValid: false,
-      error: `File is too large (${(file.size / (1024 * 1024 * 1024)).toFixed(2)} GB). The maximum supported file size for browser-based processing is 1GB.`
+      error: `File is too large (${(file.size / (1024 * 1024)).toFixed(2)} MB). The maximum supported file size for browser-based processing is 500MB.`
     };
   }
 
+  const result: FileValidationResult = { isValid: true };
+
   if (file.size > WARNING_SIZE_BYTES) {
-    result.warning = `Large file warning: This file is ${(file.size / (1024 * 1024)).toFixed(1)}MB. Processing files between 100MB and 1GB entirely in the browser is supported, but may cause the page to lag or run out of memory depending on your computer's RAM. Keep other tabs closed for best performance.`;
+    result.warning = `Large file warning: This file is ${(file.size / (1024 * 1024)).toFixed(1)}MB. Processing files between 100MB and 500MB entirely in the browser is supported, but may cause the page to lag or run out of memory depending on your computer's RAM. Keep other tabs closed for best performance.`;
   }
 
   return result;
+}
+
+/**
+ * Converts parsing/runtime errors into diagnostic user friendly messages.
+ */
+export function getPdfErrorMessage(error: any): string {
+  if (!error) return 'An unknown error occurred while reading the PDF.';
+  
+  const message = (error.message || '').toLowerCase();
+  
+  // Encrypted / Password Protected
+  if (
+    message.includes('password') || 
+    message.includes('encrypt') || 
+    message.includes('decrypt') ||
+    message.includes('security')
+  ) {
+    return 'This PDF is encrypted or password-protected. Please upload an unlocked PDF.';
+  }
+  
+  // Format / Parsing issues
+  if (message.includes('corrupt') || message.includes('failed to parse') || message.includes('pdf chain') || message.includes('parse')) {
+    return 'Failed to parse PDF document. It might be corrupted or in an unsupported format.';
+  }
+  
+  // File size / Empty
+  if (message.includes('empty') || message.includes('size is 0') || message.includes('0 bytes')) {
+    return 'The selected PDF file is empty.';
+  }
+
+  if (message.includes('large') || message.includes('too large') || message.includes('size limit')) {
+    return 'The file size is too large for processing in the browser.';
+  }
+
+  // Fallback but descriptive
+  return error.message || 'PDF could not be read correctly in the browser.';
 }

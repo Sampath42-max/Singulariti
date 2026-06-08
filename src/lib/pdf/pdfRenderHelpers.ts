@@ -1,7 +1,9 @@
 import * as pdfjsLib from 'pdfjs-dist';
 
+// Initialize the PDF.js worker dynamically from CDN to avoid build/CORS/origin issues
 if (typeof window !== 'undefined') {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 }
 
 /**
@@ -9,7 +11,7 @@ if (typeof window !== 'undefined') {
  */
 export async function loadPdfDocument(file: File): Promise<pdfjsLib.PDFDocumentProxy> {
   const arrayBuffer = await file.arrayBuffer();
-  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+  const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) });
   return loadingTask.promise;
 }
 

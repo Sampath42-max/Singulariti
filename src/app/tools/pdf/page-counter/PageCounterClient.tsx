@@ -6,7 +6,7 @@ import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { countPDFPages } from '@/lib/pdf/pdfHelpers';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Plus, Hash } from 'lucide-react';
 
@@ -40,8 +40,8 @@ export function PageCounterClient() {
           return;
         }
         validFiles.push(file);
-      } catch (err) {
-        setError(`Failed to read file "${file.name}".`);
+      } catch (err: any) {
+        setError(`File "${file.name}": ${getPdfErrorMessage(err)}`);
         setIsProcessing(false);
         return;
       }
@@ -64,7 +64,7 @@ export function PageCounterClient() {
       setTotalCount(result.total);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred while counting PDF pages.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

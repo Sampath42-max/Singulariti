@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { ProtectPdfClient } from './ProtectPdfClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { ProtectPdfPageClient } from './ProtectPdfPageClient';
 
 const seo = getUtilitySEO('protect-pdf')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function ProtectPdfPage() {
-  return (
-    <NoSSR>
-      <ProtectPdfClient />
-    </NoSSR>
-  );
+  return <ProtectPdfPageClient />;
 }
-

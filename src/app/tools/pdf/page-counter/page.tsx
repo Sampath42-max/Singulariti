@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { PageCounterClient } from './PageCounterClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { PageCounterPageClient } from './PageCounterPageClient';
 
 const seo = getUtilitySEO('page-counter')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function PageCounterPage() {
-  return (
-    <NoSSR>
-      <PageCounterClient />
-    </NoSSR>
-  );
+  return <PageCounterPageClient />;
 }
-

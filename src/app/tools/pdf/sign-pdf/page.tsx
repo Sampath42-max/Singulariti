@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { SignPdfClient } from './SignPdfClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { SignPdfPageClient } from './SignPdfPageClient';
 
 const seo = getUtilitySEO('sign-pdf')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function SignPdfPage() {
-  return (
-    <NoSSR>
-      <SignPdfClient />
-    </NoSSR>
-  );
+  return <SignPdfPageClient />;
 }
-

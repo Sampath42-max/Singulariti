@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { DownloadButton } from '@/components/tools/DownloadButton';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { splitPDF, countPDFPages } from '@/lib/pdf/pdfHelpers';
-import { parsePageRanges, checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { parsePageRanges, checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Sliders, Scissors } from 'lucide-react';
 
@@ -50,7 +50,7 @@ export function SplitPdfClient() {
       setRangeInput(`1-${counts[0].pages}`);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to load the PDF file. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     }
   };
 
@@ -74,7 +74,7 @@ export function SplitPdfClient() {
       setSplitBlobUrl(url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'Failed to split PDF. Please check your range settings.');
+      setError(err.message && (err.message.includes('Page number') || err.message.includes('bounds')) ? err.message : getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

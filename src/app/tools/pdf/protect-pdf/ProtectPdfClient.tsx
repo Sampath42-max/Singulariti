@@ -6,7 +6,7 @@ import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';
 import { DownloadButton } from '@/components/tools/DownloadButton';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { protectPDFDocument } from '@/lib/pdf/pdfHelpers';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
@@ -46,7 +46,7 @@ export function ProtectPdfClient() {
       setFile(selectedFile);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to parse PDF document. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     }
   };
 
@@ -68,7 +68,7 @@ export function ProtectPdfClient() {
       setResultBlobUrl(url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred while encrypting the PDF.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

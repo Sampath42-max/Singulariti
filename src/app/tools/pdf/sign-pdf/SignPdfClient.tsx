@@ -10,7 +10,7 @@ import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import { signPDF } from '@/lib/pdf/pdfHelpers';
 import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Edit2, Upload, PenTool, Check, Trash } from 'lucide-react';
 import { TransformableOverlay } from '@/components/ui/TransformableOverlay';
@@ -113,7 +113,7 @@ export function SignPdfClient() {
       setSelectedPage(1);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to parse PDF document. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     }
   };
 
@@ -228,7 +228,7 @@ export function SignPdfClient() {
       setResultBlobUrl(url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred while signing the PDF.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { CompressPdfClient } from './CompressPdfClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { CompressPdfPageClient } from './CompressPdfPageClient';
 
 const seo = getUtilitySEO('compress-pdf')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function CompressPdfPage() {
-  return (
-    <NoSSR>
-      <CompressPdfClient />
-    </NoSSR>
-  );
+  return <CompressPdfPageClient />;
 }
-

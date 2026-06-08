@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { DeletePdfPagesClient } from './DeletePdfPagesClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { DeletePdfPagesPageClient } from './DeletePdfPagesPageClient';
 
 const seo = getUtilitySEO('delete-pdf-pages')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function DeletePdfPagesPage() {
-  return (
-    <NoSSR>
-      <DeletePdfPagesClient />
-    </NoSSR>
-  );
+  return <DeletePdfPagesPageClient />;
 }
-

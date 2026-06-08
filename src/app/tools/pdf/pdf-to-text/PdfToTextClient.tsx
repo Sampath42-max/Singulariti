@@ -7,7 +7,7 @@ import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/Button';
 import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { loadPdfDocument, extractTextFromPdf } from '@/lib/pdf/pdfRenderHelpers';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { downloadBlob } from '@/lib/downloadHelpers';
 import { FileText, Copy, Download, Check, Clipboard } from 'lucide-react';
@@ -58,7 +58,7 @@ export function PdfToTextClient() {
       setExtractedText(text);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to extract text from PDF document. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
       setProgress({ current: 0, total: 0 });

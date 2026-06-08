@@ -10,7 +10,7 @@ import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import { rearrangePDFPages } from '@/lib/pdf/pdfHelpers';
 import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Move, ArrowLeft, ArrowRight } from 'lucide-react';
 
@@ -57,7 +57,7 @@ export function RearrangePdfPagesClient() {
       setPageOrder(order);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to parse PDF document. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     }
   };
 
@@ -112,7 +112,7 @@ export function RearrangePdfPagesClient() {
       setResultBlobUrl(url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred while compiling rearranged PDF.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }

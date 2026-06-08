@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { SplitPdfClient } from './SplitPdfClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { SplitPdfPageClient } from './SplitPdfPageClient';
 
 const seo = getUtilitySEO('split-pdf')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function SplitPdfPage() {
-  return (
-    <NoSSR>
-      <SplitPdfClient />
-    </NoSSR>
-  );
+  return <SplitPdfPageClient />;
 }
-

@@ -1,7 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
-import { MetadataViewerClient } from './MetadataViewerClient';
-import NoSSR from '@/components/NoSSR';
+import React from 'react';
+import { MetadataViewerPageClient } from './MetadataViewerPageClient';
 
 const seo = getUtilitySEO('metadata-viewer')!;
 export const metadata = buildMetadata({
@@ -24,10 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function MetadataViewerPage() {
-  return (
-    <NoSSR>
-      <MetadataViewerClient />
-    </NoSSR>
-  );
+  return <MetadataViewerPageClient />;
 }
-

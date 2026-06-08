@@ -9,7 +9,7 @@ import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import { loadPdfDocument, renderPageToDataUrl } from '@/lib/pdf/pdfRenderHelpers';
 import { downloadAllAsZip, downloadBlob } from '@/lib/downloadHelpers';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize, dataUrlToBlob } from '@/lib/fileHelpers';
 import { FileText, Download, FileImage, Image as ImageIcon } from 'lucide-react';
 
@@ -51,7 +51,7 @@ export function PdfToJpgClient() {
       setPdfDoc(doc);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to parse PDF document. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     }
   };
 

@@ -10,7 +10,7 @@ import { LoadingSpinner } from '@/components/tools/LoadingSpinner';
 import { PageThumbnail } from '@/components/tools/PageThumbnail';
 import { deletePDFPages } from '@/lib/pdf/pdfHelpers';
 import { loadPdfDocument } from '@/lib/pdf/pdfRenderHelpers';
-import { checkPdfPasswordProtected, validatePdfFile } from '@/lib/pdf/pdfValidation';
+import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Trash2, CheckCircle2 } from 'lucide-react';
 
@@ -53,7 +53,7 @@ export function DeletePdfPagesClient() {
       setPdfDoc(doc);
     } catch (err: any) {
       console.error(err);
-      setError('Failed to parse PDF document. It might be corrupted.');
+      setError(getPdfErrorMessage(err));
     }
   };
 
@@ -93,7 +93,7 @@ export function DeletePdfPagesClient() {
       setResultBlobUrl(url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'An error occurred while deleting PDF pages.');
+      setError(getPdfErrorMessage(err));
     } finally {
       setIsProcessing(false);
     }
