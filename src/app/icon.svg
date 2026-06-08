@@ -1,5 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#0B0B0F" />
-  <text x="210" y="360" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="900" font-size="340" fill="#ffffff" text-anchor="middle">s</text>
-  <circle cx="370" cy="310" r="45" fill="#00C4B4" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <polygon points="50,10 15,85 50,60" fill="#6B6B80" opacity="0.1" />
+  <polygon points="50,10 85,85 50,60" fill="#6B6B80" opacity="0.2" />
+  <polygon points="15,85 85,85 50,60" fill="#00C4B4" opacity="0.2" />
+  
+  <polygon points="50,10 15,85 85,85" stroke="#6B6B80" stroke-width="6" stroke-linejoin="round" fill="none" />
+  <line x1="50" y1="10" x2="50" y2="60" stroke="#6B6B80" stroke-width="4" stroke-linecap="round" />
+  <line x1="15" y1="85" x2="50" y2="60" stroke="#6B6B80" stroke-width="4" stroke-linecap="round" />
+  <line x1="85" y1="85" x2="50" y2="60" stroke="#6B6B80" stroke-width="4" stroke-linecap="round" />
+  
+  <circle cx="50" cy="60" r="10" fill="#00C4B4">
+    <animate attributeName="r" values="9;12;9" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" />
+  </circle>
 </svg>

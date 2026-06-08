@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Search, Sun, Moon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { CommandPalette } from '../ui/CommandPalette';
+import { Logo } from '../ui/Logo';
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -30,8 +31,8 @@ export function Header() {
       <header className="sticky top-0 z-50 h-[60px] w-full bg-surface/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 md:px-6 h-full flex items-center justify-between max-w-7xl">
           <div className="flex items-center gap-8">
-            <Link href="/" className="font-display font-bold text-xl tracking-tight text-ink flex items-center">
-              singulariti<span className="text-primary">·</span>
+            <Link href="/" className="flex items-center">
+              <Logo />
             </Link>
             
             <button 

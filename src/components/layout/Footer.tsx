@@ -1,14 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
 
+import { Logo } from '../ui/Logo';
+
 export function Footer() {
   return (
     <footer className="w-full bg-surface border-t border-border mt-24">
       <div className="container mx-auto px-4 md:px-6 py-12 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
-            <Link href="/" className="font-display font-bold text-xl tracking-tight text-ink flex items-center mb-4">
-              singulariti<span className="text-primary">·</span>
+            <Link href="/" className="flex items-center mb-6">
+              <Logo />
             </Link>
             <p className="text-slate text-[13px] font-sans">
               One place. Every tool.<br />
