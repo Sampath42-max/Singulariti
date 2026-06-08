@@ -86,7 +86,6 @@ export function NavBar({ items, className }: NavBarProps) {
           {items.map((item) => {
             const Icon = item.icon
             const isActive = activeItemName === item.name;
-            const isHovered = hoveredTab === item.name;
             const hasDropdown = item.dropdownItems && item.dropdownItems.length > 0;
 
             return (
@@ -138,22 +137,24 @@ export function NavBar({ items, className }: NavBarProps) {
                 {hasDropdown && (
                   <div
                     className={cn(
-                      "absolute left-1/2 -translate-x-1/2 w-48 bg-surface border border-border rounded-2xl shadow-xl overflow-hidden flex flex-col py-2 mt-4 top-full transition-all duration-300 ease-out will-change-transform z-50",
+                      "absolute left-1/2 -translate-x-1/2 w-48 pt-4 top-full transition-all duration-300 ease-out will-change-transform z-50",
                       activeDropdown === item.name
                         ? "opacity-100 translate-y-0 pointer-events-auto"
                         : "opacity-0 -translate-y-2 pointer-events-none"
                     )}
                   >
-                    {item.dropdownItems!.map((dropItem) => (
-                      <Link
-                        key={dropItem.name}
-                        href={dropItem.url}
-                        onClick={handleBackdropClick}
-                        className="px-4 py-2.5 text-sm text-slate hover:text-primary hover:bg-primary/5 transition-colors"
-                      >
-                        {dropItem.name}
-                      </Link>
-                    ))}
+                    <div className="bg-surface border border-border rounded-2xl shadow-xl overflow-hidden flex flex-col py-2">
+                      {item.dropdownItems!.map((dropItem) => (
+                        <Link
+                          key={dropItem.name}
+                          href={dropItem.url}
+                          onClick={handleBackdropClick}
+                          className="px-4 py-2.5 text-sm text-slate hover:text-primary hover:bg-primary/5 transition-colors"
+                        >
+                          {dropItem.name}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
