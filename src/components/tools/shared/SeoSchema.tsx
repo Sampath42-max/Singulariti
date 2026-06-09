@@ -10,20 +10,40 @@ interface SeoSchemaProps {
 }
 
 export function SeoSchema({ name, description, section, canonical, collectionName, collectionUrl }: SeoSchemaProps) {
+  // Map sections to standard Google WebApplication categories
+  const getStandardCategory = (sec: string) => {
+    const s = sec.toLowerCase();
+    if (s.includes('image') || s.includes('editing')) return 'PhotoVideoApplication';
+    if (s.includes('pdf') || s.includes('text') || s.includes('calculator') || s.includes('convert')) return 'ProductivityApplication';
+    if (s.includes('developer') || s.includes('seo') || s.includes('qr')) return 'DeveloperApplication';
+    return 'UtilitiesApplication';
+  };
+
   // 1. WebApplication Schema
   const webAppSchema = {
     "@context": "https://schema.org",
-    "@type": ["WebApplication", "SoftwareApplication"],
+    "@type": "WebApplication",
     "name": name,
-    "applicationCategory": section,
+    "applicationCategory": getStandardCategory(section),
     "url": canonical,
     "description": description,
     "operatingSystem": "Web Browser",
     "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "softwareVersion": "1.0.0",
+    "image": "https://singulariti.in/og-fallback.png",
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Singulariti",
+      "url": "https://singulariti.in",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://singulariti.in/og-fallback.png"
+      }
     },
     "featureList": "Browser-based processing, No file upload required, Instant results, Zero privacy risk, No registration needed",
     "applicationSubCategory": "UtilityApplication",

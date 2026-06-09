@@ -38,23 +38,50 @@ export function constructMetadata({
 
   const canonicalUrl = `${BASE_URL}${cleanPath}`;
   
-  const robotsConfig = robots === 'noindex' 
-    ? { index: false, follow: true } 
-    : (typeof robots === 'object' ? robots : { index: true, follow: true });
+  let robotsConfig;
+  if (robots === 'noindex') {
+    robotsConfig = { index: false, follow: true };
+  } else if (typeof robots === 'object') {
+    robotsConfig = {
+      ...robots,
+      googleBot: {
+        index: robots.index,
+        follow: robots.follow,
+        'max-video-preview': -1,
+        'max-image-preview': 'large' as const,
+        'max-snippet': -1,
+      }
+    };
+  } else {
+    robotsConfig = {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large' as const,
+        'max-snippet': -1,
+      },
+    };
+  }
 
   const imageUrl = image
     ? (image.startsWith('http') ? image : `${BASE_URL}${image}`)
     : DEFAULT_OG_IMAGE;
 
+  const finalTitle = title.endsWith(' | Singulariti') ? { absolute: title } : title;
+
   return {
-    title,
+    title: finalTitle,
     description,
+    authors: [{ name: "Singulariti", url: "https://singulariti.in" }],
     alternates: {
       canonical: canonicalUrl,
     },
     robots: robotsConfig,
     openGraph: {
-      title,
+      title: typeof finalTitle === 'string' ? finalTitle : finalTitle.absolute,
       description,
       url: canonicalUrl,
       siteName: 'Singulariti',
@@ -65,7 +92,7 @@ export function constructMetadata({
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: typeof finalTitle === 'string' ? finalTitle : finalTitle.absolute,
         },
       ],
       ...(type === 'article' && {
@@ -75,7 +102,9 @@ export function constructMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      site: '@singulariti_in',
+      creator: '@singulariti_in',
+      title: typeof finalTitle === 'string' ? finalTitle : finalTitle.absolute,
       description,
       images: [imageUrl],
     },
@@ -105,31 +134,59 @@ export interface BuildMetadataInput {
 }
 
 export function buildMetadata(input: BuildMetadataInput): Metadata {
+  const finalTitle = input.title.endsWith(' | Singulariti') ? { absolute: input.title } : input.title;
+  const titleString = typeof finalTitle === 'string' ? finalTitle : finalTitle.absolute;
+
+  const robotsConfig = input.robots
+    ? {
+        ...input.robots,
+        googleBot: {
+          index: input.robots.index,
+          follow: input.robots.follow,
+          'max-video-preview': -1,
+          'max-image-preview': 'large' as const,
+          'max-snippet': -1,
+        }
+      }
+    : {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-video-preview': -1,
+          'max-image-preview': 'large' as const,
+          'max-snippet': -1,
+        },
+      };
+
   return {
-    title: input.title,
+    title: finalTitle,
     description: input.description,
+    authors: [{ name: "Singulariti", url: "https://singulariti.in" }],
     alternates: {
       canonical: input.canonical,
     },
-    robots: input.robots ?? {
-      index: true,
-      follow: true,
-    },
+    robots: robotsConfig,
     openGraph: {
-      title: input.openGraph?.title ?? input.title,
+      title: input.openGraph?.title ?? titleString,
       description: input.openGraph?.description ?? input.description,
       url: input.openGraph?.url ?? input.canonical,
+      siteName: 'Singulariti',
+      locale: 'en_US',
       type: input.openGraph?.type ?? "website",
       images: [
         {
           url: input.openGraph?.image ?? "https://singulariti.in/og-fallback.png",
-          alt: input.title,
+          alt: titleString,
         }
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: input.twitter?.title ?? input.title,
+      site: '@singulariti_in',
+      creator: '@singulariti_in',
+      title: input.twitter?.title ?? titleString,
       description: input.twitter?.description ?? input.description,
       images: [input.twitter?.image ?? input.openGraph?.image ?? "https://singulariti.in/og-fallback.png"],
     },

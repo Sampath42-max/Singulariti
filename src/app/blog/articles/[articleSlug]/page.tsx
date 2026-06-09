@@ -8,6 +8,7 @@ import { TableOfContents } from '@/components/blog/TableOfContents';
 import { FAQSection } from '@/components/blog/FAQSection';
 import { RelatedTools } from '@/components/blog/RelatedTools';
 import { BlogArticle } from '@/components/blog/BlogArticle';
+import { constructMetadata } from '@/lib/seo/metadata';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
 import { Calendar, ArrowLeft, ChevronRight, Shield } from 'lucide-react';
 
@@ -33,33 +34,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  return {
+  return constructMetadata({
     title: post.metaTitle,
     description: post.metaDescription,
-    alternates: {
-      canonical: `https://singulariti.in/blog/articles/${post.slug}`
-    },
-    openGraph: {
-      title: post.metaTitle,
-      description: post.metaDescription,
-      url: `https://singulariti.in/blog/articles/${post.slug}`,
-      type: 'article',
-      publishedTime: post.publishedAt,
-      modifiedTime: post.updatedAt,
-      images: post.featuredImage ? [
-        {
-          url: `https://singulariti.in${post.featuredImage}`,
-          alt: post.featuredImageAlt || '',
-        }
-      ] : []
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.metaTitle,
-      description: post.metaDescription,
-      images: post.featuredImage ? [`https://singulariti.in${post.featuredImage}`] : [],
-    }
-  };
+    path: `/blog/articles/${post.slug}`,
+    type: 'article',
+    image: post.featuredImage || undefined,
+    publishedTime: post.publishedAt,
+    updatedAt: post.updatedAt,
+  });
 }
 
 export default async function BlogPostPage({ params }: PageProps) {

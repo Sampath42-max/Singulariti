@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     template: "%s | Singulariti",
   },
   description: "Fast, secure, browser-based utility tools designed for creators, developers, students and professionals. Zero uploads, absolute privacy.",
+  applicationName: "Singulariti",
+  manifest: "/manifest.webmanifest",
+  authors: [{ name: "Singulariti", url: "https://singulariti.in" }],
   openGraph: {
     title: "Online Utility Tools for PDF, Image, Text, Code, SEO and Calculations | Singulariti",
     description: "Fast, secure, browser-based utility tools designed for creators, developers, students and professionals.",
@@ -36,6 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@singulariti_in",
+    creator: "@singulariti_in",
     title: "Online Utility Tools for PDF, Image, Text, Code, SEO and Calculations | Singulariti",
     description: "Fast, secure, browser-based utility tools designed for creators, developers, students and professionals.",
   },

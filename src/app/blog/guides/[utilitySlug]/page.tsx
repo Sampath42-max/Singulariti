@@ -8,6 +8,7 @@ import { TableOfContents } from '@/components/blog/TableOfContents';
 import { FAQSection } from '@/components/blog/FAQSection';
 import { RelatedTools } from '@/components/blog/RelatedTools';
 import { BlogArticle } from '@/components/blog/BlogArticle';
+import { constructMetadata } from '@/lib/seo/metadata';
 import { getPostBySlug } from '@/lib/blog';
 import { toolRegistry, sectionRegistry, subSectionRegistry } from '@/content/tools/toolRegistry';
 import { Calendar, ArrowLeft, ChevronRight, Shield, Play } from 'lucide-react';
@@ -32,33 +33,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  return {
+  return constructMetadata({
     title: post.metaTitle,
     description: post.metaDescription,
-    alternates: {
-      canonical: `https://singulariti.in/blog/guides/${post.slug}`
-    },
-    openGraph: {
-      title: post.metaTitle,
-      description: post.metaDescription,
-      url: `https://singulariti.in/blog/guides/${post.slug}`,
-      type: 'article',
-      publishedTime: post.publishedAt,
-      modifiedTime: post.updatedAt,
-      images: post.featuredImage ? [
-        {
-          url: `https://singulariti.in${post.featuredImage}`,
-          alt: post.featuredImageAlt || '',
-        }
-      ] : []
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.metaTitle,
-      description: post.metaDescription,
-      images: post.featuredImage ? [`https://singulariti.in${post.featuredImage}`] : [],
-    }
-  };
+    path: `/blog/guides/${post.slug}`,
+    type: 'article',
+    image: post.featuredImage || undefined,
+    publishedTime: post.publishedAt,
+    updatedAt: post.updatedAt,
+  });
 }
 
 export default async function UtilityGuidePage({ params }: PageProps) {

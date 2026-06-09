@@ -55,6 +55,7 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "Singulariti",
+          "alternateName": ["Singulariti Tools", "Singulariti Utility Tools", "Singulariti Web Tools"],
           "url": "https://singulariti.in",
           "description": "Free browser-based utility tools for PDF, image, text, developer, SEO, and calculator tasks.",
           "potentialAction": {
