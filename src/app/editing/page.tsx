@@ -76,7 +76,7 @@ export default function EditingCategoryPage() {
                     title={tool.name}
                     description={tool.description}
                     href={tool.path}
-                    icon={<ToolIcon toolId={tool.id} className="w-6 h-6" fallback={<Wand2 className="w-6 h-6" />} />}
+                    icon={<ToolIcon toolId={tool.id} fallback={<Wand2 className="w-6 h-6" />} />}
                   />
                 ))}
               </div>

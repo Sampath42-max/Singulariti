@@ -80,7 +80,7 @@ export default function TextCategoryPage() {
                     title={tool.name}
                     description={tool.description}
                     href={tool.path}
-                    icon={<ToolIcon toolId={tool.id} className="w-6 h-6" fallback={<FileText className="w-6 h-6" />} />}
+                    icon={<ToolIcon toolId={tool.id} fallback={<FileText className="w-6 h-6" />} />}
                   />
                 ))}
               </div>

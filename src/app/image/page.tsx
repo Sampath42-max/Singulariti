@@ -78,7 +78,7 @@ export default function ImageCategoryPage() {
                     title={tool.name}
                     description={tool.description}
                     href={tool.path}
-                    icon={<ToolIcon toolId={tool.id} className="w-6 h-6" fallback={<ImageIcon className="w-6 h-6" />} />}
+                    icon={<ToolIcon toolId={tool.id} fallback={<ImageIcon className="w-6 h-6" />} />}
                   />
                 ))}
               </div>

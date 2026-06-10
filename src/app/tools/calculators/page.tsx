@@ -79,7 +79,7 @@ export default function CalculatorCategoryPage() {
                     title={tool.name}
                     description={tool.description}
                     href={tool.path}
-                    icon={<ToolIcon toolId={tool.id} className="w-6 h-6" fallback={<Calculator className="w-6 h-6" />} />}
+                    icon={<ToolIcon toolId={tool.id} fallback={<Calculator className="w-6 h-6" />} />}
                   />
                 ))}
               </div>

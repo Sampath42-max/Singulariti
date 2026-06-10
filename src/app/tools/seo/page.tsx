@@ -80,7 +80,7 @@ export default function SeoCategoryPage() {
                     title={tool.name}
                     description={tool.description}
                     href={tool.path}
-                    icon={<ToolIcon toolId={tool.id} className="w-6 h-6" fallback={<Globe className="w-6 h-6" />} />}
+                    icon={<ToolIcon toolId={tool.id} fallback={<Globe className="w-6 h-6" />} />}
                   />
                 ))}
               </div>

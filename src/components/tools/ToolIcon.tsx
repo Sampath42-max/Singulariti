@@ -173,11 +173,18 @@ export function ToolIcon({ toolId, className = "w-14 h-14" }: ToolIconProps) {
 
   // Premium Apple-Style Duotone Squircle
   // Using pure light teal backgrounds in light mode, and deep glassy teal in dark mode.
+  const isQrTool = id.includes('qr') || id.includes('barcode');
+
   return (
     <div className={`relative flex items-center justify-center ${className} bg-primary/10 dark:bg-primary/20 border border-primary/20 dark:border-primary/30 rounded-2xl group-hover:scale-105 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(20,184,166,0.2)] transition-all duration-300 overflow-hidden`}>
       {/* Inner subtle glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:from-white/5 dark:to-transparent pointer-events-none rounded-2xl" />
       
+      {/* Optional: Subtle QR code watermark for QR tools */}
+      {isQrTool && (
+        <QrCode className="absolute w-[120%] h-[120%] text-primary opacity-[0.04] dark:opacity-[0.08] rotate-12 -z-0 pointer-events-none mix-blend-overlay" />
+      )}
+
       {/* The Duotone Icon */}
       {/* fill="currentColor" fillOpacity={0.2} creates a stunning duotone premium effect without needing custom SVGs */}
       <IconComponent 

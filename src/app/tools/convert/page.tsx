@@ -80,7 +80,7 @@ export default function ConvertCategoryPage() {
                     title={tool.name}
                     description={tool.description}
                     href={tool.path}
-                    icon={<ToolIcon toolId={tool.id} className="w-6 h-6" fallback={<Scale className="w-6 h-6" />} />}
+                    icon={<ToolIcon toolId={tool.id} fallback={<Scale className="w-6 h-6" />} />}
                   />
                 ))}
               </div>
