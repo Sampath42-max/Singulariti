@@ -1905,7 +1905,7 @@ export const toolRegistry: UtilityRegistryItem[] = [
   },
   {
     "id": "phone-number-qr-code-generator",
-    "name": "Phone QR Code Generator",
+    "name": "Phone Number QR Code Generator",
     "sectionId": "qr",
     "subSectionId": "qr-qr-tools",
     "utilityUrl": "/tools/qr/phone-number-qr-code-generator",

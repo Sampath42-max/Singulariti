@@ -788,9 +788,9 @@ export const registry: EcosystemRegistry = {
             },
             {
               id: 'phone-number-qr-code-generator',
-              name: 'Phone QR Code Generator',
+              name: 'Phone Number QR Code Generator',
               description: 'Create a QR code that initiates a phone call when scanned.',
-              seoTitle: 'Phone QR Code Generator — Create Call QR Codes Online | Singulariti',
+              seoTitle: 'Phone Number QR Code Generator — Create Call QR Codes Online | Singulariti',
               seoDescription: 'Generate a QR code that dials a specific phone number when scanned.',
               engine: 'qr-standalone',
               path: '/tools/qr/phone-number-qr-code-generator',
