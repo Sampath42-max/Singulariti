@@ -17,14 +17,17 @@ import {
   // Calculators
   Calculator, Percent, Tag, TrendingUp, Landmark, PiggyBank, Banknote, 
   Zap as ZapIcon, Fuel, Receipt, CalendarClock, Activity, Scale,
-  // SEO & Text
-  Globe, Map, Bot, Scissors, Baseline, ListOrdered, ArrowDownAZ,
+  // SEO & Text (Updated)
+  Globe2, Waypoints, BotMessageSquare, BarChart2, 
+  BookType, SpellCheck, ArrowLeftRight, WrapText, MailSearch,
+  // Unit Conversion (Updated)
+  Ruler, Thermometer, SquareDashed, Beaker, Hourglass, Weight,
   // QR
   QrCode, ScanLine, Wifi, Smartphone, Mail, Phone, MessageSquare, Briefcase,
   // Fallbacks
-  FileCode, Layers, RefreshCw
+  FileCode, Layers, RefreshCw, FileImage
 } from 'lucide-react';
-import { PremiumIconContainer, CategoryColor } from '../ui/PremiumIconContainer';
+import { PremiumIconContainer } from '../ui/PremiumIconContainer';
 
 interface ToolIconProps {
   toolId: string;
@@ -36,13 +39,11 @@ export function ToolIcon({ toolId, className = "w-6 h-6", fallback }: ToolIconPr
   const id = toolId.toLowerCase();
 
   let IconComponent: React.ElementType = FileCode;
-  let categoryColor: CategoryColor = 'primary';
 
   // ==========================================
-  // IMAGE COMPRESSION (Color: blue)
+  // IMAGE COMPRESSION
   // ==========================================
   if (id.includes('compression') || id.includes('compressor')) {
-    categoryColor = 'blue';
     if (id === 'image-compressor') IconComponent = Minimize;
     else if (id === 'jpg-compressor' || id === 'jpeg-compressor') IconComponent = Shrink;
     else if (id === 'png-compressor') IconComponent = FileArchive;
@@ -51,14 +52,9 @@ export function ToolIcon({ toolId, className = "w-6 h-6", fallback }: ToolIconPr
     else IconComponent = Minimize;
   }
   // ==========================================
-  // IMAGE CONVERSION (Color: blue)
+  // IMAGE CONVERSION
   // ==========================================
   else if (id.includes('conversion') || id.includes('-to-')) {
-    // If it's a dev conversion tool, switch color
-    if (id.includes('base64')) categoryColor = 'purple';
-    else if (id.includes('pdf')) categoryColor = 'red';
-    else categoryColor = 'blue';
-
     if (id === 'jpg-to-png') IconComponent = ImagePlus;
     else if (id === 'png-to-jpg') IconComponent = ImageDown;
     else if (id === 'jpg-to-webp' || id === 'png-to-webp') IconComponent = PictureInPicture;
@@ -73,30 +69,29 @@ export function ToolIcon({ toolId, className = "w-6 h-6", fallback }: ToolIconPr
     else IconComponent = ArrowRightLeft;
   }
   // ==========================================
-  // IMAGE EDITING & UTILITIES (Color: blue)
+  // IMAGE EDITING & UTILITIES
   // ==========================================
-  else if (id === 'crop-image') { categoryColor = 'blue'; IconComponent = Crop; }
-  else if (id === 'image-resizer') { categoryColor = 'blue'; IconComponent = Maximize; }
-  else if (id === 'rotate-image') { categoryColor = 'blue'; IconComponent = RotateCw; }
-  else if (id === 'flip-image') { categoryColor = 'blue'; IconComponent = FlipHorizontal; }
-  else if (id === 'image-upscaler' || id === 'image-enhancer') { categoryColor = 'blue'; IconComponent = Wand2; }
-  else if (id === 'blur-image') { categoryColor = 'blue'; IconComponent = Droplets; }
-  else if (id === 'image-sharpen') { categoryColor = 'blue'; IconComponent = Zap; }
-  else if (id === 'image-denoiser' || id === 'pixelate-image') { categoryColor = 'blue'; IconComponent = Filter; }
-  else if (id === 'brightness-and-contrast-adjuster') { categoryColor = 'blue'; IconComponent = Sun; }
-  else if (id === 'color-adjuster') { categoryColor = 'blue'; IconComponent = Palette; }
-  else if (id === 'grayscale' || id.includes('black-and-white')) { categoryColor = 'blue'; IconComponent = Blend; }
-  else if (id === 'add-watermark-to-image' || id === 'add-logo-overlay') { categoryColor = 'blue'; IconComponent = Stamp; }
-  else if (id === 'add-text-on-image') { categoryColor = 'blue'; IconComponent = TypeIcon; }
-  else if (id === 'image-metadata-viewer') { categoryColor = 'blue'; IconComponent = Search; }
-  else if (id === 'image-dimension-checker') { categoryColor = 'blue'; IconComponent = Maximize; }
-  else if (id === 'color-picker-from-image' || id === 'image-color-palette-extractor') { categoryColor = 'blue'; IconComponent = Palette; }
+  else if (id === 'crop-image') { IconComponent = Crop; }
+  else if (id === 'image-resizer') { IconComponent = Maximize; }
+  else if (id === 'rotate-image') { IconComponent = RotateCw; }
+  else if (id === 'flip-image') { IconComponent = FlipHorizontal; }
+  else if (id === 'image-upscaler' || id === 'image-enhancer') { IconComponent = Wand2; }
+  else if (id === 'blur-image') { IconComponent = Droplets; }
+  else if (id === 'image-sharpen') { IconComponent = Zap; }
+  else if (id === 'image-denoiser' || id === 'pixelate-image') { IconComponent = Filter; }
+  else if (id === 'brightness-and-contrast-adjuster') { IconComponent = Sun; }
+  else if (id === 'color-adjuster') { IconComponent = Palette; }
+  else if (id === 'grayscale' || id.includes('black-and-white')) { IconComponent = Blend; }
+  else if (id === 'add-watermark-to-image' || id === 'add-logo-overlay') { IconComponent = Stamp; }
+  else if (id === 'add-text-on-image') { IconComponent = TypeIcon; }
+  else if (id === 'image-metadata-viewer') { IconComponent = Search; }
+  else if (id === 'image-dimension-checker') { IconComponent = Maximize; }
+  else if (id === 'color-picker-from-image' || id === 'image-color-palette-extractor') { IconComponent = Palette; }
   
   // ==========================================
-  // PDF TOOLS (Color: red)
+  // PDF TOOLS
   // ==========================================
   else if (id.includes('pdf')) {
-    categoryColor = 'red';
     if (id === 'merge-pdf') IconComponent = Combine;
     else if (id === 'split-pdf') IconComponent = SplitSquareHorizontal;
     else if (id === 'rotate-pdf') IconComponent = RotateCw;
@@ -113,10 +108,9 @@ export function ToolIcon({ toolId, className = "w-6 h-6", fallback }: ToolIconPr
     else IconComponent = FileText;
   }
   // ==========================================
-  // DEVELOPER TOOLS (Color: purple)
+  // DEVELOPER TOOLS
   // ==========================================
   else if (id.includes('json') || id.includes('yaml') || id.includes('xml') || id.includes('sql') || id.includes('encode') || id.includes('decode') || id.includes('hash') || id.includes('regex') || id.includes('jwt')) {
-    categoryColor = 'purple';
     if (id.includes('json')) IconComponent = Braces;
     else if (id.includes('xml')) IconComponent = CodeXml;
     else if (id.includes('yaml')) IconComponent = ListTree;
@@ -130,10 +124,9 @@ export function ToolIcon({ toolId, className = "w-6 h-6", fallback }: ToolIconPr
     else IconComponent = Code;
   }
   // ==========================================
-  // CALCULATORS (Color: orange)
+  // CALCULATORS
   // ==========================================
   else if (id.includes('calculator') || id.includes('emi') || id.includes('sip') || id.includes('tax') || id.includes('margin') || id.includes('age') || id.includes('bmi')) {
-    categoryColor = 'orange';
     if (id.includes('age') || id.includes('time') || id.includes('date')) IconComponent = CalendarClock;
     else if (id.includes('bmi') || id.includes('health')) IconComponent = Activity;
     else if (id.includes('margin') || id.includes('discount')) IconComponent = Tag;
@@ -146,60 +139,71 @@ export function ToolIcon({ toolId, className = "w-6 h-6", fallback }: ToolIconPr
     else IconComponent = Calculator;
   }
   // ==========================================
-  // SEO TOOLS (Color: green)
+  // SEO TOOLS (Updated)
   // ==========================================
   else if (id.includes('seo') || id.includes('meta') || id.includes('sitemap') || id.includes('robot') || id.includes('keyword')) {
-    categoryColor = 'green';
-    if (id.includes('meta')) IconComponent = Globe;
-    else if (id.includes('sitemap')) IconComponent = Map;
-    else if (id.includes('robot')) IconComponent = Bot;
-    else if (id.includes('keyword')) IconComponent = TextSelect;
+    if (id.includes('meta')) IconComponent = Globe2;
+    else if (id.includes('sitemap')) IconComponent = Waypoints;
+    else if (id.includes('robot')) IconComponent = BotMessageSquare;
+    else if (id.includes('keyword')) IconComponent = BarChart2;
     else IconComponent = Search;
   }
   // ==========================================
-  // TEXT TOOLS (Color: slate)
+  // TEXT TOOLS (Updated)
   // ==========================================
   else if (id.includes('text') || id.includes('word') || id.includes('case') || id.includes('sort') || id.includes('lorem')) {
-    categoryColor = 'slate';
-    if (id.includes('count')) IconComponent = TypeIcon;
-    else if (id.includes('case')) IconComponent = Baseline;
+    if (id.includes('count')) IconComponent = BookType;
+    else if (id.includes('case')) IconComponent = SpellCheck;
     else if (id.includes('sort')) IconComponent = ArrowDownAZ;
-    else if (id.includes('reverse')) IconComponent = RefreshCw;
-    else if (id.includes('remove')) IconComponent = Scissors;
-    else if (id.includes('list')) IconComponent = ListOrdered;
+    else if (id.includes('reverse')) IconComponent = ArrowLeftRight;
+    else if (id.includes('remove')) IconComponent = WrapText;
+    else if (id.includes('email') || id.includes('extract')) IconComponent = MailSearch;
     else IconComponent = TypeIcon;
   }
   // ==========================================
-  // QR TOOLS (Color: indigo)
+  // UNIT CONVERTERS (Updated)
   // ==========================================
-  else if (id.includes('qr-code')) {
-    categoryColor = 'indigo';
+  else if (id.includes('convert') || id.includes('length') || id.includes('weight') || id.includes('temperature') || id.includes('area') || id.includes('volume')) {
+    if (id.includes('length')) IconComponent = Ruler;
+    else if (id.includes('weight') || id.includes('mass')) IconComponent = Weight;
+    else if (id.includes('temperature')) IconComponent = Thermometer;
+    else if (id.includes('area')) IconComponent = SquareDashed;
+    else if (id.includes('volume')) IconComponent = Beaker;
+    else if (id.includes('time')) IconComponent = Hourglass;
+    else IconComponent = Scale;
+  }
+  // ==========================================
+  // QR TOOLS (Updated)
+  // ==========================================
+  else if (id.includes('qr-code') || id.includes('qr')) {
     if (id.includes('scanner')) IconComponent = ScanLine;
     else if (id.includes('wifi')) IconComponent = Wifi;
     else if (id.includes('vcard')) IconComponent = Briefcase;
     else if (id.includes('phone') || id.includes('sms')) IconComponent = Smartphone;
     else if (id.includes('email')) IconComponent = Mail;
     else if (id.includes('text')) IconComponent = TypeIcon;
-    else if (id.includes('url')) IconComponent = Globe;
+    else if (id.includes('url')) IconComponent = Globe2;
     else IconComponent = QrCode;
-  }
-  // ==========================================
-  // UNIT CONVERTERS (Color: primary)
-  // ==========================================
-  else if (id.includes('convert') || id.includes('length') || id.includes('weight') || id.includes('temperature')) {
-    categoryColor = 'primary';
-    IconComponent = Scale;
+
+    // QR tools get a special treatment: a faded QrCode behind them
+    if (IconComponent !== QrCode) {
+      return (
+        <PremiumIconContainer className="w-12 h-12">
+          <div className="relative w-full h-full flex items-center justify-center">
+            <QrCode className="w-8 h-8 opacity-15 absolute" strokeWidth={1.5} />
+            <IconComponent className="w-5 h-5 relative z-10 drop-shadow-sm" strokeWidth={1.5} />
+          </div>
+        </PremiumIconContainer>
+      );
+    }
   }
   
   // Default fallback if no match
   if (!IconComponent && fallback) return <>{fallback}</>;
 
   return (
-    <PremiumIconContainer color={categoryColor} className="w-12 h-12">
+    <PremiumIconContainer className="w-12 h-12">
       <IconComponent className={className} />
     </PremiumIconContainer>
   );
 }
-
-// Ensure FileImage gets picked up if needed for unknown image tasks
-import { FileImage } from 'lucide-react';

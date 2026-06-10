@@ -42,7 +42,7 @@ export default function ImageCategoryPage() {
         
         {/* Category Hero */}
         <section className="container mx-auto px-4 max-w-5xl mb-16 text-center">
-          <PremiumHeroIcon icon={<ImageIcon />} color="blue" />
+          <PremiumHeroIcon icon={<ImageIcon />} />
           <h1 className="font-display font-bold text-4xl md:text-5xl text-ink mb-6">
             Image Tools
           </h1>

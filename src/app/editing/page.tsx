@@ -42,7 +42,7 @@ export default function EditingCategoryPage() {
         
         {/* Category Hero */}
         <section className="container mx-auto px-4 max-w-5xl mb-16 text-center">
-          <PremiumHeroIcon icon={<Wand2 />} color="blue" />
+          <PremiumHeroIcon icon={<Wand2 />} />
           <h1 className="font-display font-bold text-4xl md:text-5xl text-ink mb-6">
             Editing Tools
           </h1>

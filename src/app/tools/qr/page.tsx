@@ -40,7 +40,7 @@ export default function QRCategoryPage() {
       <main className="flex-1 w-full flex flex-col items-center pt-24 pb-12">
         {/* Category Hero */}
         <section className="container mx-auto px-4 max-w-5xl mb-12 text-center animate-in fade-in duration-300">
-          <PremiumHeroIcon icon={<QrCode />} color="indigo" />
+          <PremiumHeroIcon icon={<QrCode />} />
           <h1 className="font-display font-bold text-4xl md:text-5xl text-ink mb-4">
             QR Code Tools
           </h1>
