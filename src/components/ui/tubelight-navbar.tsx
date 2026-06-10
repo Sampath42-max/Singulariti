@@ -82,7 +82,7 @@ export function NavBar({ items, className }: NavBarProps) {
       )}
 
       <div className={cn("relative z-50", className)}>
-        <div className="flex items-center justify-around w-[92vw] sm:w-auto sm:justify-start gap-1 sm:gap-3 bg-surface/80 border border-border backdrop-blur-lg py-1.5 px-2 sm:px-1 rounded-full shadow-lg">
+        <div className="flex items-center justify-around w-[85vw] sm:w-auto sm:justify-start gap-1 sm:gap-3 bg-surface/80 border border-border backdrop-blur-lg py-1.5 px-2 sm:px-1 rounded-full shadow-lg">
           {items.map((item) => {
             const Icon = item.icon
             const isActive = activeItemName === item.name;

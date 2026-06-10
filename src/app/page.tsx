@@ -55,7 +55,7 @@ export default function Home() {
       <Header />
       <main className="flex-1 w-full flex flex-col items-center pt-28 lg:pt-6 pb-12">
         {/* Hero Section */}
-        <section className="w-full max-w-7xl mx-auto px-4 mt-2 lg:mt-6 mb-24 lg:mb-32">
+        <section className="w-full max-w-7xl mx-auto px-4 mt-2 lg:mt-6 mb-16 lg:mb-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center lg:min-h-[650px]">
             
             {/* Left Column - Premium Copy */}
