@@ -83,9 +83,9 @@ export default function Home() {
                 Fast, secure, browser-based utility tools designed for creators, developers, students, and professionals. Experience zero server uploads and instant processing.
               </p>
               
-              <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                <Link href="/tools" className="w-full sm:w-auto">
-                  <Button size="lg" variant="primary" className="w-full sm:w-auto group relative overflow-hidden">
+              <div className="flex flex-row flex-wrap items-center justify-center lg:justify-start gap-4">
+                <Link href="/tools">
+                  <Button size="lg" variant="primary" className="group relative overflow-hidden px-6">
                     <span className="relative z-10 flex items-center">
                       Explore Ecosystem
                       <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -94,8 +94,8 @@ export default function Home() {
                     </span>
                   </Button>
                 </Link>
-                <Link href="/about" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                <Link href="/about">
+                  <Button size="lg" variant="outline" className="px-6">
                     How it Works
                   </Button>
                 </Link>

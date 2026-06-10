@@ -156,6 +156,8 @@ export default function HeroOrbitalEcosystem() {
         ctx.lineWidth = 1.5 - rippleT;
         ctx.stroke();
       }
+      // ── Canvas: Base Orbital Ring (Removed visual path line) ────────────────
+      // The nodes will still follow this path mathematically.
 
       // Responsive orbit radius based on screen size
       const isMobile = W < 640;
@@ -306,7 +308,7 @@ export default function HeroOrbitalEcosystem() {
         <svg
           ref={svgRef}
           viewBox="0 0 360 360"
-          className="w-[260px] h-[260px] sm:w-[280px] sm:h-[280px] lg:w-[420px] lg:h-[420px] overflow-visible drop-shadow-[0_0_20px_rgba(20,184,166,0.4)]"
+          className="w-[300px] h-[300px] sm:w-[280px] sm:h-[280px] lg:w-[420px] lg:h-[420px] overflow-visible drop-shadow-[0_0_20px_rgba(20,184,166,0.4)]"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
