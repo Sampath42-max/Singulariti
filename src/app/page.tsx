@@ -57,7 +57,11 @@ export default function Home() {
       <main className="flex-1 w-full flex flex-col items-center pt-28 lg:pt-6 pb-12">
         {/* Hero Section */}
         <section className="relative w-full max-w-7xl mx-auto px-4 mt-2 lg:mt-6 mb-16 lg:mb-32">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center lg:min-h-[650px] relative">
+          
+          {/* Subtle Ambient Background Glow for Premium Depth */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-full max-h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none z-0" />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center lg:min-h-[650px] relative z-10">
             
             {/* Desktop Vertical Line */}
             <div className="hidden lg:block absolute left-1/2 top-[10%] bottom-[10%] w-[1px] -translate-x-1/2 bg-gradient-to-b from-transparent via-teal-500/10 to-transparent z-0">
@@ -76,16 +80,16 @@ export default function Home() {
               
               <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-ink leading-[1.1] tracking-tight mb-4 sm:mb-6">
                 One Place.<br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-400">Every Tool.</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-primary to-teal-500 drop-shadow-sm">Every Tool.</span>
               </h1>
               
               <p className="font-sans text-base sm:text-lg md:text-xl text-slate max-w-xl mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0">
-                Fast, secure, browser-based utility tools designed for creators, developers, students, and professionals. Experience zero server uploads and instant processing.
+                Fast, secure, browser-based utility tools designed for creators, developers, students, and professionals. Experience <span className="text-ink dark:text-white font-medium">zero server uploads</span> and <span className="text-ink dark:text-white font-medium">instant processing</span>.
               </p>
               
               <div className="flex flex-row flex-wrap items-center justify-center lg:justify-start gap-4">
                 <Link href="/tools">
-                  <Button size="lg" variant="primary" className="group relative overflow-hidden px-6">
+                  <Button size="lg" variant="primary" className="group relative overflow-hidden px-6 shadow-sm hover:shadow-[0_0_20px_rgba(20,184,166,0.3)] transition-shadow duration-300">
                     <span className="relative z-10 flex items-center">
                       Explore Ecosystem
                       <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
