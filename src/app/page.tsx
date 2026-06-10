@@ -84,23 +84,23 @@ export default function Home() {
               </h1>
               
               <p className="font-sans text-base sm:text-lg md:text-xl text-slate max-w-xl mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0">
-                Fast, secure, browser-based utility tools designed for creators, developers, students, and professionals. Experience <span className="text-ink dark:text-white font-medium">zero server uploads</span> and <span className="text-ink dark:text-white font-medium">instant processing</span>.
+                Fast, secure, browser-based utility tools designed for creators, developers, students, and professionals. Experience <span className="text-slate-900 dark:text-white font-medium">zero server uploads</span> and <span className="text-slate-900 dark:text-white font-medium">instant processing</span>.
               </p>
               
               <div className="flex flex-row flex-wrap items-center justify-center lg:justify-start gap-4">
                 <Link href="/tools">
                   <Button size="lg" variant="primary" className="group relative overflow-hidden px-6 shadow-sm hover:shadow-[0_0_20px_rgba(20,184,166,0.3)] transition-shadow duration-300">
                     <span className="relative z-10 flex items-center">
-                      Explore Ecosystem
+                      Explore tools
                       <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
                     </span>
                   </Button>
                 </Link>
-                <Link href="/about">
+                <Link href="/blog">
                   <Button size="lg" variant="outline" className="px-6">
-                    How it Works
+                    Blogs
                   </Button>
                 </Link>
               </div>

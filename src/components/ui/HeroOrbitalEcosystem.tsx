@@ -161,7 +161,7 @@ export default function HeroOrbitalEcosystem() {
 
       // Responsive orbit radius based on screen size
       const isMobile = W < 640;
-      const R = Math.min(W, H) * (isMobile ? 0.48 : 0.43);
+      const R = Math.min(W, H) * (isMobile ? 0.46 : 0.43);
 
       nodes.forEach((node, i) => {
         const a = orbitAngle + (i / nodes.length) * Math.PI * 2;
@@ -261,8 +261,12 @@ export default function HeroOrbitalEcosystem() {
         }
       });
 
-      // ── DOM: Rotate Inner Geometry ────────────────────────────
+      // ── DOM: Rotate SVG rings and Inner Geometry ────────────────────────────
+      const ring1 = svgEl.querySelector<SVGGElement>("#halo-ring1");
+      const ring2 = svgEl.querySelector<SVGGElement>("#halo-ring2");
       const innerHex = svgEl.querySelector<SVGGElement>("#inner-hex");
+      if (ring1) ring1.setAttribute("transform", `rotate(${(t * 15 * 180) / Math.PI}, 180, 200)`);
+      if (ring2) ring2.setAttribute("transform", `rotate(${(-t * 20 * 180) / Math.PI}, 180, 195)`);
       if (innerHex) innerHex.setAttribute("transform", `rotate(${(t * 5 * 180) / Math.PI}, 180, 175)`);
 
       animRef.current = requestAnimationFrame(loop);
@@ -290,7 +294,7 @@ export default function HeroOrbitalEcosystem() {
   return (
     <div
       ref={stageRef}
-      className="relative w-full h-[340px] sm:h-[500px] lg:h-full lg:min-h-[600px] select-none mt-2 sm:mt-0"
+      className="relative w-full h-[380px] sm:h-[500px] lg:h-full lg:min-h-[600px] select-none mt-2 sm:mt-0"
       onClick={() => setActiveId(null)}
     >
       {/* High Performance Canvas for dynamic laser flares, sparks, and ripples */}
@@ -300,11 +304,11 @@ export default function HeroOrbitalEcosystem() {
       />
 
       {/* Central 3D Prism Engine — Absolutely Centered */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[30]">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
         <svg
           ref={svgRef}
           viewBox="0 0 360 360"
-          className="w-[340px] h-[340px] sm:w-[400px] sm:h-[400px] lg:w-[480px] lg:h-[480px] overflow-visible drop-shadow-[0_0_25px_rgba(20,184,166,0.4)]"
+          className="w-[340px] h-[340px] sm:w-[380px] sm:h-[380px] lg:w-[480px] lg:h-[480px] overflow-visible drop-shadow-[0_0_20px_rgba(20,184,166,0.4)]"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -359,30 +363,24 @@ export default function HeroOrbitalEcosystem() {
           <line x1="90" y1="225" x2="252" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1.5" strokeDasharray="4,4" />
           <line x1="270" y1="225" x2="108" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1.5" strokeDasharray="4,4" />
 
-          {/* The Energy Core - Premium Tapered Look */}
-          <g transform="translate(180, 175) scale(1.35) translate(-180, -175)">
-            <circle cx="180" cy="175" r="30" fill="url(#sg-core-glow)" />
-            
-            {/* Central Tapered Crystal Core */}
-            <g id="inner-hex" fill="none">
-              <polygon points="180,135 200,175 180,215 160,175" stroke="var(--color-primary)" strokeWidth="1" strokeOpacity="0.8" />
-              <polygon points="180,140 192,175 180,210 168,175" fill="var(--color-primary)" fillOpacity="0.3" />
-              <polygon points="180,145 185,175 180,205 175,175" fill="#fff" fillOpacity="0.5" />
-            </g>
-
-            <circle cx="180" cy="175" r="14" fill="var(--color-primary)" fillOpacity="0.6" filter="url(#sg-bulb-glow)">
-              <animate attributeName="r" values="12;16;12" dur="3s" repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
-            </circle>
-            
-            {/* Tapered vertical and horizontal flare lines for anamorphic lens-flare effect */}
-            <path d="M 180 115 L 181.5 175 L 180 235 L 178.5 175 Z" fill="#ffffff" filter="url(#sg-bulb-glow)" opacity="0.8">
-              <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
-            </path>
-            <path d="M 120 175 L 180 173.5 L 240 175 L 180 176.5 Z" fill="var(--color-primary)" filter="url(#sg-bulb-glow)" opacity="0.7">
-              <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2.5s" repeatCount="indefinite" />
-            </path>
+          {/* The Energy Bulb (Exactly at Vertex 180, 175) */}
+          <circle cx="180" cy="175" r="40" fill="url(#sg-core-glow)" />
+          
+          {/* Inner mechanical rotating hexagon inside the bulb */}
+          <g id="inner-hex" stroke="var(--color-primary)" strokeWidth="1.5" strokeOpacity="0.6" fill="none">
+            <polygon points="180,152 199,163.5 199,186.5 180,198 161,186.5 161,163.5" />
           </g>
+
+          <circle cx="180" cy="175" r="24" fill="var(--color-primary)" fillOpacity="0.7" filter="url(#sg-bulb-glow)">
+            <animate attributeName="r" values="20;26;20" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="180" cy="175" r="12" fill="#ffffff" filter="url(#sg-bulb-glow)">
+            <animate attributeName="r" values="10;14;10" dur="1.5s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="180" cy="175" r="6" fill="#ffffff">
+            <animate attributeName="opacity" values="0.8;1;0.8" dur="0.75s" repeatCount="indefinite" />
+          </circle>
 
         </svg>
       </div>
