@@ -92,11 +92,11 @@ export default function HeroOrbitalEcosystem() {
       if (!canvas || !stage || !svgEl) return;
       const ctx = canvas.getContext("2d")!;
 
-      tRef.current += 0.01;
+      tRef.current += 0.008;
       
       // Auto-rotate slowly, but smoothly seek to the active node if one is selected
       if (!activeRef.current) {
-        angleRef.current += 0.003;
+        angleRef.current += 0.0025;
       } else {
         // Find target angle to center the active node at the bottom (Math.PI / 2)
         const nodeIndex = nodes.findIndex(n => n.id === activeRef.current);
@@ -110,7 +110,7 @@ export default function HeroOrbitalEcosystem() {
           while (diff < -Math.PI) diff += Math.PI * 2;
           while (diff > Math.PI) diff -= Math.PI * 2;
           
-          angleRef.current += diff * 0.05;
+          angleRef.current += diff * 0.06;
         }
       }
       
@@ -143,6 +143,20 @@ export default function HeroOrbitalEcosystem() {
       const bulbX = svgCx + (180 - 180) * scaleX; 
       const bulbY = svgCy + (175 - 180) * scaleY;
 
+      // ── Canvas: Concentric Energy Ripples Emitting from Core ─────────────────
+      const numRipples = 3;
+      for (let r = 0; r < numRipples; r++) {
+        const rippleT = (t * 0.8 + r / numRipples) % 1; // 0 to 1
+        const rippleRadius = 30 + Math.pow(rippleT, 1.5) * 160;
+        const rippleAlpha = (1 - rippleT) * 0.4;
+        
+        ctx.beginPath();
+        ctx.arc(bulbX, bulbY, rippleRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${PRIMARY_RGB}, ${rippleAlpha})`;
+        ctx.lineWidth = 1.5 - rippleT;
+        ctx.stroke();
+      }
+
       // Responsive orbit radius based on screen size
       const isMobile = W < 640;
       const R = Math.min(W, H) * (isMobile ? 0.38 : 0.42);
@@ -153,20 +167,19 @@ export default function HeroOrbitalEcosystem() {
         const ny = svgCy + Math.sin(a) * R * ORBIT_RY_RATIO;
 
         const isActive = activeRef.current === node.id;
-        const isHovered = false; // We could track hover state in the future
         
         // Calculate dynamic flare/energy pulse
         const flarePhase = (t * 2 + i * 0.78) % (Math.PI * 2);
         const flareBase = Math.pow(Math.max(0, Math.sin(flarePhase)), 3);
-        const flareAlpha = isActive ? 0.9 : flareBase * 0.6;
+        const flareAlpha = isActive ? 1 : flareBase * 0.7;
 
         // ── Canvas: Bezier Arc / Plasma Stream from Bulb to Node ────────────────
         const distance = Math.hypot(nx - bulbX, ny - bulbY);
         // Organic curve control points
-        const cp1x = bulbX + (nx - bulbX) * 0.3 + Math.sin(t * 1.5 + i) * (distance * 0.1);
-        const cp1y = bulbY + (ny - bulbY) * 0.3 + Math.cos(t * 1.5 + i) * (distance * 0.1);
-        const cp2x = bulbX + (nx - bulbX) * 0.7 + Math.sin(t * 2.0 + i) * (distance * 0.08);
-        const cp2y = bulbY + (ny - bulbY) * 0.7 + Math.cos(t * 2.0 + i) * (distance * 0.08);
+        const cp1x = bulbX + (nx - bulbX) * 0.3 + Math.sin(t * 1.5 + i) * (distance * 0.15);
+        const cp1y = bulbY + (ny - bulbY) * 0.3 + Math.cos(t * 1.5 + i) * (distance * 0.15);
+        const cp2x = bulbX + (nx - bulbX) * 0.7 + Math.sin(t * 2.0 + i) * (distance * 0.1);
+        const cp2y = bulbY + (ny - bulbY) * 0.7 + Math.cos(t * 2.0 + i) * (distance * 0.1);
 
         if (flareAlpha > 0.02 || isActive) {
           ctx.save();
@@ -176,25 +189,52 @@ export default function HeroOrbitalEcosystem() {
 
           const grad = ctx.createLinearGradient(bulbX, bulbY, nx, ny);
           grad.addColorStop(0, `rgba(${PRIMARY_RGB}, ${flareAlpha})`);
-          grad.addColorStop(0.5, `rgba(${PRIMARY_RGB}, ${flareAlpha * 0.6})`);
+          grad.addColorStop(0.5, `rgba(${PRIMARY_RGB}, ${flareAlpha * 0.7})`);
           grad.addColorStop(1, `rgba(${PRIMARY_RGB}, ${isActive ? flareAlpha * 0.9 : 0})`);
 
           ctx.strokeStyle = grad;
-          ctx.lineWidth = isActive ? 3 : (flareAlpha > 0.3 ? 2 : 1);
+          ctx.lineWidth = isActive ? 3.5 : (flareAlpha > 0.3 ? 2 : 1);
           ctx.shadowColor = `rgb(${PRIMARY_RGB})`;
-          ctx.shadowBlur = isActive ? 20 : (flareAlpha > 0.3 ? 12 : 0);
+          ctx.shadowBlur = isActive ? 25 : (flareAlpha > 0.3 ? 12 : 0);
           ctx.stroke();
+          
+          // ── Canvas: Plasma Sparks traveling along the Bezier Curve ────────────
+          if (flareAlpha > 0.1 || isActive) {
+            const numParticles = isActive ? 4 : 1;
+            for (let p = 0; p < numParticles; p++) {
+              const particleT = (t * (isActive ? 1.5 : 0.8) + i * 0.3 + p / numParticles) % 1;
+              // Easing function to make it shoot fast then slow down slightly
+              const easeT = 1 - Math.pow(1 - particleT, 2.5);
+              
+              // Calculate specific coordinate along the bezier curve
+              const px = Math.pow(1 - easeT, 3) * bulbX 
+                       + 3 * Math.pow(1 - easeT, 2) * easeT * cp1x 
+                       + 3 * (1 - easeT) * Math.pow(easeT, 2) * cp2x 
+                       + Math.pow(easeT, 3) * nx;
+              const py = Math.pow(1 - easeT, 3) * bulbY 
+                       + 3 * Math.pow(1 - easeT, 2) * easeT * cp1y 
+                       + 3 * (1 - easeT) * Math.pow(easeT, 2) * cp2y 
+                       + Math.pow(easeT, 3) * ny;
+
+              ctx.beginPath();
+              ctx.arc(px, py, isActive ? 2.5 : 1.5, 0, Math.PI * 2);
+              ctx.fillStyle = `rgba(255, 255, 255, ${isActive ? 1 : 0.7})`;
+              ctx.shadowColor = `rgb(${PRIMARY_RGB})`;
+              ctx.shadowBlur = 15;
+              ctx.fill();
+            }
+          }
           ctx.restore();
         }
 
         // ── Canvas: Node Aura / Glow underneath the DOM element ─────────────────
         if (isActive || flareAlpha > 0.2) {
-          const auraR = isActive ? 45 : 30;
+          const auraR = isActive ? 50 : 35;
           ctx.save();
           ctx.beginPath();
           ctx.arc(nx, ny, auraR, 0, Math.PI * 2);
           const aura = ctx.createRadialGradient(nx, ny, 0, nx, ny, auraR);
-          const a0 = isActive ? 0.4 : flareAlpha * 0.4;
+          const a0 = isActive ? 0.5 : flareAlpha * 0.45;
           aura.addColorStop(0, `rgba(${PRIMARY_RGB}, ${a0})`);
           aura.addColorStop(1, `rgba(${PRIMARY_RGB}, 0)`);
           ctx.fillStyle = aura;
@@ -208,7 +248,7 @@ export default function HeroOrbitalEcosystem() {
           // depth ranges from 0 (back) to 1 (front)
           const depth = (Math.sin(a) + 1) / 2;
           // Scale nodes down when they go to the back for true 3D perspective
-          const scale = isActive ? 1.1 : 0.75 + depth * 0.25;
+          const scale = isActive ? 1.15 : 0.7 + depth * 0.3;
           const nodeSize = isMobile ? 50 : 60; // Base size
           const offset = nodeSize / 2;
           
@@ -219,18 +259,20 @@ export default function HeroOrbitalEcosystem() {
         }
       });
 
-      // ── DOM: Rotate SVG rings ───────────────────────────────────────────────
+      // ── DOM: Rotate SVG rings and Inner Geometry ────────────────────────────
       const ring1 = svgEl.querySelector<SVGGElement>("#halo-ring1");
       const ring2 = svgEl.querySelector<SVGGElement>("#halo-ring2");
+      const innerHex = svgEl.querySelector<SVGGElement>("#inner-hex");
       if (ring1) ring1.setAttribute("transform", `rotate(${(t * 15 * 180) / Math.PI}, 180, 200)`);
       if (ring2) ring2.setAttribute("transform", `rotate(${(-t * 20 * 180) / Math.PI}, 180, 195)`);
+      if (innerHex) innerHex.setAttribute("transform", `rotate(${(t * 5 * 180) / Math.PI}, 180, 175)`);
 
       animRef.current = requestAnimationFrame(loop);
     }
 
     animRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animRef.current);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [nodes]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -253,7 +295,7 @@ export default function HeroOrbitalEcosystem() {
       className="relative w-full h-[500px] sm:h-[600px] select-none mt-8 sm:mt-0"
       onClick={() => setActiveId(null)}
     >
-      {/* High Performance Canvas for dynamic laser flares and glows */}
+      {/* High Performance Canvas for dynamic laser flares, sparks, and ripples */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-0"
@@ -264,27 +306,27 @@ export default function HeroOrbitalEcosystem() {
         <svg
           ref={svgRef}
           viewBox="0 0 360 360"
-          className="w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] overflow-visible"
+          className="w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] overflow-visible drop-shadow-[0_0_20px_rgba(20,184,166,0.4)]"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
             <radialGradient id="sg-core-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.4" />
+              <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.45" />
               <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
             </radialGradient>
             <filter id="sg-edge-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feGaussianBlur stdDeviation="5" result="blur" />
               <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
             </filter>
-            <filter id="sg-bulb-glow" x="-60%" y="-60%" width="220%" height="220%">
-              <feGaussianBlur stdDeviation="8" result="blur" />
+            <filter id="sg-bulb-glow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="10" result="blur" />
               <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
             </filter>
           </defs>
 
           {/* Ambient Radiance */}
-          <circle cx="180" cy="200" r="100" fill="url(#sg-core-glow)" />
+          <circle cx="180" cy="200" r="110" fill="url(#sg-core-glow)" />
 
           {/* Back/Inner Hollow Wireframe Faces */}
           <polygon points="180,42 90,225 270,225"
@@ -299,45 +341,51 @@ export default function HeroOrbitalEcosystem() {
 
           {/* Outer Front Wireframe Glow Pass */}
           <polygon points="180,42 90,225 270,225"
-            stroke="var(--color-primary)" strokeWidth="2" fill="none"
+            stroke="var(--color-primary)" strokeWidth="2.5" fill="none"
             filter="url(#sg-edge-glow)" opacity="0.6" />
 
           {/* Outer Front Wireframe Sharp Edge */}
           <polygon points="180,42 90,225 270,225" stroke="var(--color-primary)" strokeWidth="2" fill="none" />
 
           {/* Inner Converging Geometry to Bulb */}
-          <line x1="180" y1="42" x2="180" y2="175" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" />
-          <line x1="90" y1="225" x2="180" y2="175" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" />
-          <line x1="270" y1="225" x2="180" y2="175" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" />
+          <line x1="180" y1="42" x2="180" y2="175" stroke="var(--color-primary)" strokeWidth="2.5" strokeLinecap="round" />
+          <line x1="90" y1="225" x2="180" y2="175" stroke="var(--color-primary)" strokeWidth="2.5" strokeLinecap="round" />
+          <line x1="270" y1="225" x2="180" y2="175" stroke="var(--color-primary)" strokeWidth="2.5" strokeLinecap="round" />
 
           {/* Inner Floor Fill */}
           <polygon points="90,225 270,225 180,175" fill="var(--color-primary)" fillOpacity="0.08" />
 
           {/* Sci-Fi Tesseract Dashed Cross-Section */}
-          <line x1="180" y1="42" x2="108" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1" strokeDasharray="4,4" />
-          <line x1="180" y1="42" x2="252" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1" strokeDasharray="4,4" />
-          <line x1="90" y1="225" x2="252" y2="210" stroke="var(--color-primary)" strokeOpacity="0.15" strokeWidth="1" strokeDasharray="4,4" />
-          <line x1="270" y1="225" x2="108" y2="210" stroke="var(--color-primary)" strokeOpacity="0.15" strokeWidth="1" strokeDasharray="4,4" />
+          <line x1="180" y1="42" x2="108" y2="210" stroke="var(--color-primary)" strokeOpacity="0.25" strokeWidth="1.5" strokeDasharray="4,4" />
+          <line x1="180" y1="42" x2="252" y2="210" stroke="var(--color-primary)" strokeOpacity="0.25" strokeWidth="1.5" strokeDasharray="4,4" />
+          <line x1="90" y1="225" x2="252" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1.5" strokeDasharray="4,4" />
+          <line x1="270" y1="225" x2="108" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1.5" strokeDasharray="4,4" />
 
           {/* The Energy Bulb (Exactly at Vertex 180, 175) */}
-          <circle cx="180" cy="175" r="26" fill="url(#sg-core-glow)" />
-          <circle cx="180" cy="175" r="14" fill="var(--color-primary)" fillOpacity="0.4" filter="url(#sg-bulb-glow)">
-            <animate attributeName="r" values="12;16;12" dur="3s" repeatCount="indefinite" />
-            <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" />
+          <circle cx="180" cy="175" r="30" fill="url(#sg-core-glow)" />
+          
+          {/* Inner mechanical rotating hexagon inside the bulb */}
+          <g id="inner-hex" stroke="var(--color-primary)" strokeWidth="1" strokeOpacity="0.5" fill="none">
+            <polygon points="180,160 193,167.5 193,182.5 180,190 167,182.5 167,167.5" />
+          </g>
+
+          <circle cx="180" cy="175" r="16" fill="var(--color-primary)" fillOpacity="0.6" filter="url(#sg-bulb-glow)">
+            <animate attributeName="r" values="14;18;14" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
           </circle>
-          <circle cx="180" cy="175" r="7" fill="var(--color-primary)">
-            <animate attributeName="r" values="6.5;9;6.5" dur="3s" repeatCount="indefinite" />
+          <circle cx="180" cy="175" r="8" fill="#ffffff" filter="url(#sg-bulb-glow)">
+            <animate attributeName="r" values="7;10;7" dur="1.5s" repeatCount="indefinite" />
           </circle>
-          <circle cx="180" cy="175" r="3.5" fill="#ffffff">
-            <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite" />
+          <circle cx="180" cy="175" r="4" fill="#ffffff">
+            <animate attributeName="opacity" values="0.8;1;0.8" dur="0.75s" repeatCount="indefinite" />
           </circle>
 
           {/* Rotating Halo Rings (Isometric perspective) */}
-          <g id="halo-ring1" opacity="0.25">
+          <g id="halo-ring1" opacity="0.3">
             <ellipse cx="180" cy="200" rx="140" ry="35"
               stroke="var(--color-primary)" strokeWidth="1.5" fill="none" strokeDasharray="12,12" />
           </g>
-          <g id="halo-ring2" opacity="0.15">
+          <g id="halo-ring2" opacity="0.2">
             <ellipse cx="180" cy="195" rx="165" ry="25"
               stroke="var(--color-primary)" strokeWidth="1" fill="none" strokeDasharray="6,8" />
           </g>
@@ -359,18 +407,19 @@ export default function HeroOrbitalEcosystem() {
           >
             {/* Ping Ring */}
             <span
-              className="absolute inset-0 rounded-full border-2 border-primary/40 animate-ping opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-0 rounded-full border border-primary/60 animate-ping opacity-0 group-hover:opacity-100 transition-opacity"
               style={{ animationDelay: `${i * 0.35}s`, animationDuration: "3s" }}
             />
 
             {/* Premium Glass Node Circle */}
             <div className={[
               "w-full h-full rounded-full flex items-center justify-center relative backdrop-blur-md",
-              "border-2 transition-all duration-500 shadow-sm",
+              "border-[1.5px] transition-all duration-500 shadow-sm",
               isActive
                 ? "border-primary bg-primary shadow-[0_0_40px_rgba(20,184,166,0.6),0_0_15px_rgba(20,184,166,0.4)_inset] scale-110"
-                : "border-primary/20 bg-surface dark:bg-[#0a0a0a] group-hover:border-primary/80 group-hover:bg-primary/5 dark:group-hover:bg-primary/10 group-hover:shadow-[0_0_25px_rgba(20,184,166,0.4)]",
+                : "border-primary/40 bg-surface dark:bg-[#0a0a0a] group-hover:border-primary group-hover:bg-primary/10 dark:group-hover:bg-primary/20 group-hover:shadow-[0_0_25px_rgba(20,184,166,0.5),inset_0_0_10px_rgba(20,184,166,0.2)]",
             ].join(" ")}>
+              {/* Teal Icons for all states */}
               <Icon
                 size={isActive ? 24 : 22}
                 strokeWidth={isActive ? 2.5 : 2}
@@ -378,16 +427,16 @@ export default function HeroOrbitalEcosystem() {
                   "transition-all duration-500 relative z-10",
                   isActive
                     ? "text-white drop-shadow-[0_0_10px_white]"
-                    : "text-ink dark:text-white group-hover:text-primary",
+                    : "text-primary drop-shadow-[0_0_8px_rgba(20,184,166,0.4)] group-hover:text-teal-300",
                 ].join(" ")}
               />
             </div>
 
             {/* Orbit Label */}
             <div className={[
-              "absolute top-[115%] left-1/2 -translate-x-1/2 whitespace-nowrap font-display font-bold tracking-widest uppercase transition-all duration-300 pointer-events-none drop-shadow-sm",
+              "absolute top-[115%] left-1/2 -translate-x-1/2 whitespace-nowrap font-display font-bold tracking-widest uppercase transition-all duration-300 pointer-events-none drop-shadow-md",
               "text-[10px] sm:text-[11px]",
-              isActive ? "opacity-0" : "text-slate group-hover:text-primary"
+              isActive ? "opacity-0" : "text-slate dark:text-slate/90 group-hover:text-primary"
             ].join(" ")}>
               {node.title}
             </div>
@@ -408,7 +457,7 @@ export default function HeroOrbitalEcosystem() {
                   <div className="flex items-center justify-between mb-3 relative z-10">
                     <div className="flex items-center gap-2.5">
                       <div className="w-8 h-8 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center">
-                        <Icon size={16} strokeWidth={2.5} className="text-primary" />
+                        <Icon size={16} strokeWidth={2.5} className="text-primary drop-shadow-[0_0_5px_rgba(20,184,166,0.5)]" />
                       </div>
                       <h3 className="font-display font-bold text-base text-ink dark:text-white tracking-tight">
                         {node.title}
