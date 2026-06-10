@@ -364,23 +364,10 @@ export default function HeroOrbitalEcosystem() {
           <line x1="90" y1="225" x2="252" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1.5" strokeDasharray="4,4" />
           <line x1="270" y1="225" x2="108" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1.5" strokeDasharray="4,4" />
 
-          {/* Subtle Ambient Energy Core */}
-          <circle cx="180" cy="175" r="32" fill="url(#sg-core-glow)" />
-          
-          {/* Delicate Breathing Inner Ring */}
-          <circle cx="180" cy="175" r="14" stroke="var(--color-primary)" strokeWidth="0.5" strokeOpacity="0.5" fill="none">
-            <animate attributeName="r" values="14;16;14" dur="4s" repeatCount="indefinite" />
-            <animate attributeName="stroke-opacity" values="0.3;0.6;0.3" dur="4s" repeatCount="indefinite" />
-          </circle>
-
-          {/* Minimalist Solid Core */}
-          <circle cx="180" cy="175" r="4" fill="var(--color-primary)" fillOpacity="0.9" filter="url(#sg-bulb-glow)">
-            <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
-          </circle>
-          
-          {/* Micro White Center Dot */}
-          <circle cx="180" cy="175" r="1.5" fill="#ffffff">
-             <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" />
+          {/* Bolder, Logo-like Minimalist Solid Core */}
+          <circle cx="180" cy="175" r="24" fill="var(--color-primary)" style={{ filter: "drop-shadow(0px 0px 24px var(--color-primary))" }}>
+            <animate attributeName="r" values="22;26;22" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" repeatCount="indefinite" />
           </circle>
 
         </svg>
