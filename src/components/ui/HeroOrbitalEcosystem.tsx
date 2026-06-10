@@ -261,12 +261,8 @@ export default function HeroOrbitalEcosystem() {
         }
       });
 
-      // ── DOM: Rotate SVG rings and Inner Geometry ────────────────────────────
-      const ring1 = svgEl.querySelector<SVGGElement>("#halo-ring1");
-      const ring2 = svgEl.querySelector<SVGGElement>("#halo-ring2");
+      // ── DOM: Rotate Inner Geometry ────────────────────────────
       const innerHex = svgEl.querySelector<SVGGElement>("#inner-hex");
-      if (ring1) ring1.setAttribute("transform", `rotate(${(t * 15 * 180) / Math.PI}, 180, 200)`);
-      if (ring2) ring2.setAttribute("transform", `rotate(${(-t * 20 * 180) / Math.PI}, 180, 195)`);
       if (innerHex) innerHex.setAttribute("transform", `rotate(${(t * 5 * 180) / Math.PI}, 180, 175)`);
 
       animRef.current = requestAnimationFrame(loop);
@@ -304,11 +300,11 @@ export default function HeroOrbitalEcosystem() {
       />
 
       {/* Central 3D Prism Engine — Absolutely Centered */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[30]">
         <svg
           ref={svgRef}
           viewBox="0 0 360 360"
-          className="w-[300px] h-[300px] sm:w-[280px] sm:h-[280px] lg:w-[420px] lg:h-[420px] overflow-visible drop-shadow-[0_0_20px_rgba(20,184,166,0.4)]"
+          className="w-[340px] h-[340px] sm:w-[400px] sm:h-[400px] lg:w-[480px] lg:h-[480px] overflow-visible drop-shadow-[0_0_25px_rgba(20,184,166,0.4)]"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -363,34 +359,31 @@ export default function HeroOrbitalEcosystem() {
           <line x1="90" y1="225" x2="252" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1.5" strokeDasharray="4,4" />
           <line x1="270" y1="225" x2="108" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1.5" strokeDasharray="4,4" />
 
-          {/* The Energy Bulb (Exactly at Vertex 180, 175) */}
-          <circle cx="180" cy="175" r="30" fill="url(#sg-core-glow)" />
-          
-          {/* Inner mechanical rotating hexagon inside the bulb */}
-          <g id="inner-hex" stroke="var(--color-primary)" strokeWidth="1" strokeOpacity="0.5" fill="none">
-            <polygon points="180,160 193,167.5 193,182.5 180,190 167,182.5 167,167.5" />
+          {/* The Energy Core - Premium Tapered Look */}
+          <g transform="translate(180, 175) scale(1.35) translate(-180, -175)">
+            <circle cx="180" cy="175" r="30" fill="url(#sg-core-glow)" />
+            
+            {/* Central Tapered Crystal Core */}
+            <g id="inner-hex" fill="none">
+              <polygon points="180,135 200,175 180,215 160,175" stroke="var(--color-primary)" strokeWidth="1" strokeOpacity="0.8" />
+              <polygon points="180,140 192,175 180,210 168,175" fill="var(--color-primary)" fillOpacity="0.3" />
+              <polygon points="180,145 185,175 180,205 175,175" fill="#fff" fillOpacity="0.5" />
+            </g>
+
+            <circle cx="180" cy="175" r="14" fill="var(--color-primary)" fillOpacity="0.6" filter="url(#sg-bulb-glow)">
+              <animate attributeName="r" values="12;16;12" dur="3s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
+            </circle>
+            
+            {/* Tapered vertical and horizontal flare lines for anamorphic lens-flare effect */}
+            <path d="M 180 115 L 181.5 175 L 180 235 L 178.5 175 Z" fill="#ffffff" filter="url(#sg-bulb-glow)" opacity="0.8">
+              <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+            </path>
+            <path d="M 120 175 L 180 173.5 L 240 175 L 180 176.5 Z" fill="var(--color-primary)" filter="url(#sg-bulb-glow)" opacity="0.7">
+              <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2.5s" repeatCount="indefinite" />
+            </path>
           </g>
 
-          <circle cx="180" cy="175" r="16" fill="var(--color-primary)" fillOpacity="0.6" filter="url(#sg-bulb-glow)">
-            <animate attributeName="r" values="14;18;14" dur="3s" repeatCount="indefinite" />
-            <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="180" cy="175" r="8" fill="#ffffff" filter="url(#sg-bulb-glow)">
-            <animate attributeName="r" values="7;10;7" dur="1.5s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="180" cy="175" r="4" fill="#ffffff">
-            <animate attributeName="opacity" values="0.8;1;0.8" dur="0.75s" repeatCount="indefinite" />
-          </circle>
-
-          {/* Rotating Halo Rings (Isometric perspective) */}
-          <g id="halo-ring1" opacity="0.3">
-            <ellipse cx="180" cy="200" rx="140" ry="35"
-              stroke="var(--color-primary)" strokeWidth="1.5" fill="none" strokeDasharray="12,12" />
-          </g>
-          <g id="halo-ring2" opacity="0.2">
-            <ellipse cx="180" cy="195" rx="165" ry="25"
-              stroke="var(--color-primary)" strokeWidth="1" fill="none" strokeDasharray="6,8" />
-          </g>
         </svg>
       </div>
 
