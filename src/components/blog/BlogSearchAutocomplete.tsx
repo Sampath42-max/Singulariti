@@ -64,6 +64,7 @@ export function BlogSearchAutocomplete() {
             <Search className="h-4.5 w-4.5 text-slate" />
           </span>
           <input
+            suppressHydrationWarning
             type="text"
             name="q"
             value={query}
@@ -76,6 +77,7 @@ export function BlogSearchAutocomplete() {
           />
         </div>
         <button
+          suppressHydrationWarning
           type="submit"
           className="bg-primary hover:bg-primary/95 text-white font-sans font-bold text-xs px-5 py-3.5 rounded-xl transition-colors shadow-sm"
         >

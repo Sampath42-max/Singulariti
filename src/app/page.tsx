@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ImageIcon, FileText, QrCode, Wand2, Calculator, Keyboard, Timer, Brush, Type, Code, Scale, Search } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
+import { PremiumIconContainer } from '@/components/ui/PremiumIconContainer';
 import { registry } from '@/registry';
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getPageSEO } from '@/lib/seo/pageMetadata';
@@ -86,82 +87,82 @@ export default function Home() {
             <Card 
               title="Image Tools"
               description="Compress, convert, and resize images instantly in your browser."
-              icon={<ImageIcon />}
+              icon={<PremiumIconContainer color="blue"><ImageIcon /></PremiumIconContainer>}
               href="/image"
               badge={{ text: `${imageToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="PDF Tools"
               description="Merge, split, rotate, sign, compress and watermark PDF files."
-              icon={<FileText />}
+              icon={<PremiumIconContainer color="red"><FileText /></PremiumIconContainer>}
               href="/tools/pdf"
               badge={{ text: `${pdfToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="Developer Tools"
               description="Format JSON/XML/YAML/SQL, encode Base64/URLs, decode JWTs, and test regex."
-              icon={<Code />}
+              icon={<PremiumIconContainer color="purple"><Code /></PremiumIconContainer>}
               href="/tools/dev"
               badge={{ text: `${devToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="Calculator Tools"
               description="Calculate financial, mathematical, tax, health, and date-related metrics."
-              icon={<Calculator />}
+              icon={<PremiumIconContainer color="orange"><Calculator /></PremiumIconContainer>}
               href="/tools/calculators"
               badge={{ text: `${calculatorsToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="SEO Tools"
               description="Generate meta tags, robots.txt, sitemaps, and check heading structures."
-              icon={<Search />}
+              icon={<PremiumIconContainer color="green"><Search /></PremiumIconContainer>}
               href="/tools/seo"
               badge={{ text: `${seoToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="Text Tools"
               description="Count words, format cases, sort, reverse, and compare text instantly."
-              icon={<Type />}
+              icon={<PremiumIconContainer color="slate"><Type /></PremiumIconContainer>}
               href="/tools/text"
               badge={{ text: `${textToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="Unit Conversion Tools"
               description="Convert lengths, weights, temperature, area, bases and data storage."
-              icon={<Scale />}
+              icon={<PremiumIconContainer color="primary"><Scale /></PremiumIconContainer>}
               href="/tools/convert"
               badge={{ text: `${convertToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="QR Tools"
               description="Generate custom styled QR codes or scan them securely."
-              icon={<QrCode />}
+              icon={<PremiumIconContainer color="indigo"><QrCode /></PremiumIconContainer>}
               href="/tools/qr"
               badge={{ text: `${qrToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="Image Editing Tools"
               description="Edit, crop, apply filters, and enhance images instantly."
-              icon={<Wand2 />}
+              icon={<PremiumIconContainer color="blue"><Wand2 /></PremiumIconContainer>}
               href="/editing"
               badge={{ text: `${editingToolsCount} Tools`, variant: 'default' }}
             />
             <Card 
               title="Typing Speed Test"
               description="Measure your WPM, analyze your mistakes, and improve your typing accuracy."
-              icon={<Keyboard />}
+              icon={<PremiumIconContainer color="slate"><Keyboard /></PremiumIconContainer>}
               href="/typing-speed-test"
             />
             <Card 
               title="Pomodoro Timer"
               description="Deep focus environment with task management and ambient sounds."
-              icon={<Timer />}
+              icon={<PremiumIconContainer color="orange"><Timer /></PremiumIconContainer>}
               href="/pomodoro-timer"
             />
             <Card 
               title="Online Whiteboard"
               description="Draw, write, sketch, add shapes, and export your whiteboard directly in your browser."
-              icon={<Brush />}
+              icon={<PremiumIconContainer color="purple"><Brush /></PremiumIconContainer>}
               href="/tools/editing/online-whiteboard"
             />
           </div>

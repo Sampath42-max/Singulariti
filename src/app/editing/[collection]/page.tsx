@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
+import { ToolIcon } from '@/components/tools/ToolIcon';
 import { getCategoryById } from '@/registry';
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getPageSEO } from '@/lib/seo/pageMetadata';

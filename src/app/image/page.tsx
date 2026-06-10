@@ -1,8 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
+import { PremiumHeroIcon } from '@/components/ui/PremiumHeroIcon';
 import { Footer } from '@/components/layout/Footer';
 import { Card } from '@/components/ui/Card';
+import { ToolIcon } from '@/components/tools/ToolIcon';
 import { registry } from '@/registry';
 import { ImageIcon } from 'lucide-react';
 import { buildMetadata } from '@/lib/seo/metadata';
@@ -40,9 +42,7 @@ export default function ImageCategoryPage() {
         
         {/* Category Hero */}
         <section className="container mx-auto px-4 max-w-5xl mb-16 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6">
-            <ImageIcon className="w-8 h-8" />
-          </div>
+          <PremiumHeroIcon icon={<ImageIcon />} color="blue" />
           <h1 className="font-display font-bold text-4xl md:text-5xl text-ink mb-6">
             Image Tools
           </h1>
@@ -78,7 +78,7 @@ export default function ImageCategoryPage() {
                     title={tool.name}
                     description={tool.description}
                     href={tool.path}
-                    icon={<ImageIcon className="w-6 h-6" />}
+                    icon={<ToolIcon toolId={tool.id} className="w-6 h-6" fallback={<ImageIcon className="w-6 h-6" />} />}
                   />
                 ))}
               </div>

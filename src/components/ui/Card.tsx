@@ -19,9 +19,7 @@ export function Card({ title, description, icon, href, badge }: CardProps) {
     <Link href={href} className="group block">
       <div className="h-full p-6 bg-surface border border-border rounded-xl transition-all duration-150 ease-out hover:border-slate hover:shadow-sm flex flex-col">
         <div className="flex justify-between items-start mb-4">
-          <div className="w-12 h-12 rounded-lg bg-background flex items-center justify-center text-primary group-hover:brightness-110 transition-all">
-            {icon}
-          </div>
+          {icon}
           {badge && (
             <Badge variant={badge.variant}>{badge.text}</Badge>
           )}

@@ -8,6 +8,8 @@ import { ImageIcon, FileText, QrCode, Calculator, Type, Code, Scale, Search } fr
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getPageSEO } from '@/lib/seo/pageMetadata';
 
+import { ToolIcon } from '@/components/tools/ToolIcon';
+
 const seo = getPageSEO('tools')!;
 export const metadata = buildMetadata({
   title: seo.title,
@@ -102,7 +104,7 @@ export default function ToolsDirectoryPage() {
                           title={tool.name}
                           description={tool.description}
                           href={tool.path}
-                          icon={getIcon(category.id)}
+                          icon={<ToolIcon toolId={tool.id} />}
                         />
                       ))}
                     </div>
