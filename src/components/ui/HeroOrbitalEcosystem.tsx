@@ -365,8 +365,8 @@ export default function HeroOrbitalEcosystem() {
           <line x1="270" y1="225" x2="108" y2="210" stroke="var(--color-primary)" strokeOpacity="0.2" strokeWidth="1.5" strokeDasharray="4,4" />
 
           {/* Bolder, Logo-like Minimalist Solid Core */}
-          <circle cx="180" cy="175" r="16" fill="var(--color-primary)" style={{ filter: "drop-shadow(0px 0px 16px var(--color-primary))" }}>
-            <animate attributeName="r" values="14;18;14" dur="3s" repeatCount="indefinite" />
+          <circle cx="180" cy="175" r="12" fill="var(--color-primary)" style={{ filter: "drop-shadow(0px 0px 12px var(--color-primary))" }}>
+            <animate attributeName="r" values="10;14;10" dur="3s" repeatCount="indefinite" />
             <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" repeatCount="indefinite" />
           </circle>
 
