@@ -159,26 +159,12 @@ export default function HeroOrbitalEcosystem() {
 
       // Responsive orbit radius based on screen size
       const isMobile = W < 640;
-      // Slightly larger radius for vertical mobile layout to clear the logo
-      const R = Math.min(W, H) * (isMobile ? 0.42 : 0.43);
+      const R = Math.min(W, H) * (isMobile ? 0.38 : 0.43);
 
       nodes.forEach((node, i) => {
         const a = orbitAngle + (i / nodes.length) * Math.PI * 2;
-        
-        // ── Math: Isometric Orbit Projection ────────────────────────────────────
-        let nx, ny, depth;
-        
-        if (isMobile) {
-          // Vertical Orbit (Parallel to Y Plane)
-          nx = svgCx + Math.cos(a) * R * ORBIT_RY_RATIO;
-          ny = svgCy + Math.sin(a) * R;
-          depth = (Math.cos(a) + 1) / 2; // Right side is front, left is back
-        } else {
-          // Horizontal Orbit (Parallel to X Plane)
-          nx = svgCx + Math.cos(a) * R;
-          ny = svgCy + Math.sin(a) * R * ORBIT_RY_RATIO;
-          depth = (Math.sin(a) + 1) / 2; // Bottom side is front, top is back
-        }
+        const nx = svgCx + Math.cos(a) * R;
+        const ny = svgCy + Math.sin(a) * R * ORBIT_RY_RATIO;
 
         const isActive = activeRef.current === node.id;
         
@@ -259,7 +245,8 @@ export default function HeroOrbitalEcosystem() {
         // ── DOM: High Performance 3D Positioning ────────────────────────────────
         const el = document.getElementById(`orbit-node-${node.id}`);
         if (el) {
-          // Use the dynamically calculated 'depth' from the Math projection block
+          // depth ranges from 0 (back) to 1 (front)
+          const depth = (Math.sin(a) + 1) / 2;
           // Scale nodes down when they go to the back for true 3D perspective
           const scale = isActive ? 1.2 : 0.75 + depth * 0.35;
           const nodeSize = isMobile ? 48 : 64; // Base size
@@ -273,12 +260,11 @@ export default function HeroOrbitalEcosystem() {
       });
 
       // ── DOM: Rotate SVG rings and Inner Geometry ────────────────────────────
-      const ring1 = svgEl.querySelector<SVGGElement>(isMobile ? "#halo-ring1-mobile" : "#halo-ring1");
-      const ring2 = svgEl.querySelector<SVGGElement>(isMobile ? "#halo-ring2-mobile" : "#halo-ring2");
+      const ring1 = svgEl.querySelector<SVGGElement>("#halo-ring1");
+      const ring2 = svgEl.querySelector<SVGGElement>("#halo-ring2");
       const innerHex = svgEl.querySelector<SVGGElement>("#inner-hex");
       if (ring1) ring1.setAttribute("transform", `rotate(${(t * 15 * 180) / Math.PI}, 180, 200)`);
       if (ring2) ring2.setAttribute("transform", `rotate(${(-t * 20 * 180) / Math.PI}, 180, 195)`);
-      if (innerHex) innerHex.setAttribute("transform", `rotate(${(t * 5 * 180) / Math.PI}, 180, 175)`);
       if (innerHex) innerHex.setAttribute("transform", `rotate(${(t * 5 * 180) / Math.PI}, 180, 175)`);
 
       animRef.current = requestAnimationFrame(loop);
@@ -394,23 +380,13 @@ export default function HeroOrbitalEcosystem() {
             <animate attributeName="opacity" values="0.8;1;0.8" dur="0.75s" repeatCount="indefinite" />
           </circle>
 
-          {/* Desktop Rotating Halo Rings (Isometric perspective) */}
-          <g id="halo-ring1" opacity="0.3" className="hidden sm:inline">
+          {/* Rotating Halo Rings (Isometric perspective) */}
+          <g id="halo-ring1" opacity="0.3">
             <ellipse cx="180" cy="200" rx="140" ry="35"
               stroke="var(--color-primary)" strokeWidth="1.5" fill="none" strokeDasharray="12,12" />
           </g>
-          <g id="halo-ring2" opacity="0.2" className="hidden sm:inline">
+          <g id="halo-ring2" opacity="0.2">
             <ellipse cx="180" cy="195" rx="165" ry="25"
-              stroke="var(--color-primary)" strokeWidth="1" fill="none" strokeDasharray="6,8" />
-          </g>
-
-          {/* Mobile Rotating Halo Rings (Vertical perspective) */}
-          <g id="halo-ring1-mobile" opacity="0.3" className="sm:hidden">
-            <ellipse cx="180" cy="200" rx="35" ry="140"
-              stroke="var(--color-primary)" strokeWidth="1.5" fill="none" strokeDasharray="12,12" />
-          </g>
-          <g id="halo-ring2-mobile" opacity="0.2" className="sm:hidden">
-            <ellipse cx="180" cy="195" rx="25" ry="165"
               stroke="var(--color-primary)" strokeWidth="1" fill="none" strokeDasharray="6,8" />
           </g>
         </svg>

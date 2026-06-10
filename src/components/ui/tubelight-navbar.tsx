@@ -82,7 +82,7 @@ export function NavBar({ items, className }: NavBarProps) {
       )}
 
       <div className={cn("relative z-50", className)}>
-        <div className="flex items-center gap-2 sm:gap-3 bg-surface/80 border border-border backdrop-blur-lg py-1.5 sm:py-1 px-1.5 sm:px-1 rounded-full shadow-lg">
+        <div className="flex items-center justify-around w-[92vw] sm:w-auto sm:justify-start gap-1 sm:gap-3 bg-surface/80 border border-border backdrop-blur-lg py-1.5 px-2 sm:px-1 rounded-full shadow-lg">
           {items.map((item) => {
             const Icon = item.icon
             const isActive = activeItemName === item.name;
@@ -99,7 +99,7 @@ export function NavBar({ items, className }: NavBarProps) {
                   href={item.url}
                   onClick={(e) => handleItemClick(e, item)}
                   className={cn(
-                    "relative cursor-pointer text-sm font-medium px-5 md:px-6 py-2.5 md:py-2 rounded-full transition-colors flex items-center gap-1.5",
+                    "relative cursor-pointer text-sm font-medium px-4 md:px-6 py-2 rounded-full transition-colors flex items-center gap-1.5",
                     "text-slate hover:text-primary",
                     isActive && "text-primary",
                   )}
