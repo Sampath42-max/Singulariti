@@ -68,12 +68,12 @@ export default function Home() {
                 100% Free & Browser Based
               </Badge>
               
-              <h1 className="font-display font-bold text-5xl md:text-6xl lg:text-7xl text-ink leading-[1.1] tracking-tight mb-6">
+              <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-ink leading-[1.1] tracking-tight mb-4 sm:mb-6">
                 One Place.<br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-400">Every Tool.</span>
               </h1>
               
-              <p className="font-sans text-lg md:text-xl text-slate max-w-xl mb-10 leading-relaxed">
+              <p className="font-sans text-base sm:text-lg md:text-xl text-slate max-w-xl mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0">
                 Fast, secure, browser-based utility tools designed for creators, developers, students, and professionals. Experience zero server uploads and instant processing.
               </p>
               
