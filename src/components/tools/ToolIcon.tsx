@@ -180,15 +180,18 @@ export function ToolIcon({ toolId, className = "w-14 h-14" }: ToolIconProps) {
       {/* Inner subtle glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:from-white/5 dark:to-transparent pointer-events-none rounded-2xl" />
       
-      {/* Optional: Subtle QR code watermark for QR tools */}
+      {/* Background QR code watermark for QR tools */}
       {isQrTool && (
-        <QrCode className="absolute w-[120%] h-[120%] text-primary opacity-[0.04] dark:opacity-[0.08] rotate-12 -z-0 pointer-events-none mix-blend-overlay" />
+        <QrCode 
+          className="absolute inset-0 w-full h-full p-2 text-primary opacity-20 dark:opacity-20 z-0 pointer-events-none" 
+          strokeWidth={1.5}
+        />
       )}
 
       {/* The Duotone Icon */}
       {/* fill="currentColor" fillOpacity={0.2} creates a stunning duotone premium effect without needing custom SVGs */}
       <IconComponent 
-        className="w-7 h-7 text-primary relative z-10" 
+        className="w-7 h-7 text-primary relative z-10 drop-shadow-md" 
         strokeWidth={2} 
         fill="currentColor" 
         fillOpacity={0.2} 
