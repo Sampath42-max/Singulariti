@@ -1,12 +1,7 @@
 import { buildMetadata } from '@/lib/seo/metadata';
 import { getPageSEO } from '@/lib/seo/pageMetadata';
 import React from 'react';
-import dynamic from 'next/dynamic';
-
-const WhiteboardClientWrapper = dynamic(() => import('@/components/tools/whiteboard/WhiteboardClientWrapper'), {
-  ssr: false,
-  loading: () => <div className="min-h-screen flex items-center justify-center">Loading Whiteboard...</div>
-});
+import { WhiteboardPageClient } from './WhiteboardPageClient';
 
 const seo = getPageSEO('online-whiteboard')!;
 export const metadata = buildMetadata({
@@ -29,5 +24,5 @@ export const metadata = buildMetadata({
 });
 
 export default function OnlineWhiteboardPage() {
-  return <WhiteboardClientWrapper />;
+  return <WhiteboardPageClient />;
 }
