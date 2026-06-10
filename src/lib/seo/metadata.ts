@@ -1,5 +1,88 @@
 import type { Metadata } from "next";
 
+export function generateKeywords(title: string, description: string, customKeywords?: string[] | string): string[] {
+  if (customKeywords) {
+    return Array.isArray(customKeywords) ? customKeywords : customKeywords.split(',').map(k => k.trim());
+  }
+
+  const keywordsSet = new Set<string>();
+
+  // 1. Core terms from the title (lowercase, normalized)
+  const titleWords = title
+    .toLowerCase()
+    .replace(/[|–\-—,.:;|()]/g, ' ')
+    .split(/\s+/)
+    .map(w => w.trim())
+    .filter(w => w.length > 2);
+
+  // Stop words to exclude from raw keyword extraction
+  const stopWords = new Set([
+    'and', 'the', 'for', 'you', 'with', 'from', 'your', 'free', 'online', 
+    'tool', 'browser', 'local', 'private', 'secure', 'safe', 'without', 
+    'uploads', 'login', 'signup', 'singulariti'
+  ]);
+
+  // Description text lowercase for duplicate check
+  const descLower = description.toLowerCase();
+
+  // Helper to check if a word is heavily used in the description
+  const countOccurrences = (str: string, word: string) => {
+    return str.split(word).length - 1;
+  };
+
+  // Add key terms from the title if they aren't overly used in description
+  titleWords.forEach(word => {
+    if (!stopWords.has(word)) {
+      // If it appears less than twice in description, it's not mostly used in description
+      if (countOccurrences(descLower, word) < 2) {
+        keywordsSet.add(word);
+      }
+    }
+  });
+
+  // 2. Add typical action/modifier combinations
+  const cleanTitle = title.split(/[|–\-—|]/)[0].trim();
+  const toolBase = cleanTitle.toLowerCase().replace('free', '').replace('online', '').trim();
+
+  if (toolBase.length > 3) {
+    keywordsSet.add(`${toolBase} free`);
+    keywordsSet.add(`browser ${toolBase}`);
+    keywordsSet.add(`offline ${toolBase}`);
+    keywordsSet.add(`${toolBase} online`);
+    keywordsSet.add(`privacy safe ${toolBase}`);
+    keywordsSet.add(`local ${toolBase}`);
+  }
+
+  // 3. Add category-specific keywords based on words in title
+  const titleLower = title.toLowerCase();
+  if (titleLower.includes('pdf')) {
+    keywordsSet.add('pdf editor');
+    keywordsSet.add('convert pdf');
+    keywordsSet.add('pdf utility');
+    keywordsSet.add('no upload pdf');
+  } else if (titleLower.includes('image') || titleLower.includes('jpg') || titleLower.includes('png') || titleLower.includes('webp')) {
+    keywordsSet.add('image optimizer');
+    keywordsSet.add('convert image');
+    keywordsSet.add('image converter');
+    keywordsSet.add('privacy photo tool');
+  } else if (titleLower.includes('json') || titleLower.includes('xml') || titleLower.includes('sql') || titleLower.includes('yaml')) {
+    keywordsSet.add('code formatter');
+    keywordsSet.add('developer utility');
+    keywordsSet.add('json formatter online');
+    keywordsSet.add('parse json');
+  } else if (titleLower.includes('calculator')) {
+    keywordsSet.add('free calculator');
+    keywordsSet.add('online calculator');
+    keywordsSet.add('math calculation');
+  } else if (titleLower.includes('qr')) {
+    keywordsSet.add('qr maker');
+    keywordsSet.add('qr code scanner');
+    keywordsSet.add('custom qr');
+  }
+
+  return Array.from(keywordsSet).slice(0, 12);
+}
+
 export interface MetadataOptions {
   title: string;
   description: string;
@@ -9,6 +92,7 @@ export interface MetadataOptions {
   image?: string; // path or URL, e.g., "/og-fallback.png"
   publishedTime?: string;
   updatedAt?: string;
+  keywords?: string[] | string;
 }
 
 const BASE_URL = 'https://singulariti.in';
@@ -23,6 +107,7 @@ export function constructMetadata({
   image,
   publishedTime,
   updatedAt,
+  keywords,
 }: MetadataOptions): Metadata {
   // Ensure paths are formatted properly without trailing slash unless it's homepage
   let cleanPath = path;
@@ -75,6 +160,7 @@ export function constructMetadata({
   return {
     title: finalTitle,
     description,
+    keywords,
     authors: [{ name: "Singulariti", url: "https://singulariti.in" }],
     alternates: {
       canonical: canonicalUrl,
@@ -115,6 +201,7 @@ export interface BuildMetadataInput {
   title: string;
   description: string;
   canonical: string;
+  keywords?: string[] | string;
   robots?: {
     index: boolean;
     follow: boolean;
@@ -163,6 +250,7 @@ export function buildMetadata(input: BuildMetadataInput): Metadata {
   return {
     title: finalTitle,
     description: input.description,
+    keywords: input.keywords,
     authors: [{ name: "Singulariti", url: "https://singulariti.in" }],
     alternates: {
       canonical: input.canonical,

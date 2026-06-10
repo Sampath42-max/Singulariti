@@ -23,21 +23,21 @@ export type PageSEO = {
 
 export const pageMetadataRegistry: Record<string, PageSEO> = {
   "home": {
-    title: "Online Utility Tools for PDF, Image, Text, Code, SEO and Calculations",
-    description: "Use browser-friendly utilities for PDF, image, text, developer, SEO, QR, calculator and productivity tasks without login or signup.",
+    title: "Free PDF, Image, Text, Developer, SEO & More Tools | Singulariti",
+    description: "All-in-one collection of free utility tools for PDF, images, text, code, SEO and productivity.Fast, privacy-friendly and works directly in your browser. No signup required.",
     path: "/",
     robots: { index: true, follow: true },
     openGraph: {
-      title: "Online Utility Tools for PDF, Image, Text, Code, SEO and Calculations",
-      description: "Use browser-friendly utilities for PDF, image, text, developer, SEO, QR, calculator and productivity tasks without login or signup.",
+      title: "Free PDF, Image, Text, Developer, SEO & More Tools | Singulariti",
+      description: "All-in-one collection of free utility tools for PDF, images, text, code, SEO and productivity.Fast, privacy-friendly and works directly in your browser. No signup required.",
       url: "https://singulariti.in",
       type: "website",
       image: "https://singulariti.in/og-fallback.png"
     },
     twitter: {
       card: "summary_large_image",
-      title: "Online Utility Tools for PDF, Image, Text, Code, SEO and Calculations",
-      description: "Use browser-friendly utilities for PDF, image, text, developer, SEO, QR, calculator and productivity tasks without login or signup.",
+      title: "Free PDF, Image, Text, Developer, SEO & More Tools | Singulariti",
+      description: "All-in-one collection of free utility tools for PDF, images, text, code, SEO and productivity.Fast, privacy-friendly and works directly in your browser. No signup required.",
       image: "https://singulariti.in/og-fallback.png"
     }
   },
@@ -136,7 +136,7 @@ export const pageMetadataRegistry: Record<string, PageSEO> = {
       image: "https://singulariti.in/og-fallback.png"
     }
   },
-  
+
   // Section index pages
   "category-image": {
     title: "Image Utilities for Compression, Conversion and Resizing",
@@ -424,101 +424,101 @@ export const pageMetadataRegistry: Record<string, PageSEO> = {
     }
   },
   "collection-image-compression": {
+    title: "Image Compression Utilities - Compress Images Online",
+    description: "Use image compression utilities to reduce image file sizes without losing quality. Works instantly in the web browser.",
+    path: "/image/compression",
+    robots: { index: true, follow: true },
+    openGraph: {
       title: "Image Compression Utilities - Compress Images Online",
       description: "Use image compression utilities to reduce image file sizes without losing quality. Works instantly in the web browser.",
-      path: "/image/compression",
-      robots: { index: true, follow: true },
-      openGraph: {
-        title: "Image Compression Utilities - Compress Images Online",
-        description: "Use image compression utilities to reduce image file sizes without losing quality. Works instantly in the web browser.",
-        url: "https://singulariti.in/image/compression",
-        type: "website",
-        image: "https://singulariti.in/og-fallback.png"
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: "Image Compression Utilities - Compress Images Online",
-        description: "Use image compression utilities to reduce image file sizes without losing quality. Works instantly in the web browser.",
-        image: "https://singulariti.in/og-fallback.png"
-      }
+      url: "https://singulariti.in/image/compression",
+      type: "website",
+      image: "https://singulariti.in/og-fallback.png"
     },
-    "collection-image-conversion": {
+    twitter: {
+      card: "summary_large_image",
+      title: "Image Compression Utilities - Compress Images Online",
+      description: "Use image compression utilities to reduce image file sizes without losing quality. Works instantly in the web browser.",
+      image: "https://singulariti.in/og-fallback.png"
+    }
+  },
+  "collection-image-conversion": {
+    title: "Image Conversion Utilities - Convert Images Online",
+    description: "Use image conversion utilities to convert images between different formats instantly and securely in the web browser.",
+    path: "/image/conversion",
+    robots: { index: true, follow: true },
+    openGraph: {
       title: "Image Conversion Utilities - Convert Images Online",
       description: "Use image conversion utilities to convert images between different formats instantly and securely in the web browser.",
-      path: "/image/conversion",
-      robots: { index: true, follow: true },
-      openGraph: {
-        title: "Image Conversion Utilities - Convert Images Online",
-        description: "Use image conversion utilities to convert images between different formats instantly and securely in the web browser.",
-        url: "https://singulariti.in/image/conversion",
-        type: "website",
-        image: "https://singulariti.in/og-fallback.png"
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: "Image Conversion Utilities - Convert Images Online",
-        description: "Use image conversion utilities to convert images between different formats instantly and securely in the web browser.",
-        image: "https://singulariti.in/og-fallback.png"
-      }
+      url: "https://singulariti.in/image/conversion",
+      type: "website",
+      image: "https://singulariti.in/og-fallback.png"
     },
-    "collection-image-utility": {
+    twitter: {
+      card: "summary_large_image",
+      title: "Image Conversion Utilities - Convert Images Online",
+      description: "Use image conversion utilities to convert images between different formats instantly and securely in the web browser.",
+      image: "https://singulariti.in/og-fallback.png"
+    }
+  },
+  "collection-image-utility": {
+    title: "Image Utility Tools - Analyze Images Online",
+    description: "Use image utility tools to extract color palettes, pick colors, check dimensions, and view EXIF metadata.",
+    path: "/image/utility",
+    robots: { index: true, follow: true },
+    openGraph: {
       title: "Image Utility Tools - Analyze Images Online",
       description: "Use image utility tools to extract color palettes, pick colors, check dimensions, and view EXIF metadata.",
-      path: "/image/utility",
-      robots: { index: true, follow: true },
-      openGraph: {
-        title: "Image Utility Tools - Analyze Images Online",
-        description: "Use image utility tools to extract color palettes, pick colors, check dimensions, and view EXIF metadata.",
-        url: "https://singulariti.in/image/utility",
-        type: "website",
-        image: "https://singulariti.in/og-fallback.png"
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: "Image Utility Tools - Analyze Images Online",
-        description: "Use image utility tools to extract color palettes, pick colors, check dimensions, and view EXIF metadata.",
-        image: "https://singulariti.in/og-fallback.png"
-      }
+      url: "https://singulariti.in/image/utility",
+      type: "website",
+      image: "https://singulariti.in/og-fallback.png"
     },
-    "collection-image-developer": {
+    twitter: {
+      card: "summary_large_image",
+      title: "Image Utility Tools - Analyze Images Online",
+      description: "Use image utility tools to extract color palettes, pick colors, check dimensions, and view EXIF metadata.",
+      image: "https://singulariti.in/og-fallback.png"
+    }
+  },
+  "collection-image-developer": {
+    title: "Image Developer Utilities - Base64 Conversion",
+    description: "Use image developer utilities to convert images to Base64 strings and decode Base64 data URIs securely.",
+    path: "/image/developer",
+    robots: { index: true, follow: true },
+    openGraph: {
       title: "Image Developer Utilities - Base64 Conversion",
       description: "Use image developer utilities to convert images to Base64 strings and decode Base64 data URIs securely.",
-      path: "/image/developer",
-      robots: { index: true, follow: true },
-      openGraph: {
-        title: "Image Developer Utilities - Base64 Conversion",
-        description: "Use image developer utilities to convert images to Base64 strings and decode Base64 data URIs securely.",
-        url: "https://singulariti.in/image/developer",
-        type: "website",
-        image: "https://singulariti.in/og-fallback.png"
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: "Image Developer Utilities - Base64 Conversion",
-        description: "Use image developer utilities to convert images to Base64 strings and decode Base64 data URIs securely.",
-        image: "https://singulariti.in/og-fallback.png"
-      }
+      url: "https://singulariti.in/image/developer",
+      type: "website",
+      image: "https://singulariti.in/og-fallback.png"
     },
-    "collection-editing-tools": {
+    twitter: {
+      card: "summary_large_image",
+      title: "Image Developer Utilities - Base64 Conversion",
+      description: "Use image developer utilities to convert images to Base64 strings and decode Base64 data URIs securely.",
+      image: "https://singulariti.in/og-fallback.png"
+    }
+  },
+  "collection-editing-tools": {
+    title: "Image Editing Utilities - Edit Images Online",
+    description: "Use image editing utilities to resize, crop, rotate, flip, and apply filters to images directly in the browser.",
+    path: "/editing/tools",
+    robots: { index: true, follow: true },
+    openGraph: {
       title: "Image Editing Utilities - Edit Images Online",
       description: "Use image editing utilities to resize, crop, rotate, flip, and apply filters to images directly in the browser.",
-      path: "/editing/tools",
-      robots: { index: true, follow: true },
-      openGraph: {
-        title: "Image Editing Utilities - Edit Images Online",
-        description: "Use image editing utilities to resize, crop, rotate, flip, and apply filters to images directly in the browser.",
-        url: "https://singulariti.in/editing/tools",
-        type: "website",
-        image: "https://singulariti.in/og-fallback.png"
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: "Image Editing Utilities - Edit Images Online",
-        description: "Use image editing utilities to resize, crop, rotate, flip, and apply filters to images directly in the browser.",
-        image: "https://singulariti.in/og-fallback.png"
-      }
+      url: "https://singulariti.in/editing/tools",
+      type: "website",
+      image: "https://singulariti.in/og-fallback.png"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Image Editing Utilities - Edit Images Online",
+      description: "Use image editing utilities to resize, crop, rotate, flip, and apply filters to images directly in the browser.",
+      image: "https://singulariti.in/og-fallback.png"
     }
-  };
+  }
+};
 
 export function getPageSEO(key: string): PageSEO | undefined {
   return pageMetadataRegistry[key];
