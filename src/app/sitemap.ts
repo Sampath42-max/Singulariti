@@ -159,9 +159,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   });
 
   // Blog Guides (e.g., /blog/guides/word-counter-guide)
-  blogGuidesList.forEach((guide) => {
+  const posts = getAllPosts();
+  const guides = posts.filter(p => p.toolUrl);
+  guides.forEach((post) => {
     routes.push({
-      url: `${baseUrl}/blog/guides/${guide.slug}`,
+      url: `${baseUrl}/blog/guides/${post.slug}`,
       lastModified,
       changeFrequency: 'weekly',
       priority: 0.7,
@@ -169,7 +171,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   });
 
   // Blog Articles (non-tool guides, e.g., /blog/articles/why-online-utility-tools-are-useful)
-  const posts = getAllPosts();
   const articles = posts.filter(p => !p.toolUrl);
   articles.forEach((post) => {
     routes.push({

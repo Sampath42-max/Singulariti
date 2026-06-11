@@ -124,13 +124,13 @@ export function ToolLayout({
               {privacyLabel || (() => {
                 const cat = (categoryName || '').toLowerCase();
                 if (cat.includes('pdf')) {
-                  return "PDFs are processed only for the selected action. No files are uploaded to our server.";
+                  return "This tool may temporarily send files to a secure backend for processing, then deletes them immediately after processing.";
                 }
                 if (cat.includes('image') || cat.includes('editing')) {
                   return "Images are processed locally in your browser. Nothing is uploaded to any server.";
                 }
                 if (cat.includes('text')) {
-                  return "Text is processed temporarily and not stored. No files are uploaded to our server.";
+                  return "Text is processed locally and not stored. Nothing is uploaded to any server.";
                 }
                 return "Your inputs are processed locally in your browser. Nothing is uploaded to any server.";
               })()}

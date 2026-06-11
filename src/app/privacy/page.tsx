@@ -43,7 +43,7 @@ export default function PrivacyPage() {
 
           <h2 className="font-display font-bold text-2xl text-ink mt-8 mb-4">2. Browser-Side (Local) File Processing</h2>
           <p className="mb-4 leading-relaxed">
-            The tools operate entirely inside the web browser. File operations, image compression, formatting, conversions, and calculations are computed locally on the device. Files are not uploaded to servers, keeping documents, images, and data strictly on the device.
+            Most of our tools operate entirely inside your web browser. File operations, image compression, formatting, and calculations are computed locally on your device. For these tools, files are never uploaded to our servers, keeping your documents, images, and data strictly on your device.
           </p>
 
           <h2 className="font-display font-bold text-2xl text-ink mt-8 mb-4">3. Temporary Backend Processing</h2>

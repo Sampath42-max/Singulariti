@@ -19,13 +19,9 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const { getAllPosts } = await import('@/lib/blog');
-  const toolSlugs = toolRegistry.map((tool) => ({ utilitySlug: tool.guideSlug }));
   const postSlugs = getAllPosts().map(p => ({ utilitySlug: p.slug }));
   
-  // Deduplicate slugs
-  const allSlugs = Array.from(new Set([...toolSlugs.map(t => t.utilitySlug), ...postSlugs.map(p => p.utilitySlug)]));
-  
-  return allSlugs.map(slug => ({ utilitySlug: slug }));
+  return postSlugs;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
