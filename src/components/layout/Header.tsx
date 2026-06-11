@@ -79,6 +79,7 @@ export function Header() {
             <button 
               onClick={() => setIsSearchOpen(true)}
               className="lg:hidden p-2 rounded-full hover:bg-slate/10 text-slate transition-colors"
+              aria-label="Open Search"
             >
               <Search className="w-5 h-5" />
             </button>
