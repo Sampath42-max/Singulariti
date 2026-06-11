@@ -30,7 +30,8 @@ export default function CookiePolicyPage() {
       <Header />
       <main className="flex-1 w-full flex flex-col items-center pt-24 pb-12">
         <section className="container mx-auto px-4 max-w-3xl font-sans text-slate">
-          <h1 className="font-display font-bold text-4xl text-ink mb-8">Cookie Policy</h1>
+          <h1 className="font-display font-bold text-4xl text-ink mb-3">Cookie Policy</h1>
+          <p className="text-sm text-slate mb-8">Last Updated: June 2026</p>
           <p className="mb-6 leading-relaxed">
             This Cookie Policy explains how Singulariti uses cookies and similar technologies to recognize you when you visit our website. It explains what these technologies are and why we use them, as well as your rights to control our use of them.
           </p>
@@ -77,7 +78,7 @@ export default function CookiePolicyPage() {
           <div className="bg-surface border border-border rounded-xl p-6 mt-6 mb-8">
             <h3 className="font-display font-bold text-lg text-ink mb-4">Singulariti Labs</h3>
             <p className="mb-2 text-[15px]"><strong>Email:</strong> <a href="mailto:singulariti.contact@gmail.com" className="text-primary hover:underline">singulariti.contact@gmail.com</a></p>
-            <p className="text-[15px]"><strong>Address:</strong> Vishakapatnam, Andhra Pradesh, India</p>
+            <p className="text-[15px]"><strong>Address:</strong> Visakhapatnam, Andhra Pradesh 530001, India</p>
           </div>
         </section>
       </main>

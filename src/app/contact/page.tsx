@@ -39,6 +39,12 @@ export default function ContactPage() {
             <a href="https://www.youtube.com/@singulariti_in" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">YouTube</a>.
           </p>
           <ContactForm />
+          <div className="bg-surface border border-border rounded-xl p-6 mt-10">
+            <h2 className="font-display font-bold text-xl text-ink mb-4">Our Address</h2>
+            <p className="mb-2 text-[15px]"><strong>Email:</strong> <a href="mailto:singulariti.contact@gmail.com" className="text-primary hover:underline">singulariti.contact@gmail.com</a></p>
+            <p className="mb-2 text-[15px]"><strong>Address:</strong> Visakhapatnam, Andhra Pradesh 530001, India</p>
+            <p className="text-[13px] text-slate mt-4">We typically respond within 48 hours on working days.</p>
+          </div>
         </section>
       </main>
       <Footer />

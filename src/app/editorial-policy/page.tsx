@@ -21,9 +21,10 @@ export default function EditorialPolicyPage() {
             <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-2xl text-primary mb-6">
               <ShieldCheck className="w-8 h-8" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-ink mb-6 tracking-tight">
-              Editorial & Transparency Policy
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-ink mb-4 tracking-tight">
+              Editorial &amp; Transparency Policy
             </h1>
+            <p className="text-sm text-slate mb-4">Last Updated: June 2026</p>
             <p className="text-lg md:text-xl font-sans text-slate leading-relaxed">
               At Singulariti Labs, we believe in building tools that empower users without compromising their privacy. This document outlines our core principles and editorial standards.
             </p>

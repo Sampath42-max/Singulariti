@@ -2,6 +2,7 @@ import "@/lib/polyfill";
 import type { Metadata } from "next";
 import { Syne, Outfit, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import Script from "next/script";
 import "./globals.css";
 import { DynamicStructuredData } from "@/components/seo/DynamicStructuredData";
 import { CookieConsent } from "@/components/layout/CookieConsent";
@@ -113,6 +114,21 @@ export default function RootLayout({
         <DynamicStructuredData />
       </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col font-sans bg-background text-foreground transition-colors duration-300">
+        {/* Google Analytics 4 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-L34GDSVBFJ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-L34GDSVBFJ', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
         <ThemeProvider>
           {children}
           <CookieConsent />
