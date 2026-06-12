@@ -147,7 +147,7 @@ export function ExtractPdfPagesClient() {
       {!file ? (
         <FileUploader
           onFilesSelected={handleFileSelected}
-          multiple={}
+          multiple={false}
           accept={{ 'application/pdf': ['.pdf'] }}
           title="Upload a PDF file to extract"
           subtitle="Choose the PDF document you want to extract pages from"

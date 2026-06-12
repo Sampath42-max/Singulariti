@@ -119,7 +119,7 @@ export function SplitPdfClient() {
       {!file ? (
         <FileUploader
           onFilesSelected={handleFileSelected}
-          multiple={}
+          multiple={false}
           accept={{ 'application/pdf': ['.pdf'] }}
           title="Upload a PDF file to split"
           subtitle="Choose the PDF document you want to extract pages from"

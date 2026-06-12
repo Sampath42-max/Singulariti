@@ -158,7 +158,7 @@ export function MergePdfClient() {
       {files.length === 0 ? (
         <FileUploader
           onFilesSelected={handleFilesSelected}
-          multiple={}
+          multiple={true}
           accept={{ 'application/pdf': ['.pdf'] }}
           title="Upload PDF files to merge"
           subtitle="Select two or more PDF documents from your device"

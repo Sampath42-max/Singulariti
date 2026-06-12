@@ -150,7 +150,7 @@ export function RotatePdfClient() {
       {!file ? (
         <FileUploader
           onFilesSelected={handleFileSelected}
-          multiple={}
+          multiple={false}
           accept={{ 'application/pdf': ['.pdf'] }}
           title="Upload a PDF file to rotate"
           subtitle="Choose the PDF document whose pages you want to rotate"

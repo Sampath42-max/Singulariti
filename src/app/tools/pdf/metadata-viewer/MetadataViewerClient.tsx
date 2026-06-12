@@ -109,7 +109,7 @@ export function MetadataViewerClient() {
       {!file ? (
         <FileUploader
           onFilesSelected={handleFileSelected}
-          multiple={}
+          multiple={false}
           accept={{ 'application/pdf': ['.pdf'] }}
           title="Upload a PDF file to view metadata"
           subtitle="Choose the PDF document you want to inspect"

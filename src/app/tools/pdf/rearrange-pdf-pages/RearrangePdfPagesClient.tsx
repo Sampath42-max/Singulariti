@@ -158,7 +158,7 @@ export function RearrangePdfPagesClient() {
       {!file ? (
         <FileUploader
           onFilesSelected={handleFileSelected}
-          multiple={}
+          multiple={false}
           accept={{ 'application/pdf': ['.pdf'] }}
           title="Upload a PDF file to reorder"
           subtitle="Choose the PDF document whose pages you want to rearrange"
