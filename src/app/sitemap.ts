@@ -6,9 +6,8 @@ import { getAllPosts } from '@/lib/blog';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://singulariti.in';
 
-  // Use a stable date (e.g. last major deployment) to prevent false crawler triggers
-  // rather than new Date() which changes on every sitemap request.
-  const lastModified = new Date('2026-06-10T00:00:00.000Z');
+  // Use current build date for sitemap
+  const lastModified = new Date();
 
   const categories = registry.categories;
 
@@ -181,5 +180,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  return routes;
+  // Deduplicate routes based on URL
+  const uniqueRoutes = Array.from(new Map(routes.map(r => [r.url, r])).values());
+
+  return uniqueRoutes;
 }

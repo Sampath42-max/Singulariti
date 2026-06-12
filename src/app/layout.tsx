@@ -107,9 +107,9 @@ export default function RootLayout({
             "url": "https://singulariti.in",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://singulariti.in/og-fallback.png",
-              "width": 1200,
-              "height": 630
+              "url": "https://singulariti.in/singulariti-prism.svg",
+              "width": 512,
+              "height": 512
             },
             "description": "Singulariti offers free browser-based utility tools for PDF management, image compression, text formatting, developer encoding, and calculator tasks — all processed locally with zero uploads.",
             "foundingDate": "2026-06-06",
