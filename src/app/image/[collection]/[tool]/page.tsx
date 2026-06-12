@@ -84,7 +84,7 @@ export default async function ToolPage(props: { params: Promise<{ collection: st
         {/* SEO / Content Section */}
         {articleContent ? (
           <section className="container mx-auto px-4 max-w-3xl mt-16 text-slate font-sans">
-            <article className="prose prose-slate dark:prose-invert max-w-none">
+            <article className="prose prose-slate dark:prose-invert max-w-none text-slate prose-headings:text-ink prose-strong:text-ink">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {articleContent}
               </ReactMarkdown>
@@ -92,7 +92,7 @@ export default async function ToolPage(props: { params: Promise<{ collection: st
           </section>
         ) : (
           <section className="container mx-auto px-4 max-w-3xl mt-16 text-slate font-sans">
-            <article className="prose prose-slate dark:prose-invert max-w-none">
+            <article className="prose prose-slate dark:prose-invert max-w-none text-slate prose-headings:text-ink prose-strong:text-ink">
               <h2 className="text-2xl font-bold font-display text-ink mb-4">About {tool.name}</h2>
               <p className="mb-6">
                 Welcome to this online {tool.name}. The utility is designed to be fast, secure, and run entirely within the web browser. This means that files are never uploaded to servers, ensuring data remains completely private.

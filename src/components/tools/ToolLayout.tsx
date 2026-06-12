@@ -207,7 +207,7 @@ export function ToolLayout({
         <section className="container mx-auto px-4 md:px-6 max-w-4xl mt-12 space-y-12">
           {/* Article / Comprehensive Content */}
           {article && (
-            <div className="bg-surface/50 border border-border/60 rounded-2xl p-6 md:p-8 prose prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-bold prose-p:font-sans prose-p:leading-relaxed prose-a:text-primary hover:prose-a:text-primary/80">
+            <div className="bg-surface/50 border border-border/60 rounded-2xl p-6 md:p-8 prose prose-slate dark:prose-invert max-w-none text-slate prose-headings:font-display prose-headings:font-bold prose-headings:text-ink prose-strong:text-ink prose-p:font-sans prose-p:leading-relaxed prose-a:text-primary hover:prose-a:text-primary/80">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {article}
               </ReactMarkdown>

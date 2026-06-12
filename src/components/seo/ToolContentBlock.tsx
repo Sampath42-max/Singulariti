@@ -57,7 +57,7 @@ export function ToolContentBlock({ utilityId, article }: ToolContentBlockProps) 
               <span>•</span>
               <span>Updated {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
             </div>
-            <div className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-bold prose-p:font-sans prose-p:leading-relaxed prose-a:text-primary hover:prose-a:text-primary/80">
+            <div className="prose prose-slate dark:prose-invert max-w-none text-slate prose-headings:font-display prose-headings:font-bold prose-headings:text-ink prose-strong:text-ink prose-p:font-sans prose-p:leading-relaxed prose-a:text-primary hover:prose-a:text-primary/80">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {article}
               </ReactMarkdown>
