@@ -16,13 +16,15 @@ export interface QrCodeGeneratorClientProps {
   toolDescription?: string;
   toolSeoTitle?: string;
   toolSeoDescription?: string;
+  article?: string;
 }
 
 export function QrCodeGeneratorClient({
   initialType = 'url',
   isStandalone = false,
   toolName = "QR Code Generator",
-  toolDescription = "Create highly customized QR codes for URLs, Wi-Fi networks, UPI payments, phone numbers, and contacts. Customize designs, add logos, and export to PNG, SVG, or PDF."
+  toolDescription = "Create highly customized QR codes for URLs, Wi-Fi networks, UPI payments, phone numbers, and contacts. Customize designs, add logos, and export to PNG, SVG, or PDF.",
+  article
 }: QrCodeGeneratorClientProps = {}) {
   const [qrType, setQrType] = useState<QRType>(initialType);
   
@@ -284,6 +286,7 @@ export function QrCodeGeneratorClient({
       categoryHref="/tools/qr"
       error={error}
       onClearError={() => setError(null)}
+      article={article}
     >
       <div className="bg-surface border border-border rounded-xl p-6 md:p-8 shadow-sm">
         

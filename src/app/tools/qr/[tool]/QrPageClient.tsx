@@ -17,7 +17,8 @@ export function QrPageClient({
   toolName,
   toolDescription,
   toolSeoTitle,
-  toolSeoDescription
+  toolSeoDescription,
+  article
 }: {
   initialType: QRType;
   isStandalone: boolean;
@@ -26,6 +27,7 @@ export function QrPageClient({
   toolDescription: string;
   toolSeoTitle?: string;
   toolSeoDescription?: string;
+  article?: string;
 }) {
   return (
     <>
@@ -37,7 +39,7 @@ export function QrPageClient({
         toolSeoTitle={toolSeoTitle}
         toolSeoDescription={toolSeoDescription}
       />
-      <ToolContentBlock utilityId={toolId} />
+      <ToolContentBlock utilityId={toolId} article={article} />
     </>
   );
 }

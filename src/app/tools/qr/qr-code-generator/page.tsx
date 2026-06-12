@@ -2,6 +2,8 @@ import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { QrCodeGeneratorClient } from './QrCodeGeneratorClient';
+import fs from 'fs';
+import path from 'path';
 
 const seo = getUtilitySEO('qr-code-generator')!;
 export const metadata = buildMetadata({
@@ -23,6 +25,13 @@ export const metadata = buildMetadata({
   },
 });
 
-export default function QrCodeGeneratorPage() {
-  return <QrCodeGeneratorClient />;
+export default async function QrCodeGeneratorPage() {
+  let article = '';
+  try {
+    const articlePath = path.join(process.cwd(), 'src', 'content', 'articles', 'qr-code-generator.md');
+    if (fs.existsSync(articlePath)) {
+      article = fs.readFileSync(articlePath, 'utf8');
+    }
+  } catch (e) { /* ignore */ }
+  return <QrCodeGeneratorClient article={article || undefined} />;
 }

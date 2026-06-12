@@ -7,6 +7,10 @@ const QrCodeScannerClient = dynamic(
   { ssr: false }
 );
 
-export function QrCodeScannerPageClient() {
-  return <QrCodeScannerClient />;
+interface Props {
+  article?: string;
+}
+
+export function QrCodeScannerPageClient({ article }: Props) {
+  return <QrCodeScannerClient article={article} />;
 }

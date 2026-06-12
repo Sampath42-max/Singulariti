@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import { getToolByPath, getCategoryById } from '@/registry';
 import { QrPageClient } from './QrPageClient';
 import { QRType } from '@/lib/qr/qrHelpers';
+import fs from 'fs';
+import path from 'path';
 
 export default async function QRToolPage(props: { params: Promise<{ tool: string }> }) {
   const params = await props.params;
@@ -23,6 +25,16 @@ export default async function QRToolPage(props: { params: Promise<{ tool: string
 
   const initialType = (tool.options?.type as QRType) || 'url';
 
+  let article = '';
+  try {
+    const articlePath = path.join(process.cwd(), 'src', 'content', 'articles', `${tool.id}.md`);
+    if (fs.existsSync(articlePath)) {
+      article = fs.readFileSync(articlePath, 'utf8');
+    }
+  } catch (e) {
+    // Ignore if not found
+  }
+
   return (
     <QrPageClient 
       initialType={initialType} 
@@ -32,6 +44,7 @@ export default async function QRToolPage(props: { params: Promise<{ tool: string
       toolDescription={tool.description}
       toolSeoTitle={tool.seoTitle}
       toolSeoDescription={tool.seoDescription}
+      article={article || undefined}
     />
   );
 }

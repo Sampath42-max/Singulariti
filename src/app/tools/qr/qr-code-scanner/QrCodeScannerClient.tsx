@@ -13,7 +13,7 @@ import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '
 import { formatFileSize } from '@/lib/fileHelpers';
 import { Camera, Image as ImageIcon, FileText, CameraOff, RefreshCw, AlertCircle, AlertTriangle } from 'lucide-react';
 
-export function QrCodeScannerClient() {
+export function QrCodeScannerClient({ article }: { article?: string } = {}) {
   const [scanMode, setScanMode] = useState<'camera' | 'image' | 'pdf'>('camera');
   const [error, setError] = useState<string | null>(null);
   const [warning, setWarning] = useState<string | null>(null);
@@ -313,6 +313,7 @@ export function QrCodeScannerClient() {
       error={error}
       warning={warning}
       onClearError={() => setError(null)}
+      article={article}
     >
       <div className="bg-surface border border-border rounded-xl p-6 md:p-8 shadow-sm">
         
