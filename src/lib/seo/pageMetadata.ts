@@ -555,6 +555,25 @@ export const pageMetadataRegistry: Record<string, PageSEO> = {
       description: "Use image editing utilities to resize, crop, rotate, flip, and apply filters to images directly in the browser.",
       image: "https://singulariti.in/og-fallback.png"
     }
+  },
+  "disclaimer": {
+    title: "Disclaimer | Singulariti",
+    description: "Read the disclaimer and limitations of liability for the tools, content, and calculators provided by Singulariti.",
+    path: "/disclaimer",
+    robots: { index: true, follow: true },
+    openGraph: {
+      title: "Disclaimer | Singulariti",
+      description: "Read the disclaimer and limitations of liability for the tools, content, and calculators provided by Singulariti.",
+      url: "https://singulariti.in/disclaimer",
+      type: "website",
+      image: "https://singulariti.in/og-fallback.png"
+    },
+    twitter: {
+      card: "summary",
+      title: "Disclaimer | Singulariti",
+      description: "Read the disclaimer and limitations of liability for the tools, content, and calculators provided by Singulariti.",
+      image: "https://singulariti.in/og-fallback.png"
+    }
   }
 };
 
