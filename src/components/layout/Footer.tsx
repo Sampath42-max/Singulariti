@@ -97,7 +97,7 @@ export function Footer() {
         <div className="w-full h-px bg-border my-8"></div>
         
         <div className="flex justify-between items-center text-[11px] text-slate font-sans">
-          <span>&copy; {new Date().getFullYear()} Singulariti Labs. All rights reserved.</span>
+          <span>&copy; 2026 Singulariti Labs. All rights reserved.</span>
           <span>Designed with precision.</span>
         </div>
       </div>
