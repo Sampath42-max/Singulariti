@@ -6,8 +6,8 @@ import { getAllPosts } from '@/lib/blog';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://singulariti.in';
 
-  // Use current build date for sitemap
-  const lastModified = new Date();
+  // Use a stable date (last major content update) to prevent false crawler triggers
+  const lastModified = new Date('2026-06-12T00:00:00Z');
 
   const categories = registry.categories;
 
