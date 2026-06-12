@@ -7,6 +7,9 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Editorial & Transparency Policy | Singulariti',
   description: 'Learn about our commitment to accurate, secure, and privacy-first browser tools.',
+  alternates: {
+    canonical: 'https://singulariti.in/editorial-policy',
+  },
 };
 
 export default function EditorialPolicyPage() {

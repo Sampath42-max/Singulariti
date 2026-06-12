@@ -1,8 +1,6 @@
-"use client";
-
 import React from 'react';
 import Link from 'next/link';
-import { notFound, useSearchParams, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { 
   blogSeriesList,
   blogSubSeriesList,
@@ -22,12 +20,10 @@ import {
 interface SubSeriesContentProps {
   seriesSlug: string;
   subSectionSlug: string;
+  page?: string;
 }
 
-export function SubSeriesContent({ seriesSlug, subSectionSlug }: SubSeriesContentProps) {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
+export function SubSeriesContent({ seriesSlug, subSectionSlug, page }: SubSeriesContentProps) {
   // Find series info
   const series = blogSeriesList.find(s => s.slug === seriesSlug);
   if (!series) {
@@ -46,17 +42,11 @@ export function SubSeriesContent({ seriesSlug, subSectionSlug }: SubSeriesConten
   const guides = blogGuidesList.filter(g => g.subSeriesId === subSection.id);
 
   // Pagination Logic
-  const currentPage = parseInt(searchParams?.get('page') || '1', 10);
+  const currentPage = parseInt(page || '1', 10);
   const pageSize = 12;
   const totalPages = Math.ceil(guides.length / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedGuides = guides.slice(startIndex, startIndex + pageSize);
-
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      router.push(`/blog/series/${seriesSlug}/${subSectionSlug}?page=${page}`);
-    }
-  };
 
   // Get other subsections of the same section for the sidebar layout
   const siblingSubsections = blogSubSeriesList.filter(
@@ -195,37 +185,35 @@ export function SubSeriesContent({ seriesSlug, subSectionSlug }: SubSeriesConten
           {/* Pagination Controls */}
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2 pt-8 font-sans text-xs">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="p-2 border border-border hover:border-primary rounded-xl text-slate hover:text-primary disabled:opacity-40 disabled:hover:border-border disabled:hover:text-slate transition-all"
+              <Link
+                href={currentPage > 1 ? `/blog/series/${seriesSlug}/${subSectionSlug}?page=${currentPage - 1}` : '#'}
+                className={`p-2 border border-border hover:border-primary rounded-xl text-slate hover:text-primary transition-all ${currentPage === 1 ? 'opacity-40 pointer-events-none' : ''}`}
                 aria-label="Previous Page"
               >
                 <ChevronLeft className="w-4 h-4" />
-              </button>
+              </Link>
 
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`w-8 h-8 rounded-xl font-bold transition-all border ${
-                    currentPage === page
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNum => (
+                <Link
+                  key={pageNum}
+                  href={`/blog/series/${seriesSlug}/${subSectionSlug}?page=${pageNum}`}
+                  className={`w-8 h-8 rounded-xl font-bold transition-all border flex items-center justify-center ${
+                    currentPage === pageNum
                       ? 'bg-primary text-white border-primary shadow-xs'
                       : 'bg-surface border-border text-slate hover:border-slate/60 hover:text-primary'
                   }`}
                 >
-                  {page}
-                </button>
+                  {pageNum}
+                </Link>
               ))}
 
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="p-2 border border-border hover:border-primary rounded-xl text-slate hover:text-primary disabled:opacity-40 disabled:hover:border-border disabled:hover:text-slate transition-all"
+              <Link
+                href={currentPage < totalPages ? `/blog/series/${seriesSlug}/${subSectionSlug}?page=${currentPage + 1}` : '#'}
+                className={`p-2 border border-border hover:border-primary rounded-xl text-slate hover:text-primary transition-all ${currentPage === totalPages ? 'opacity-40 pointer-events-none' : ''}`}
                 aria-label="Next Page"
               >
                 <ChevronRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
           )}
         </div>

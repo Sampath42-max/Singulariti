@@ -1,12 +1,13 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { blogSeriesList, blogSubSeriesList } from '@/content/tools/toolRegistry';
-import { SubSeriesContent } from './SubSeriesClient';
+import { SubSeriesContent } from './SubSeriesContent';
 import { constructMetadata } from '@/lib/seo/metadata';
 
 interface PageProps {
   params: Promise<{ seriesSlug: string; subSectionSlug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export async function generateStaticParams() {
@@ -50,15 +51,16 @@ export async function generateMetadata({ params }: PageProps) {
   });
 }
 
-export default async function SubSeriesPage({ params }: PageProps) {
+export default async function SubSeriesPage({ params, searchParams }: PageProps) {
   const { seriesSlug, subSectionSlug } = await params;
+  const { page } = await searchParams;
+  const currentPage = typeof page === 'string' ? page : '1';
+
   return (
     <>
       <Header />
       <main className="flex-1 w-full bg-background pt-24 pb-16">
-        <Suspense fallback={null}>
-          <SubSeriesContent seriesSlug={seriesSlug} subSectionSlug={subSectionSlug} />
-        </Suspense>
+        <SubSeriesContent seriesSlug={seriesSlug} subSectionSlug={subSectionSlug} page={currentPage} />
       </main>
       <Footer />
     </>

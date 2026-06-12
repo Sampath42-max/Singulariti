@@ -79,9 +79,9 @@ export const CATEGORIES = {
 export const blogPosts: BlogPost[] = [
   // 1. Website Introduction Article
   {
-    title: "Why Online Utility Tools Are Useful for Everyday Digital Work",
+    title: "Why Browser Utility Tools Are Useful for Everyday Work",
     slug: "why-online-utility-tools-are-useful",
-    metaTitle: "Why Online Utility Tools Are Useful for Everyday Digital Work | Singulariti",
+    metaTitle: "Why Browser Utility Tools Are Useful for Everyday Work | Singulariti",
     metaDescription: "Understand why browser-based utility tools are essential for digital workflows, how they save time, and why local browser processing keeps files secure.",
     category: CATEGORIES.general,
     tags: ["Productivity", "Web Tools", "Security", "Workflow"],
