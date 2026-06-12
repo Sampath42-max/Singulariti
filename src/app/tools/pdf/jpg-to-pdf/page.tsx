@@ -2,6 +2,8 @@ import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { JpgToPdfPageClient } from './JpgToPdfPageClient';
+import fs from 'fs';
+import path from 'path';
 
 const seo = getUtilitySEO('jpg-to-pdf')!;
 export const metadata = buildMetadata({
@@ -23,6 +25,15 @@ export const metadata = buildMetadata({
   },
 });
 
-export default function JpgToPdfPage() {
-  return <JpgToPdfPageClient />;
+export default async function JpgToPdfPage() {
+  let article = '';
+  try {
+    const articlePath = path.join(process.cwd(), 'src', 'content', 'articles', 'jpg-to-pdf.md');
+    if (fs.existsSync(articlePath)) {
+      article = fs.readFileSync(articlePath, 'utf8');
+    }
+  } catch (e) {
+    // Ignore if not found
+  }
+  return <JpgToPdfPageClient article={article || undefined} />;
 }

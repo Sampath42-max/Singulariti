@@ -2,6 +2,8 @@ import { buildMetadata } from '@/lib/seo/metadata';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 import React from 'react';
 import { DeletePdfPagesPageClient } from './DeletePdfPagesPageClient';
+import fs from 'fs';
+import path from 'path';
 
 const seo = getUtilitySEO('delete-pdf-pages')!;
 export const metadata = buildMetadata({
@@ -23,6 +25,15 @@ export const metadata = buildMetadata({
   },
 });
 
-export default function DeletePdfPagesPage() {
-  return <DeletePdfPagesPageClient />;
+export default async function DeletePdfPagesPage() {
+  let article = '';
+  try {
+    const articlePath = path.join(process.cwd(), 'src', 'content', 'articles', 'delete-pdf-pages.md');
+    if (fs.existsSync(articlePath)) {
+      article = fs.readFileSync(articlePath, 'utf8');
+    }
+  } catch (e) {
+    // Ignore if not found
+  }
+  return <DeletePdfPagesPageClient article={article || undefined} />;
 }
