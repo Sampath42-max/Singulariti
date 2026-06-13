@@ -13,7 +13,7 @@ import { formatFileSize } from '@/lib/fileHelpers';
 import { downloadBlob } from '@/lib/pdf/downloadBlob';
 import { FileText, Copy, Download, Check, Clipboard } from 'lucide-react';
 
-export function PdfToTextClient() {
+export function PdfToTextClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [extractedText, setExtractedText] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -89,6 +89,7 @@ export function PdfToTextClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload a PDF containing text.",
         "Wait a moment while the text is extracted locally.",

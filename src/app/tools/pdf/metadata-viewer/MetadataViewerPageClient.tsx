@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from 'next/dynamic';
-import { ToolContentBlock } from '@/components/seo/ToolContentBlock';
 
 const MetadataViewerClient = dynamic(
   () => import('./MetadataViewerClient').then((m) => m.MetadataViewerClient),
@@ -15,8 +14,8 @@ interface Props {
 export function MetadataViewerPageClient({ article }: Props) {
   return (
     <>
-      <MetadataViewerClient />
-      <ToolContentBlock utilityId="metadata-viewer" article={article} />
+      <MetadataViewerClient article={article} />
+      
     </>
   );
 }

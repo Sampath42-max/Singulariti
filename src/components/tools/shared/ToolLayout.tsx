@@ -8,6 +8,9 @@ import { ChevronDown, ChevronUp, ArrowLeft, ShieldCheck } from 'lucide-react';
 import { SeoSchema } from './SeoSchema';
 import { getUtilitySEO } from '@/lib/seo/utilityMetadata';
 
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 interface FaqItem {
   question: string;
   answer: string;
@@ -124,7 +127,7 @@ export function ToolLayout({
               {privacyLabel || (() => {
                 const cat = (categoryName || '').toLowerCase();
                 if (cat.includes('pdf')) {
-                  return "This tool may temporarily send files to a secure backend for processing, then deletes them immediately after processing.";
+                  return "This tool processes files locally in your browser. Nothing is uploaded to any server.";
                 }
                 if (cat.includes('image') || cat.includes('editing')) {
                   return "Images are processed locally in your browser. Nothing is uploaded to any server.";
@@ -147,8 +150,17 @@ export function ToolLayout({
 
         {/* Details & FAQ Area */}
         <section className="container mx-auto px-4 max-w-4xl mt-6 space-y-12">
+          {/* Article / Comprehensive Content */}
+          {article && (
+            <div className="bg-surface/50 border border-border/60 rounded-2xl p-6 md:p-8 prose prose-slate dark:prose-invert max-w-none text-slate prose-headings:font-display prose-headings:font-bold prose-headings:text-ink prose-strong:text-ink prose-p:font-sans prose-p:leading-relaxed prose-a:text-primary hover:prose-a:text-primary/80">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {article}
+              </ReactMarkdown>
+            </div>
+          )}
+
           {/* How to Use */}
-          {howToUse && howToUse.length > 0 && (
+          {!article && howToUse && howToUse.length > 0 && (
             <div className="bg-surface/50 border border-border/60 rounded-2xl p-6 md:p-8">
               <h2 className="font-display font-bold text-xl text-ink mb-6">How to Use</h2>
               <ol className="space-y-4">
@@ -165,7 +177,7 @@ export function ToolLayout({
           )}
 
           {/* FAQs */}
-          {faqs && faqs.length > 0 && (
+          {!article && faqs && faqs.length > 0 && (
             <div className="space-y-4">
               <h2 className="font-display font-bold text-xl text-ink mb-6 text-center">Frequently Asked Questions</h2>
               <div className="space-y-3">
@@ -193,15 +205,6 @@ export function ToolLayout({
             </div>
           )}
         </section>
-        {/* Article / Educational Content */}
-        {article && (
-          <section className="container mx-auto px-4 max-w-4xl mt-6 mb-8">
-            <div className="bg-surface/50 border border-border/60 rounded-2xl p-6 md:p-8">
-              <h2 className="font-display font-bold text-xl text-ink mb-6">About This Tool</h2>
-              <div className="font-sans text-sm text-slate leading-relaxed space-y-4 whitespace-pre-wrap">{article}</div>
-            </div>
-          </section>
-        )}
         {/* Related Tools Cross-linking */}
         {relatedTools && relatedTools.length > 0 && (
           <section className="container mx-auto px-4 max-w-6xl mt-12 mb-6 w-full">

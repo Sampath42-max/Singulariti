@@ -10,7 +10,7 @@ import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Plus, Hash } from 'lucide-react';
 
-export function PageCounterClient() {
+export function PageCounterClient({ article }: { article?: string }) {
   const [files, setFiles] = useState<File[]>([]);
   const [fileCounts, setFileCounts] = useState<{ fileName: string; pages: number }[]>([]);
   const [totalCount, setTotalCount] = useState<number | null>(null);
@@ -80,6 +80,7 @@ export function PageCounterClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Select one or multiple PDF documents.",
         "The tool will instantly analyze the files and display the page count for each.",

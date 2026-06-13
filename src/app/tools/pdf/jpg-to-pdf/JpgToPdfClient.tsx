@@ -10,7 +10,7 @@ import { imagesToPDF, ImageToPDFSettings } from '@/lib/pdf/pdfHelpers';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { ArrowUp, ArrowDown, Trash2, Plus, Image as ImageIcon, Settings } from 'lucide-react';
 
-export function JpgToPdfClient() {
+export function JpgToPdfClient({ article }: { article?: string }) {
   const [files, setFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<Record<string, string>>({});
   const [pageSize, setPageSize] = useState<'A4' | 'Letter' | 'fit'>('A4');
@@ -105,6 +105,7 @@ export function JpgToPdfClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload one or more JPG/JPEG images.",
         "Drag and drop the image thumbnails to rearrange their order.",

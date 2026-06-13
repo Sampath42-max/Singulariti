@@ -10,7 +10,7 @@ import { formatFileSize } from '@/lib/fileHelpers';
 import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 import { FileText, Eye, Info } from 'lucide-react';
 
-export function MetadataViewerClient() {
+export function MetadataViewerClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [metadata, setMetadata] = useState<PDFMetadata | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -81,6 +81,7 @@ export function MetadataViewerClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload a PDF file to analyze its metadata.",
         "The tool will instantly read and display hidden information like Author, Creator, Producer, and Dates.",

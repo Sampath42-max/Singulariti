@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from 'next/dynamic';
-import { ToolContentBlock } from '@/components/seo/ToolContentBlock';
 
 const ExtractPdfPagesClient = dynamic(
   () => import('./ExtractPdfPagesClient').then((m) => m.ExtractPdfPagesClient),
@@ -15,8 +14,8 @@ interface Props {
 export function ExtractPdfPagesPageClient({ article }: Props) {
   return (
     <>
-      <ExtractPdfPagesClient />
-      <ToolContentBlock utilityId="extract-pdf-pages" article={article} />
+      <ExtractPdfPagesClient article={article} />
+      
     </>
   );
 }

@@ -12,7 +12,7 @@ import { formatFileSize } from '@/lib/fileHelpers';
 import { ArrowUp, ArrowDown, Trash2, Plus, FileText } from 'lucide-react';
 import { checkPdfPasswordProtected, validatePdfFile, getPdfErrorMessage } from '@/lib/pdf/pdfValidation';
 
-export function MergePdfClient() {
+export function MergePdfClient({ article }: { article?: string }) {
   const [files, setFiles] = useState<File[]>([]);
   const [pageCounts, setPageCounts] = useState<Record<string, number>>({});
   const [isProcessing, setIsProcessing] = useState(false);
@@ -156,35 +156,7 @@ export function MergePdfClient() {
           answer: "Yes, this tool is ideal for sensitive documents. Because it runs 100% locally using client-side JavaScript, your files never leave your computer and are never uploaded to our servers."
         }
       ]}
-      article={`
-## The Importance of Secure PDF Merging
-
-In the modern digital workplace, the Portable Document Format (PDF) remains the standard for sharing final, non-editable documents. Often, individuals need to compile multiple reports, legal contracts, or scanned receipts into a single, cohesive file. A reliable **Merge PDF** tool simplifies this process.
-
-### Why Local Processing Matters
-
-Most online PDF utilities require you to upload your files to a remote cloud server. The server processes the files and provides a download link. While convenient, this workflow introduces significant privacy risks:
-
-1. **Data Interception**: Files transferred over the internet are vulnerable, even with encryption.
-2. **Server Storage**: Uploaded files reside on third-party servers. Although privacy policies may promise deletion within 24 hours, you have no technical guarantee.
-3. **Network Delays**: Uploading and downloading large, high-resolution PDFs takes time and consumes bandwidth.
-
-By executing the PDF merge **entirely locally in your browser**, Singulariti eliminates these risks. The PDF processing library compiles the binary data directly in your computer's RAM. The files never leave your device.
-
-### How the Merge Operation Works
-
-Under the hood, a PDF document is a complex hierarchy of objects, dictionaries, and byte-offsets. When you merge PDFs:
-
-- The utility parses the cross-reference table of each document.
-- It extracts the pages and their associated resources (fonts, images, annotations).
-- It generates a new, unified catalog tree and writes a continuous stream of bytes.
-
-Because this logic runs natively in your browser using modern Web APIs, the computational overhead is incredibly low.
-
-### Best Practices for Compiling Documents
-
-When assembling a final document, order matters. Ensure that your title page or executive summary is placed first in the queue. You can easily reorder files using the up and down arrows in the interface. Once the merge is complete, the resulting file is functionally identical to a PDF created natively from a word processor, preserving all vector data and text searchability.
-      `}
+      article={article}
       title="Merge PDF"
       description="Combine multiple PDF documents into a single file quickly and securely. All processing happens locally in your browser."
       categoryName="PDF Tools"

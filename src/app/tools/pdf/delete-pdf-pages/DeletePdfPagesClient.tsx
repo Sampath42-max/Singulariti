@@ -15,7 +15,7 @@ import { readPdfFile } from '@/lib/pdf/readPdfFile';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Trash2, CheckCircle2 } from 'lucide-react';
 
-export function DeletePdfPagesClient() {
+export function DeletePdfPagesClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [deletedPages, setDeletedPages] = useState<Set<number>>(new Set());
@@ -111,6 +111,7 @@ export function DeletePdfPagesClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload your PDF document to the tool.",
         "View all pages as thumbnails and select the ones you wish to delete.",

@@ -15,7 +15,7 @@ import { readPdfFile } from '@/lib/pdf/readPdfFile';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, RotateCw, RefreshCw } from 'lucide-react';
 
-export function RotatePdfClient() {
+export function RotatePdfClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [pageRotations, setPageRotations] = useState<Record<number, number>>({});
@@ -122,6 +122,7 @@ export function RotatePdfClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload a PDF with incorrectly oriented pages.",
         "Click the rotate buttons on individual page thumbnails, or rotate all pages at once.",

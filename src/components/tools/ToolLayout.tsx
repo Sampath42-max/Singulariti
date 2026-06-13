@@ -151,7 +151,7 @@ export function ToolLayout({
               {privacyLabel || (() => {
                 const cat = (categoryName || '').toLowerCase();
                 if (cat.includes('pdf')) {
-                  return "This tool may temporarily send files to a secure backend for processing, then deletes them immediately after processing.";
+                  return "This tool processes files locally in your browser. Nothing is uploaded to any server.";
                 }
                 if (cat.includes('image') || cat.includes('editing')) {
                   return "Images are processed locally in your browser. Nothing is uploaded to any server.";
@@ -215,7 +215,7 @@ export function ToolLayout({
           )}
 
           {/* How to Use */}
-          {howToUse && howToUse.length > 0 && (
+          {!article && howToUse && howToUse.length > 0 && (
             <div className="bg-surface/50 border border-border/60 rounded-2xl p-6 md:p-8">
               <h2 className="font-display font-bold text-xl text-ink mb-6">How to Use</h2>
               <ol className="space-y-4">
@@ -232,7 +232,7 @@ export function ToolLayout({
           )}
 
           {/* FAQs */}
-          {faqs && faqs.length > 0 && (
+          {!article && faqs && faqs.length > 0 && (
             <div className="space-y-4">
               <h2 className="font-display font-bold text-xl text-ink mb-6 text-center">Frequently Asked Questions</h2>
               <div className="space-y-3">

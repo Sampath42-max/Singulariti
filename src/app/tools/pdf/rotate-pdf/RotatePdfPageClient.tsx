@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from 'next/dynamic';
-import { ToolContentBlock } from '@/components/seo/ToolContentBlock';
 
 const RotatePdfClient = dynamic(
   () => import('./RotatePdfClient').then((m) => m.RotatePdfClient),
@@ -15,8 +14,8 @@ interface Props {
 export function RotatePdfPageClient({ article }: Props) {
   return (
     <>
-      <RotatePdfClient />
-      <ToolContentBlock utilityId="rotate-pdf" article={article} />
+      <RotatePdfClient article={article} />
+      
     </>
   );
 }

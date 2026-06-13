@@ -15,7 +15,7 @@ import { readPdfFile } from '@/lib/pdf/readPdfFile';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, CheckSquare, Square, Download } from 'lucide-react';
 
-export function ExtractPdfPagesClient() {
+export function ExtractPdfPagesClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [extractedPages, setExtractedPages] = useState<Set<number>>(new Set());
@@ -119,6 +119,7 @@ export function ExtractPdfPagesClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Select and upload the PDF file you want to extract pages from.",
         "Click on the page thumbnails to select the specific pages you need.",

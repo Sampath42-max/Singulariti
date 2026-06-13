@@ -11,7 +11,7 @@ import { parsePageRanges, checkPdfPasswordProtected, validatePdfFile, getPdfErro
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Sliders, Scissors } from 'lucide-react';
 
-export function SplitPdfClient() {
+export function SplitPdfClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [pageCount, setPageCount] = useState<number | null>(null);
   const [rangeInput, setRangeInput] = useState('');
@@ -91,6 +91,7 @@ export function SplitPdfClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload a multi-page PDF document.",
         "Specify the page ranges where you want to split the document.",

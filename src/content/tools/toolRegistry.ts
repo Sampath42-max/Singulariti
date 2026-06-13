@@ -4368,6 +4368,196 @@ export const toolRegistry: UtilityRegistryItem[] = [
       "meta-title-checker",
       "meta-description-checker"
     ]
+  },
+  {
+    "id": "gif-maker",
+    "name": "GIF Maker",
+    "sectionId": "image",
+    "subSectionId": "image-utility",
+    "utilityUrl": "/image/animation/gif-maker",
+    "guideSlug": "gif-maker-guide",
+    "shortDescription": "Create animated GIF files from sequence of images locally.",
+    "inputType": [
+      "Multiple Image Files (PNG, JPG, WebP)"
+    ],
+    "outputType": [
+      "Animated GIF File"
+    ],
+    "operationType": "generator",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
+  },
+  {
+    "id": "heic-to-jpg",
+    "name": "HEIC to JPG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "utilityUrl": "/image/animation/heic-to-jpg",
+    "guideSlug": "heic-to-jpg-guide",
+    "shortDescription": "Convert HEIC photos from iPhone/iPad to standard JPEG files locally.",
+    "inputType": [
+      "HEIC Photo File"
+    ],
+    "outputType": [
+      "JPEG Image File"
+    ],
+    "operationType": "converter",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
+  },
+  {
+    "id": "cron-generator",
+    "name": "CRON Expression Generator",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/cron-generator",
+    "guideSlug": "cron-generator-guide",
+    "shortDescription": "Generate and decode CRON schedule expressions visually with plain English explanations.",
+    "inputType": [
+      "Visual schedule selections"
+    ],
+    "outputType": [
+      "CRON Expression String"
+    ],
+    "operationType": "generator",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
+  },
+  {
+    "id": "password-generator",
+    "name": "Password Generator",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/password-generator",
+    "guideSlug": "password-generator-guide",
+    "shortDescription": "Generate strong, cryptographically secure passwords locally in your browser.",
+    "inputType": [
+      "Password length and character set options"
+    ],
+    "outputType": [
+      "Secure Plain Text Password"
+    ],
+    "operationType": "generator",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
+  },
+  {
+    "id": "bcrypt-generator",
+    "name": "Bcrypt Hash Generator",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/bcrypt-generator",
+    "guideSlug": "bcrypt-generator-guide",
+    "shortDescription": "Generate and verify secure bcrypt password hashes locally in your browser.",
+    "inputType": [
+      "Plain text password and round parameters"
+    ],
+    "outputType": [
+      "Bcrypt Hash String"
+    ],
+    "operationType": "generator",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
+  },
+  {
+    "id": "css-gradient-generator",
+    "name": "CSS Gradient Generator",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/css-gradient-generator",
+    "guideSlug": "css-gradient-generator-guide",
+    "shortDescription": "Create colorful CSS gradients and copy CSS code snippets instantly.",
+    "inputType": [
+      "Color stops and angle directions"
+    ],
+    "outputType": [
+      "CSS linear/radial gradient code"
+    ],
+    "operationType": "generator",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
+  },
+  {
+    "id": "css-box-shadow",
+    "name": "CSS Box Shadow Generator",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/css-box-shadow",
+    "guideSlug": "css-box-shadow-guide",
+    "shortDescription": "Generate box-shadow CSS styles with interactive visual previews.",
+    "inputType": [
+      "Shadow offsets, blur, spread and color parameters"
+    ],
+    "outputType": [
+      "CSS box-shadow code snippet"
+    ],
+    "operationType": "generator",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
+  },
+  {
+    "id": "color-contrast-checker",
+    "name": "WCAG Color Contrast Checker",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/color-contrast-checker",
+    "guideSlug": "color-contrast-checker-guide",
+    "shortDescription": "Check contrast ratio of text and background colors according to WCAG standards.",
+    "inputType": [
+      "Foreground and background HEX/RGB colors"
+    ],
+    "outputType": [
+      "Contrast ratio and WCAG compliance status"
+    ],
+    "operationType": "utility",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
+  },
+  {
+    "id": "svg-optimizer",
+    "name": "SVG Optimizer",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/svg-optimizer",
+    "guideSlug": "svg-optimizer-guide",
+    "shortDescription": "Optimize and minify SVG files by removing metadata, comments, and redundant attributes.",
+    "inputType": [
+      "Raw SVG Image File / Code"
+    ],
+    "outputType": [
+      "Optimized Minified SVG Output"
+    ],
+    "operationType": "compressor",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
+  },
+  {
+    "id": "pdf-image-extractor",
+    "name": "PDF Image Extractor",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "utilityUrl": "/tools/dev/pdf-image-extractor",
+    "guideSlug": "pdf-image-extractor-guide",
+    "shortDescription": "Extract all embedded images from a PDF file locally in your browser.",
+    "inputType": [
+      "PDF Document (.pdf)"
+    ],
+    "outputType": [
+      "Extracted Image Files (PNG, JPG)"
+    ],
+    "operationType": "converter",
+    "runsInBrowser": true,
+    "requiresBackend": false,
+    "hasFormula": false
   }
 ];
 

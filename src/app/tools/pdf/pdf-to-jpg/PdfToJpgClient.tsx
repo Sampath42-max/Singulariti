@@ -15,7 +15,7 @@ import { readPdfFile } from '@/lib/pdf/readPdfFile';
 import { formatFileSize, dataUrlToBlob } from '@/lib/fileHelpers';
 import { FileText, Download, FileImage, Image as ImageIcon } from 'lucide-react';
 
-export function PdfToJpgClient() {
+export function PdfToJpgClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -120,6 +120,7 @@ export function PdfToJpgClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload the PDF you want to convert into images.",
         "The tool will render each page of the PDF into a high-quality JPG image.",

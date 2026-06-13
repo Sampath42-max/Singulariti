@@ -11,7 +11,7 @@ import { protectPDFDocument } from '@/lib/pdf/pdfHelpers';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 
-export function ProtectPdfClient() {
+export function ProtectPdfClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -85,6 +85,7 @@ export function ProtectPdfClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload your PDF document.",
         "Enter a strong password to encrypt the file.",

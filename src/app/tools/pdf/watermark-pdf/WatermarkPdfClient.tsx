@@ -28,7 +28,7 @@ const getTextWidth = (text: string, size: number) => {
 };
 
 
-export function WatermarkPdfClient() {
+export function WatermarkPdfClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [pdfPageSize, setPdfPageSize] = useState<{ width: number; height: number } | null>(null);
@@ -363,6 +363,7 @@ export function WatermarkPdfClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload your PDF document.",
         "Type the text you want to use as a watermark and adjust the size, opacity, and angle.",

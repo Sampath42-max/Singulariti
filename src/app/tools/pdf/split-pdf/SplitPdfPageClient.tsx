@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from 'next/dynamic';
-import { ToolContentBlock } from '@/components/seo/ToolContentBlock';
 
 const SplitPdfClient = dynamic(
   () => import('./SplitPdfClient').then((m) => m.SplitPdfClient),
@@ -15,8 +14,8 @@ interface Props {
 export function SplitPdfPageClient({ article }: Props) {
   return (
     <>
-      <SplitPdfClient />
-      <ToolContentBlock utilityId="split-pdf" article={article} />
+      <SplitPdfClient article={article} />
+      
     </>
   );
 }

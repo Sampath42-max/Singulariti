@@ -1,0 +1,2460 @@
+[
+  {
+    "id": "image-compressor",
+    "name": "Image Compressor",
+    "sectionId": "image",
+    "subSectionId": "image-compression",
+    "shortDescription": "Reduce image file size while keeping quality. Free, secure, no upload to server.",
+    "inputType": [
+      "Large File / Document"
+    ],
+    "outputType": [
+      "Compressed File / Document"
+    ],
+    "operationType": "compressor"
+  },
+  {
+    "id": "jpg-compressor",
+    "name": "JPG Compressor",
+    "sectionId": "image",
+    "subSectionId": "image-compression",
+    "shortDescription": "Reduce JPG file size while keeping quality. Free, secure, no upload to server.",
+    "inputType": [
+      "Large File / Document"
+    ],
+    "outputType": [
+      "Compressed File / Document"
+    ],
+    "operationType": "compressor"
+  },
+  {
+    "id": "jpeg-compressor",
+    "name": "JPEG Compressor",
+    "sectionId": "image",
+    "subSectionId": "image-compression",
+    "shortDescription": "Reduce JPEG file size while keeping quality. Free, secure, no upload to server.",
+    "inputType": [
+      "Large File / Document"
+    ],
+    "outputType": [
+      "Compressed File / Document"
+    ],
+    "operationType": "compressor"
+  },
+  {
+    "id": "png-compressor",
+    "name": "PNG Compressor",
+    "sectionId": "image",
+    "subSectionId": "image-compression",
+    "shortDescription": "Reduce PNG file size while keeping quality. Free, secure, no upload to server.",
+    "inputType": [
+      "Large File / Document"
+    ],
+    "outputType": [
+      "Compressed File / Document"
+    ],
+    "operationType": "compressor"
+  },
+  {
+    "id": "webp-compressor",
+    "name": "WebP Compressor",
+    "sectionId": "image",
+    "subSectionId": "image-compression",
+    "shortDescription": "Reduce WebP file size while keeping quality. Free, secure, no upload to server.",
+    "inputType": [
+      "Large File / Document"
+    ],
+    "outputType": [
+      "Compressed File / Document"
+    ],
+    "operationType": "compressor"
+  },
+  {
+    "id": "svg-compressor",
+    "name": "SVG Compressor",
+    "sectionId": "image",
+    "subSectionId": "image-compression",
+    "shortDescription": "Minify SVG files to reduce file size. Free, secure, no upload to server.",
+    "inputType": [
+      "Large File / Document"
+    ],
+    "outputType": [
+      "Compressed File / Document"
+    ],
+    "operationType": "compressor"
+  },
+  {
+    "id": "jpg-to-png",
+    "name": "JPG to PNG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert JPG images to PNG format with transparency support. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "png-to-jpg",
+    "name": "PNG to JPG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert PNG images to JPG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "jpg-to-webp",
+    "name": "JPG to WebP",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert JPG images to WebP format for better compression. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "png-to-webp",
+    "name": "PNG to WebP",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert PNG images to WebP format for better compression. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "webp-to-jpg",
+    "name": "WebP to JPG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert WebP images to JPG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "webp-to-png",
+    "name": "WebP to PNG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert WebP images to PNG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "jpg-to-jpeg",
+    "name": "JPG to JPEG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert JPG images to JPEG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "jpeg-to-jpg",
+    "name": "JPEG to JPG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert JPEG images to JPG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "svg-to-png",
+    "name": "SVG to PNG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert SVG vector images to PNG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "svg-to-jpg",
+    "name": "SVG to JPG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert SVG vector images to JPG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "svg-to-webp",
+    "name": "SVG to WebP",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert SVG vector images to WebP format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "png-to-svg",
+    "name": "PNG to SVG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert PNG images to SVG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "jpg-to-svg",
+    "name": "JPG to SVG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert JPG images to SVG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "webp-to-svg",
+    "name": "WebP to SVG",
+    "sectionId": "image",
+    "subSectionId": "image-conversion",
+    "shortDescription": "Convert WebP images to SVG format. Free, secure, no upload to server.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "image-metadata-viewer",
+    "name": "Image Metadata Viewer",
+    "sectionId": "image",
+    "subSectionId": "image-utility",
+    "shortDescription": "View EXIF and file metadata from an image. Free, secure, no upload to server.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "image-dimension-checker",
+    "name": "Image Dimension Checker",
+    "sectionId": "image",
+    "subSectionId": "image-utility",
+    "shortDescription": "Instantly check exact width, height, and aspect ratio of an image.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "image-format-detector",
+    "name": "Image Format Detector",
+    "sectionId": "image",
+    "subSectionId": "image-utility",
+    "shortDescription": "Detect the true MIME type and format of an image file.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "color-picker-from-image",
+    "name": "Color Picker From Image",
+    "sectionId": "image",
+    "subSectionId": "image-utility",
+    "shortDescription": "Click anywhere on an image to extract precise HEX and RGB colors.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "image-color-palette-extractor",
+    "name": "Image Color Palette Extractor",
+    "sectionId": "image",
+    "subSectionId": "image-utility",
+    "shortDescription": "Automatically extract the dominant color palette from any image.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "image-to-base64",
+    "name": "Image to Base64",
+    "sectionId": "image",
+    "subSectionId": "image-developer",
+    "shortDescription": "Convert image files to Base64 strings for CSS and HTML embedding.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "base64-to-image",
+    "name": "Base64 to Image",
+    "sectionId": "image",
+    "subSectionId": "image-developer",
+    "shortDescription": "Convert Base64 data URI strings back into downloadable image files.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "crop-image",
+    "name": "Crop Image",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Crop images easily to remove unwanted edges or fit specific aspect ratios locally.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "image-resizer",
+    "name": "Image Resizer",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Resize image dimensions (width & height) quickly while maintaining aspect ratio.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "rotate-image",
+    "name": "Rotate Image",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Rotate images by custom angles or standard 90-degree increments.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "flip-image",
+    "name": "Flip Image",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Mirror images horizontally or vertically instantly.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "image-upscaler",
+    "name": "Image Upscaler",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Enlarge and upscale images smoothly with advanced browser algorithms.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "image-enhancer",
+    "name": "Image Enhancer",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Auto-enhance image clarity, exposure, and color.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "image-sharpen",
+    "name": "Sharpen Image",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Sharpen blurry images to improve crispness and detail.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "image-denoiser",
+    "name": "Denoise Image",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Remove noise and grain from photos for a smoother look.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "brightness-and-contrast-adjuster",
+    "name": "Brightness & Contrast",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Adjust image brightness, contrast, highlights, and shadows.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "color-adjuster",
+    "name": "Color Adjuster",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Fine-tune image saturation, hue, vibrance, and temperature.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "grayscale",
+    "name": "Grayscale Converter",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Convert images to pure grayscale instantly.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "color-to-black-and-white",
+    "name": "Color to Black & White",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Apply high-contrast black and white filters to photos.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "black-and-white-to-color",
+    "name": "Black & White to Color",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Add vintage and warmth color tints to black & white images.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "blur-image",
+    "name": "Blur Image",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Apply adjustable gaussian blur to your images.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "pixelate-image",
+    "name": "Pixelate Image",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Censor or pixelate images with an adjustable pixel size.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "add-watermark-to-image",
+    "name": "Add Watermark",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Overlay custom text watermarks repeatedly to protect images.",
+    "inputType": [
+      "File Canvas / Canvas Drawings"
+    ],
+    "outputType": [
+      "Modified Document File"
+    ],
+    "operationType": "editor"
+  },
+  {
+    "id": "add-text-on-image",
+    "name": "Add Text",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Write customizable text directly on top of your images.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "add-logo-overlay",
+    "name": "Add Logo Overlay",
+    "sectionId": "editing",
+    "subSectionId": "editing-tools",
+    "shortDescription": "Place a secondary logo or image perfectly on top of another image.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "merge-pdf",
+    "name": "Merge PDF",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-management",
+    "shortDescription": "Combine multiple PDF files into one directly in your browser.",
+    "inputType": [
+      "File Canvas / Canvas Drawings"
+    ],
+    "outputType": [
+      "Modified Document File"
+    ],
+    "operationType": "editor"
+  },
+  {
+    "id": "split-pdf",
+    "name": "Split PDF",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-management",
+    "shortDescription": "Split a PDF into multiple documents by defining page ranges.",
+    "inputType": [
+      "File Canvas / Canvas Drawings"
+    ],
+    "outputType": [
+      "Modified Document File"
+    ],
+    "operationType": "editor"
+  },
+  {
+    "id": "rotate-pdf",
+    "name": "Rotate PDF",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-management",
+    "shortDescription": "Rotate pages in a PDF document by 90, 180, or 270 degrees.",
+    "inputType": [
+      "File Canvas / Canvas Drawings"
+    ],
+    "outputType": [
+      "Modified Document File"
+    ],
+    "operationType": "editor"
+  },
+  {
+    "id": "delete-pdf-pages",
+    "name": "Delete PDF Pages",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-management",
+    "shortDescription": "Remove pages from your PDF document easily in your browser.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "rearrange-pdf-pages",
+    "name": "Rearrange PDF Pages",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-management",
+    "shortDescription": "Reorder pages of a PDF document using drag and drop.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "extract-pdf-pages",
+    "name": "Extract PDF Pages",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-management",
+    "shortDescription": "Extract specific pages or page ranges from your PDF document.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "jpg-to-pdf",
+    "name": "JPG to PDF",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-conversion",
+    "shortDescription": "Convert JPG, JPEG, and PNG images into a PDF document.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "pdf-to-jpg",
+    "name": "PDF to JPG",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-conversion",
+    "shortDescription": "Extract pages of a PDF as high-quality JPG images.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "compress-pdf",
+    "name": "Compress PDF",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-utility",
+    "shortDescription": "Reduce the file size of your PDF documents in the browser.",
+    "inputType": [
+      "Large File / Document"
+    ],
+    "outputType": [
+      "Compressed File / Document"
+    ],
+    "operationType": "compressor"
+  },
+  {
+    "id": "sign-pdf",
+    "name": "Sign PDF",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-utility",
+    "shortDescription": "Draw or upload a signature and place it on your PDF pages.",
+    "inputType": [
+      "File Canvas / Canvas Drawings"
+    ],
+    "outputType": [
+      "Modified Document File"
+    ],
+    "operationType": "editor"
+  },
+  {
+    "id": "watermark-pdf",
+    "name": "Add Watermark to PDF",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-utility",
+    "shortDescription": "Add text or image watermarks to your PDF pages.",
+    "inputType": [
+      "File Canvas / Canvas Drawings"
+    ],
+    "outputType": [
+      "Modified Document File"
+    ],
+    "operationType": "editor"
+  },
+  {
+    "id": "protect-pdf",
+    "name": "Protect PDF",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-utility",
+    "shortDescription": "Encrypt and lock your PDF document with a password.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "metadata-viewer",
+    "name": "PDF Metadata Viewer",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-utility",
+    "shortDescription": "View and inspect hidden metadata of any PDF document.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "page-counter",
+    "name": "PDF Page Counter",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-utility",
+    "shortDescription": "Count pages of multiple PDF files and calculate totals.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "pdf-to-text",
+    "name": "PDF to Text",
+    "sectionId": "pdf",
+    "subSectionId": "pdf-text",
+    "shortDescription": "Extract readable text from a PDF document.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "qr-code-generator",
+    "name": "QR Code Generator",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Generate custom QR codes for text, URLs, Wi-Fi, UPI, email, phone, and more.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "qr-code-scanner",
+    "name": "QR Code Scanner",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Scan QR codes using camera, image files, or PDF documents.",
+    "inputType": [
+      "Camera Stream",
+      "Image File Upload"
+    ],
+    "outputType": [
+      "Decoded Text / Action Link"
+    ],
+    "operationType": "scanner"
+  },
+  {
+    "id": "url-qr-code-generator",
+    "name": "URL QR Code Generator",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Convert a website URL into a scannable QR code.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "text-qr-code-generator",
+    "name": "Text QR Code Generator",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Convert plain text into a scannable QR code.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "wifi-qr-code-generator",
+    "name": "Wi-Fi QR Code Generator",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Create a Wi-Fi QR code to easily share network credentials.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "vcard-qr-code-generator",
+    "name": "vCard QR Code Generator",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Generate a vCard QR code to easily share contact information.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "email-qr-code-generator",
+    "name": "Email QR Code Generator",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Generate a QR code that opens an email draft with recipient and subject pre-filled.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "phone-number-qr-code-generator",
+    "name": "Phone Number QR Code Generator",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Create a QR code that initiates a phone call when scanned.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "sms-qr-code-generator",
+    "name": "SMS QR Code Generator",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Create a QR code that opens an SMS with a prefilled message.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "upi-qr-code-generator",
+    "name": "UPI QR Code Generator",
+    "sectionId": "qr",
+    "subSectionId": "qr-qr-tools",
+    "shortDescription": "Generate QR codes for UPI payments.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "emi-calculator",
+    "name": "EMI Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-financial",
+    "shortDescription": "Calculate monthly loan EMI, total interest, and total repayment amount.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "sip-calculator",
+    "name": "SIP Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-financial",
+    "shortDescription": "Estimate maturity value and estimated returns of your mutual fund SIP investments.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "compound-interest-calculator",
+    "name": "Compound Interest Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-financial",
+    "shortDescription": "Calculate future compound interest earnings with flexible compounding frequencies.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "cagr-calculator",
+    "name": "CAGR Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-financial",
+    "shortDescription": "Calculate Compound Annual Growth Rate of investments over years.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "fd-calculator",
+    "name": "FD Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-financial",
+    "shortDescription": "Calculate Fixed Deposit maturity amount and interest earned.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "roi-calculator",
+    "name": "ROI Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-financial",
+    "shortDescription": "Calculate Return on Investment percentage and annualized performance.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "currency-converter",
+    "name": "Currency Converter",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-financial",
+    "shortDescription": "Convert between different currencies using standard exchange rates.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "mortgage-calculator",
+    "name": "Mortgage Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-financial",
+    "shortDescription": "Estimate monthly mortgage payments, including property tax and home insurance.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "loan-calculator",
+    "name": "Loan Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-financial",
+    "shortDescription": "Calculate monthly loan payments, total interest, and amortized schedules.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "income-tax-calculator",
+    "name": "Income Tax Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-tax-business",
+    "shortDescription": "Estimate income tax payable under Old and New tax regimes with deductions.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "gst-calculator",
+    "name": "GST Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-tax-business",
+    "shortDescription": "Calculate GST amounts by adding or removing GST with custom rates.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "discount-calculator",
+    "name": "Discount Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-tax-business",
+    "shortDescription": "Calculate discount savings, final sales price, and additional discounts.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "profit-calculator",
+    "name": "Profit Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-tax-business",
+    "shortDescription": "Calculate cost, selling price, profit amount, and profit margins.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "youtube-earnings-calculator",
+    "name": "YouTube Earnings Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-tax-business",
+    "shortDescription": "Estimate daily, monthly, and yearly YouTube video creation earnings.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "adsense-revenue-calculator",
+    "name": "AdSense Revenue Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-tax-business",
+    "shortDescription": "Estimate Google AdSense earnings based on page views, CPC, and CTR.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "simple-interest-calculator",
+    "name": "Simple Interest Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-tax-business",
+    "shortDescription": "Calculate simple interest earnings, principal amounts, or active interest rates.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "salary-calculator",
+    "name": "Salary Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-tax-business",
+    "shortDescription": "Convert salary figures between hourly, daily, weekly, monthly, and annual amounts.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "percentage-calculator",
+    "name": "Percentage Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-math-science",
+    "shortDescription": "Compute percentages, percentage increases, decreases, and fractions.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "cgpa-calculator",
+    "name": "CGPA Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-math-science",
+    "shortDescription": "Calculate cumulative grade point average (CGPA) and convert to percentages.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "scientific-calculator",
+    "name": "Scientific Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-math-science",
+    "shortDescription": "Full scientific calculator supporting trigonometry, logs, factorials, and powers.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "basic-calculator",
+    "name": "Basic Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-math-science",
+    "shortDescription": "Simple mathematical calculator for addition, subtraction, multiplication, and division.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "age-calculator",
+    "name": "Age Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-health-date",
+    "shortDescription": "Calculate chronological age in years, months, and days, and countdown to next birthday.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "date-difference-calculator",
+    "name": "Date Difference Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-health-date",
+    "shortDescription": "Calculate exact years, months, and days difference between two selected dates.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "bmi-calculator",
+    "name": "BMI Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-health-date",
+    "shortDescription": "Calculate body mass index (BMI) and identify healthy weight ranges.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "calorie-calculator",
+    "name": "Calorie Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-health-date",
+    "shortDescription": "Calculate BMR and daily calorie maintenance requirements based on fitness goals.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "tip-calculator",
+    "name": "Tip Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-health-date",
+    "shortDescription": "Calculate split bills, tip percentages, and exact share payments.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "time-duration-calculator",
+    "name": "Time Duration Calculator",
+    "sectionId": "calculators",
+    "subSectionId": "calculators-health-date",
+    "shortDescription": "Calculate exact elapsed time durations in hours, minutes, and seconds between times.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "word-counter",
+    "name": "Word Counter",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Count words, characters, sentences, and paragraphs in real time.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "character-counter",
+    "name": "Character Counter",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Count characters and spaces in your text instantly.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "case-converter",
+    "name": "Case Converter",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Convert text between uppercase, lowercase, sentence case, and title case.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "remove-duplicate-lines",
+    "name": "Remove Duplicate Lines",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Remove duplicate lines from text or lists instantly.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "text-sorter",
+    "name": "Text Sorter",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Sort text lines alphabetically or reverse list order.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "text-compare",
+    "name": "Text Compare",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Compare two text blocks side-by-side to highlight differences.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "text-diff",
+    "name": "Text Diff Checker",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Find differences between two versions of text with inline highlights.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "remove-extra-spaces",
+    "name": "Remove Extra Spaces",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Strip multiple spaces, trailing white spaces, and empty lines.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "line-counter",
+    "name": "Line Counter",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Count the total number of lines in a text document.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "sentence-counter",
+    "name": "Sentence Counter",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Count sentences in a block of text.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "paragraph-counter",
+    "name": "Paragraph Counter",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Count paragraphs in a block of text.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "text-reverser",
+    "name": "Text Reverser",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Reverse character letters or word orders.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "slug-generator",
+    "name": "Slug Generator",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Convert text to URL-friendly slugs.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "find-replace",
+    "name": "Find and Replace Text",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Find text patterns and replace with other values.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "text-uppercase",
+    "name": "Text to Uppercase",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Convert text to all capital letters.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "text-lowercase",
+    "name": "Text to Lowercase",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Convert text to all lowercase letters.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "capitalize-text",
+    "name": "Capitalize Text",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Capitalize the first letter of each sentence.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "title-case",
+    "name": "Title Case Converter",
+    "sectionId": "text",
+    "subSectionId": "text-text-manipulation",
+    "shortDescription": "Convert text to Title Case capitalization.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "lorem-ipsum",
+    "name": "Lorem Ipsum Generator",
+    "sectionId": "text",
+    "subSectionId": "text-generators",
+    "shortDescription": "Generate dummy Lorem Ipsum paragraphs for design layouts.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "random-text",
+    "name": "Random Text Generator",
+    "sectionId": "text",
+    "subSectionId": "text-generators",
+    "shortDescription": "Generate random strings, passwords, or alphanumeric lists.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "json-formatter",
+    "name": "JSON Formatter",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-formatters",
+    "shortDescription": "Prettify and format JSON data with customizable spacing.",
+    "inputType": [
+      "Code / Raw String"
+    ],
+    "outputType": [
+      "Formatted / Indented Code"
+    ],
+    "operationType": "formatter"
+  },
+  {
+    "id": "json-validator",
+    "name": "JSON Validator",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-formatters",
+    "shortDescription": "Validate and check JSON syntax structure.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "xml-formatter",
+    "name": "XML Formatter",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-formatters",
+    "shortDescription": "Format and beautify XML strings.",
+    "inputType": [
+      "Code / Raw String"
+    ],
+    "outputType": [
+      "Formatted / Indented Code"
+    ],
+    "operationType": "formatter"
+  },
+  {
+    "id": "yaml-formatter",
+    "name": "YAML Formatter",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-formatters",
+    "shortDescription": "Clean up and format YAML documents.",
+    "inputType": [
+      "Code / Raw String"
+    ],
+    "outputType": [
+      "Formatted / Indented Code"
+    ],
+    "operationType": "formatter"
+  },
+  {
+    "id": "sql-formatter",
+    "name": "SQL Formatter",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-formatters",
+    "shortDescription": "Format and beautify SQL queries.",
+    "inputType": [
+      "Code / Raw String"
+    ],
+    "outputType": [
+      "Formatted / Indented Code"
+    ],
+    "operationType": "formatter"
+  },
+  {
+    "id": "code-beautifier",
+    "name": "Code Beautifier",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-formatters",
+    "shortDescription": "Beautify HTML, CSS, and JS code formatting.",
+    "inputType": [
+      "Code / Raw String"
+    ],
+    "outputType": [
+      "Formatted / Indented Code"
+    ],
+    "operationType": "formatter"
+  },
+  {
+    "id": "base64-encoder-decoder",
+    "name": "Base64 Encoder/Decoder",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-encoders",
+    "shortDescription": "Encode plain text to Base64 or decode Base64 strings.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "url-encoder-decoder",
+    "name": "URL Encoder/Decoder",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-encoders",
+    "shortDescription": "Percent-encode or decode URL component parameters.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "jwt-decoder",
+    "name": "JWT Decoder",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-encoders",
+    "shortDescription": "Decode JWT headers and payload values locally.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "html-encoder-decoder",
+    "name": "HTML Encoder/Decoder",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-encoders",
+    "shortDescription": "Convert characters to HTML entities and decode them.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "html-minifier",
+    "name": "HTML Minifier",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-minifiers",
+    "shortDescription": "Compress HTML files to reduce loading size.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "css-minifier",
+    "name": "CSS Minifier",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-minifiers",
+    "shortDescription": "Minify CSS files to reduce loading size.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "js-minifier",
+    "name": "JS Minifier",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-minifiers",
+    "shortDescription": "Compress JavaScript code files to reduce loading size.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "regex-tester",
+    "name": "Regex Tester",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-minifiers",
+    "shortDescription": "Test and check regular expression patterns live.",
+    "inputType": [
+      "Interactive Keyboard Typings"
+    ],
+    "outputType": [
+      "Speed (WPM)",
+      "Accuracy Rate"
+    ],
+    "operationType": "test"
+  },
+  {
+    "id": "uuid-generator",
+    "name": "UUID Generator",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Generate RFC4122 compliant UUIDs (v4) instantly.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "hash-generator",
+    "name": "Hash Generator",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Generate SHA-256, SHA-512, MD5, and SHA-1 hashes.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "color-picker-tool",
+    "name": "Color Picker",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Pick colors, create gradients, and explore palettes.",
+    "inputType": [
+      "User Inputs"
+    ],
+    "outputType": [
+      "Processed Results"
+    ],
+    "operationType": "utility"
+  },
+  {
+    "id": "hex-to-rgb",
+    "name": "HEX to RGB Converter",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Convert HEX color codes to RGB format values.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "rgb-to-hex",
+    "name": "RGB to HEX Converter",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Convert RGB color codes to HEX format values.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "timestamp-converter",
+    "name": "Timestamp Converter",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Convert human dates to epoch timestamps and vice versa.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "unix-time-converter",
+    "name": "Unix Time Converter",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Show current Unix epoch time in seconds and milliseconds.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "markdown-previewer",
+    "name": "Markdown Previewer",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Compose Markdown formatting and render HTML preview live.",
+    "inputType": [
+      "HTML/CSS/JS Markup Code"
+    ],
+    "outputType": [
+      "Isolated Interactive Sandbox Preview"
+    ],
+    "operationType": "previewer"
+  },
+  {
+    "id": "html-previewer",
+    "name": "HTML Previewer",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Render raw HTML code elements live in a safe frame.",
+    "inputType": [
+      "HTML Code"
+    ],
+    "outputType": [
+      "Isolated Interactive Sandbox Preview"
+    ],
+    "operationType": "previewer"
+  },
+  {
+    "id": "web-compiler",
+    "name": "Web Compiler",
+    "sectionId": "dev",
+    "subSectionId": "dev-dev-utilities",
+    "shortDescription": "Write HTML, CSS, and JavaScript and see the results instantly in your browser.",
+    "inputType": [
+      "HTML Code",
+      "CSS Styles",
+      "JavaScript Code"
+    ],
+    "outputType": [
+      "Isolated Interactive Sandbox Preview"
+    ],
+    "operationType": "previewer"
+  },
+  {
+    "id": "length-converter",
+    "name": "Length Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert between kilometers, meters, centimeters, miles, and inches.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "weight-converter",
+    "name": "Weight Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert between kilograms, grams, pounds, ounces, and tons.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "temperature-converter",
+    "name": "Temperature Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert Celsius, Fahrenheit, and Kelvin scales.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "area-converter",
+    "name": "Area Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert between square meters, square feet, acres, and hectares.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "volume-converter",
+    "name": "Volume Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert liters, milliliters, gallons, and cubic meters.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "speed-converter",
+    "name": "Speed Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert km/h, mph, m/s, and knots.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "time-converter",
+    "name": "Time Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert hours, minutes, seconds, days, and weeks.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "data-storage-converter",
+    "name": "Data Storage Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert gigabytes, megabytes, terabytes, and bits.",
+    "inputType": [
+      "Numeric Parameters",
+      "Rates / Tenures"
+    ],
+    "outputType": [
+      "Calculated Metrics",
+      "Schedules"
+    ],
+    "operationType": "calculator"
+  },
+  {
+    "id": "fuel-efficiency-converter",
+    "name": "Fuel Efficiency Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert mpg, L/100km, and km/L values.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "angle-converter",
+    "name": "Angle Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert degrees, radians, and gradians.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "pressure-converter",
+    "name": "Pressure Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert Pascal, Bar, PSI, and Atmosphere units.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "energy-converter",
+    "name": "Energy Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert Joules, Calories, Kilowatt-hours, and BTUs.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "power-converter",
+    "name": "Power Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert Watts, Kilowatts, and Horsepower.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "frequency-converter",
+    "name": "Frequency Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert Hertz, Kilohertz, Megahertz, and Gigahertz.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "number-base-converter",
+    "name": "Number Base Converter",
+    "sectionId": "convert",
+    "subSectionId": "convert-conversions",
+    "shortDescription": "Convert binary, octal, decimal, and hexadecimal bases.",
+    "inputType": [
+      "Source Format File / Value"
+    ],
+    "outputType": [
+      "Target Format File / Value"
+    ],
+    "operationType": "converter"
+  },
+  {
+    "id": "meta-tag-generator",
+    "name": "Meta Tag Generator",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Generate HTML search engine tags (Title, Description, Robots).",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "meta-title-checker",
+    "name": "Meta Title Length Checker",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Verify that your web page titles meet standard SEO lengths.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "meta-description-checker",
+    "name": "Meta Description Length Checker",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Verify descriptions fit the Google snippet pixel length limits.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "seo-keyword-density",
+    "name": "Keyword Density Checker",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Analyze your page texts for keyword density optimization.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "seo-slug-generator",
+    "name": "Slug Generator",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Create search-friendly slugs for web page routing structures.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "robots-txt-generator",
+    "name": "Robots.txt Generator",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Generate robots.txt crawl directives files for web crawlers.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "sitemap-xml-generator",
+    "name": "Sitemap XML Generator",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Build search XML sitemap files to index page paths.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "open-graph-generator",
+    "name": "Open Graph Tag Generator",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Generate HTML OG metadata tags for Facebook, LinkedIn sharing.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "twitter-card-generator",
+    "name": "Twitter Card Generator",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Generate summary cards tags for Twitter formatting previews.",
+    "inputType": [
+      "Configuration Settings",
+      "Parameters"
+    ],
+    "outputType": [
+      "Generated Output String / Key"
+    ],
+    "operationType": "generator"
+  },
+  {
+    "id": "seo-word-count",
+    "name": "Word Count for SEO",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Measure keyword presence and total read lengths for articles.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  },
+  {
+    "id": "heading-structure-checker",
+    "name": "Heading Structure Checker",
+    "sectionId": "seo",
+    "subSectionId": "seo-seo-generators",
+    "shortDescription": "Analyze hierarchy structures (H1-H6 tags) of pasted code.",
+    "inputType": [
+      "Input Text / Domain"
+    ],
+    "outputType": [
+      "Validation Rules Report"
+    ],
+    "operationType": "checker"
+  }
+]

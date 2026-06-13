@@ -16,7 +16,7 @@ import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Edit2, Upload, PenTool, Check, Trash } from 'lucide-react';
 import { TransformableOverlay } from '@/components/ui/TransformableOverlay';
 
-export function SignPdfClient() {
+export function SignPdfClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [selectedPage, setSelectedPage] = useState(1);
@@ -251,6 +251,7 @@ export function SignPdfClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload the PDF document that requires a signature.",
         "Draw your signature using your mouse or touch screen, or type it out.",

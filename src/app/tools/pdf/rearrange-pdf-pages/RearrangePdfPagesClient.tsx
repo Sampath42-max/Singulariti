@@ -15,7 +15,7 @@ import { readPdfFile } from '@/lib/pdf/readPdfFile';
 import { formatFileSize } from '@/lib/fileHelpers';
 import { FileText, Move, ArrowLeft, ArrowRight } from 'lucide-react';
 
-export function RearrangePdfPagesClient() {
+export function RearrangePdfPagesClient({ article }: { article?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [pageOrder, setPageOrder] = useState<number[]>([]); // 0-based indices
@@ -130,6 +130,7 @@ export function RearrangePdfPagesClient() {
 
   return (
     <ToolLayout
+      article={article}
       howToUse={[
         "Upload the PDF document you want to reorder.",
         "Drag and drop the page thumbnails into your desired sequence.",
