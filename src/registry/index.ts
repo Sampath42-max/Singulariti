@@ -1,4 +1,5 @@
 import { EcosystemRegistry } from './types';
+import { getDynamicToolDescription } from './descriptions';
 
 export const registry: EcosystemRegistry = {
   categories: [
@@ -1351,6 +1352,16 @@ export const registry: EcosystemRegistry = {
     }
   ]
 };
+
+// Dynamically decorate tool descriptions and SEO descriptions
+registry.categories.forEach(category => {
+  category.collections.forEach(collection => {
+    collection.tools.forEach(tool => {
+      tool.description = getDynamicToolDescription(tool.id, tool.name, category.id, collection.id, 'description');
+      tool.seoDescription = getDynamicToolDescription(tool.id, tool.name, category.id, collection.id, 'seoDescription');
+    });
+  });
+});
 
 // Helper methods for easy lookup
 
