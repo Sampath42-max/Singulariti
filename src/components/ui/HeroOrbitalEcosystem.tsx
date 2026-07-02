@@ -71,6 +71,53 @@ export default function HeroOrbitalEcosystem() {
   const { resolvedTheme } = useTheme();
   const isDarkRef = useRef(false);
 
+  // High performance DOM element and selector caching
+  const elementCacheRef = useRef<Record<string, HTMLElement | null>>({});
+  const svgElementsCacheRef = useRef<{
+    ring1: SVGGElement | null;
+    ring2: SVGGElement | null;
+    innerHex: SVGGElement | null;
+  } | null>(null);
+
+  // Cached layout dimensions to prevent layout thrashing and forced reflows inside the loop
+  const layoutRef = useRef({
+    W: 0,
+    H: 0,
+    svgCx: 0,
+    svgCy: 0,
+    scaleX: 1,
+    scaleY: 1,
+    svgRectWidth: 360,
+    svgRectHeight: 360
+  });
+
+  const updateLayout = useCallback(() => {
+    const stage = stageRef.current;
+    const svgEl = svgRef.current;
+    if (!stage || !svgEl) return;
+
+    const W = stage.offsetWidth;
+    const H = stage.offsetHeight;
+    const svgRect = svgEl.getBoundingClientRect();
+    const stageRect = stage.getBoundingClientRect();
+    
+    const svgCx = svgRect.left - stageRect.left + svgRect.width / 2;
+    const svgCy = svgRect.top - stageRect.top + svgRect.height / 2;
+    const scaleX = svgRect.width / 360;
+    const scaleY = svgRect.height / 360;
+
+    layoutRef.current = {
+      W,
+      H,
+      svgCx,
+      svgCy,
+      scaleX,
+      scaleY,
+      svgRectWidth: svgRect.width,
+      svgRectHeight: svgRect.height
+    };
+  }, []);
+
   // Keep ref in sync so the rAF loop reads current value without stale closure
   useEffect(() => { activeRef.current = activeId; }, [activeId]);
   useEffect(() => { isDarkRef.current = resolvedTheme === "dark"; }, [resolvedTheme]);
@@ -88,7 +135,15 @@ export default function HeroOrbitalEcosystem() {
   });
 
   // ─── Mount ──────────────────────────────────────────────────────────────────
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+    // Initial measurement
+    updateLayout();
+    
+    // Listen to resize to recompute dimensions
+    window.addEventListener("resize", updateLayout);
+    return () => window.removeEventListener("resize", updateLayout);
+  }, [updateLayout]);
 
   // ─── Animation loop (60fps Canvas & DOM Transform Engine) ───────────────────
   const startAnimation = useCallback(() => {
@@ -98,6 +153,16 @@ export default function HeroOrbitalEcosystem() {
       const svgEl = svgRef.current;
       if (!canvas || !stage || !svgEl) return;
       const ctx = canvas.getContext("2d")!;
+
+      let layout = layoutRef.current;
+      if (layout.W === 0) {
+        updateLayout();
+        layout = layoutRef.current;
+        if (layout.W === 0) {
+          animRef.current = requestAnimationFrame(loop);
+          return;
+        }
+      }
 
       tRef.current += 0.008;
       
@@ -125,9 +190,9 @@ export default function HeroOrbitalEcosystem() {
       const orbitAngle = angleRef.current;
       const isDark = isDarkRef.current;
 
+      const { W, H, svgCx, svgCy, scaleX, scaleY } = layout;
+
       // Handle Canvas Resizing (with High DPI / Retina Support for premium sharpness)
-      const W = stage.offsetWidth;
-      const H = stage.offsetHeight;
       const dpr = window.devicePixelRatio || 1;
       
       if (canvas.width !== W * dpr || canvas.height !== H * dpr) {
@@ -139,15 +204,6 @@ export default function HeroOrbitalEcosystem() {
       }
       ctx.clearRect(0, 0, W, H);
 
-      // Extract precise SVG center coordinates relative to the Stage
-      const svgRect = svgEl.getBoundingClientRect();
-      const stageRect = stage.getBoundingClientRect();
-      const svgCx = svgRect.left - stageRect.left + svgRect.width / 2;
-      const svgCy = svgRect.top - stageRect.top + svgRect.height / 2;
-
-      // The Bulb is exactly at SVG coordinate (180, 175) in a 360x360 viewBox
-      const scaleX = svgRect.width / 360;
-      const scaleY = svgRect.height / 360;
       const bulbX = svgCx + (180 - 180) * scaleX; 
       const bulbY = svgCy + (175 - 180) * scaleY;
 
@@ -164,8 +220,6 @@ export default function HeroOrbitalEcosystem() {
         ctx.lineWidth = 1.5 - rippleT;
         ctx.stroke();
       }
-      // ── Canvas: Base Orbital Ring (Removed visual path line) ────────────────
-      // The nodes will still follow this path mathematically.
 
       // Responsive orbit radius based on screen size
       const isMobile = W < 640;
@@ -256,7 +310,13 @@ export default function HeroOrbitalEcosystem() {
         }
 
         // ── DOM: High Performance 3D Positioning ────────────────────────────────
-        const el = document.getElementById(`orbit-node-${node.id}`);
+        let el = elementCacheRef.current[node.id];
+        if (!el) {
+          el = document.getElementById(`orbit-node-${node.id}`);
+          if (el) {
+            elementCacheRef.current[node.id] = el;
+          }
+        }
         if (el) {
           // depth ranges from 0 (back) to 1 (front)
           const depth = (Math.sin(a) + 1) / 2;
@@ -272,10 +332,15 @@ export default function HeroOrbitalEcosystem() {
         }
       });
 
-      // ── DOM: Rotate SVG rings and Inner Geometry ────────────────────────────
-      const ring1 = svgEl.querySelector<SVGGElement>("#halo-ring1");
-      const ring2 = svgEl.querySelector<SVGGElement>("#halo-ring2");
-      const innerHex = svgEl.querySelector<SVGGElement>("#inner-hex");
+      // ── DOM: Rotate SVG rings and Inner Geometry (Cached selectors) ─────────
+      if (!svgElementsCacheRef.current) {
+        svgElementsCacheRef.current = {
+          ring1: svgEl.querySelector<SVGGElement>("#halo-ring1"),
+          ring2: svgEl.querySelector<SVGGElement>("#halo-ring2"),
+          innerHex: svgEl.querySelector<SVGGElement>("#inner-hex")
+        };
+      }
+      const { ring1, ring2, innerHex } = svgElementsCacheRef.current;
       if (ring1) ring1.setAttribute("transform", `rotate(${(t * 15 * 180) / Math.PI}, 180, 200)`);
       if (ring2) ring2.setAttribute("transform", `rotate(${(-t * 20 * 180) / Math.PI}, 180, 195)`);
       if (innerHex) innerHex.setAttribute("transform", `rotate(${(t * 5 * 180) / Math.PI}, 180, 175)`);
@@ -285,7 +350,7 @@ export default function HeroOrbitalEcosystem() {
 
     animRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animRef.current);
-  }, [nodes]);
+  }, [nodes, updateLayout]);
 
   useEffect(() => {
     if (!mounted) return;
